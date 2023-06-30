@@ -25,7 +25,7 @@ class FileApplicationTests {
 		try(Connection connection = dataSource.getConnection()) {
 			log.info("Let's Do It");
 		} catch (Exception e) {
-			log.info("Find Some Error Your Connection Is Not Ok");
+			log.info("Find Your Errors Your Connection Is Not Ok");
 		}
 	}
 

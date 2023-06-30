@@ -1,0 +1,8 @@
+package board.file.mappers;
+
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface ReplyMapper {
+    
+}

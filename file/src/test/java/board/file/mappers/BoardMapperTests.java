@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import board.file.dto.board.BoardCreateDTO;
 import board.file.dto.board.BoardDTO;
-import board.file.dto.board.BoardListDTO;
 import board.file.dto.board.BoardUpdateDTO;
 import board.file.dto.page.PageRequestDTO;
 import lombok.extern.log4j.Log4j2;

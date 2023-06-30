@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import board.file.dto.board.BoardCreateDTO;
 import board.file.dto.board.BoardDTO;
@@ -30,7 +31,9 @@ public class BoardServiceImpl implements BoardService {
     
     // List BoardServiceImpl 
     @Override
+    @Transactional
     public PageResponseDTO<BoardListDTO> listboard(PageRequestDTO pageRequestDTO) {
+        log.info("List BoardServiceImpl Is Running");
         List<BoardListDTO> list = boardMapper.listBoard(pageRequestDTO);
         int total = boardMapper.total(pageRequestDTO);
 
@@ -42,25 +45,33 @@ public class BoardServiceImpl implements BoardService {
 
     // Create BoardServiceImpl
     @Override
+    @Transactional
     public int createBoard(BoardCreateDTO boardCreateDTO) {
+       log.info("Create BoardServiceImpl Is Running");
        return boardMapper.createBoard(boardCreateDTO);
     }
 
     // Delete BoardServiceImpl
     @Override
+    @Transactional
     public void deleteBoard(Long tno) {
+      log.info("Delete BoardServiceImpl Is Running");
       boardMapper.deleteBoard(tno);
     }
 
     // Update BoardServiceImpl
     @Override
+    @Transactional
     public void updateBoard(BoardUpdateDTO boardUpdateDTO) {
+       log.info("Update BoardService Is Running");
        boardMapper.updateBoard(boardUpdateDTO);
     }
 
     // Read BoardServiceImpl
     @Override
+    @Transactional
     public BoardDTO readBoard(Long tno) {
+       log.info("Read BoardServiceImpl Is Running");
        return boardMapper.readBoard(tno);
     }
 }
