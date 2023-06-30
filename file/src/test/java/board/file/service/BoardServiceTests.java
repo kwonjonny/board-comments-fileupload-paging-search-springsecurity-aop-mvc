@@ -98,6 +98,7 @@ public class BoardServiceTests {
         // THEN
         BoardDTO updatedBoardDTO = boardService.readBoard(TEST_TNO);
         Assertions.assertNotNull(updatedBoardDTO, "updatedBoardDTO Should Be Sucessful And Not Null");
+        Assertions.assertEquals(TEST_TITLE, boardUpdateDTO.getTitle(), "TITLE Should Be Updated");
         log.info("===== End Board Service Update Test =====");
     }
 

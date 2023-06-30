@@ -20,7 +20,7 @@ import lombok.extern.log4j.Log4j2;
 public class BoardMapperTests {
 
     // 의존성 주입 
-    @Autowired
+    @Autowired(required = false)
     private BoardMapper boardMapper;
 
     private static final String TEST_TITLE = "JunitTestTitleMapper";

@@ -1,4 +1,4 @@
-package board.file.dto.board;
+package board.file.dto.reply;
 
 import java.time.LocalDate;
 
@@ -15,11 +15,11 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardUpdateDTO {
-    // tbl_board
+public class ReplyUpdateDTO {
     private Long tno;
-    private String title;
-    private String content;
-    private String writer;
-    private LocalDate updateDate;
+    private Long rno;
+    private Long gno;
+    private String reply;
+    private String replyer;
+    private LocalDate modifyDate;
 }
