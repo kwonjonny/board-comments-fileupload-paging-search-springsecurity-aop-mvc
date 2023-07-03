@@ -26,12 +26,13 @@ public class BoardServiceImpl implements BoardService {
     // Autowired 명시적 표시 
     @Autowired
     public BoardServiceImpl(BoardMapper boardMapper) {
+        log.info("Constructor Called, Mapper Injected.");
         this.boardMapper = boardMapper;
     }
     
     // List BoardServiceImpl 
     @Override
-    @Transactional
+    @Transactional(readonly = true)
     public PageResponseDTO<BoardListDTO> listboard(PageRequestDTO pageRequestDTO) {
         log.info("List BoardServiceImpl Is Running");
         List<BoardListDTO> list = boardMapper.listBoard(pageRequestDTO);
@@ -46,9 +47,10 @@ public class BoardServiceImpl implements BoardService {
     // Create BoardServiceImpl
     @Override
     @Transactional
-    public int createBoard(BoardCreateDTO boardCreateDTO) {
+    public Long createBoard(BoardCreateDTO boardCreateDTO) {
        log.info("Create BoardServiceImpl Is Running");
-       return boardMapper.createBoard(boardCreateDTO);
+       boardMapper.createBoard(boardCreateDTO);
+       return boardCreateDTO.getTno();
     }
 
     // Delete BoardServiceImpl
@@ -69,7 +71,7 @@ public class BoardServiceImpl implements BoardService {
 
     // Read BoardServiceImpl
     @Override
-    @Transactional
+    @Transactional(readonly = true)
     public BoardDTO readBoard(Long tno) {
        log.info("Read BoardServiceImpl Is Running");
        return boardMapper.readBoard(tno);

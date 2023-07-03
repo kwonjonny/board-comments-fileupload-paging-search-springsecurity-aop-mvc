@@ -1,5 +1,7 @@
 package board.file.mappers;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import board.file.dto.page.PageRequestDTO;
 import board.file.dto.reply.ReplyCreateDTO;
 import board.file.dto.reply.ReplyDTO;
 import board.file.dto.reply.ReplyUpdateDTO;
@@ -132,10 +135,11 @@ public class ReplyMapperTets {
         // THEN 
         ReplyDTO replyDTO = replyMapper.readReply(TEST_RNO);
         Assertions.assertEquals("삭제된 댓글입니다.", replyDTO.getReply());
+        replyMapper.decrementReplyCount(TEST_TNO);
         log.info("===== End Delete Reply Mapper Test =====");
     }
 
-    // Update Replt Test 
+    // Update Reply Test 
     @Test
     @Transactional
     @DisplayName("댓글 업데이트 테스트")
@@ -147,7 +151,39 @@ public class ReplyMapperTets {
         // THEN 
         ReplyDTO replyDTO = replyMapper.readReply(TEST_RNO);
         Assertions.assertNotNull(replyDTO, "replyDTO Should Be Not Null");
-        Assertions.assertEquals(replyDTO.getReply(), replyDTO);
+        Assertions.assertEquals("Junit Reply Mapper Test", replyDTO.getReply());
         log.info("===== End Update Reply Mapper Test =====");
+    }
+
+    // Update Reply Child Test 
+    @Test
+    @Transactional
+    @DisplayName("대댓글 업데이트 테스트")
+    public void updateReplyChildMapperTest() {
+        // GIVEN
+        log.info("===== Start Update Reply Child Mapper Test =====");
+        // WHEN 
+        replyMapper.updateReply(replyChildUpdateDTO);
+        // THEN 
+        ReplyDTO replyDTO = replyMapper.readReply(TEST_RNO);
+        Assertions.assertNotNull(replyDTO, "replyDTO Should Be Not Null");
+        Assertions.assertEquals("Junit Reply Child Mapper Test", replyDTO.getReply());
+        log.info("===== End Update Reply Child Mapper Test =====");
+    }
+
+    // List Reply Child Test 
+    @Test
+    @Transactional
+    @DisplayName("댓글 리스트 테스트")
+    public void listReplyMapperTest() {
+        // GIVEN
+        log.info("===== Start List Reply Child Mapper Test =====");
+        // WHEN
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().build();
+
+        List<ReplyDTO> listReply = replyMapper.listReply(pageRequestDTO, TEST_TNO);
+        // THEN 
+        log.info(listReply);
+        log.info("===== End List Reply Child Mapper Test =====");
     }
 }

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board Create Page</title>
+</head>
+<body>
+ <!-- fragment content start -->
+ <div layout:fragment="content">
+    <h1>Board Create Page</h1>
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <!-- form start -->
+              <form class="form-horizontal actionButton" name="valueCheck" method="post" enctype="multipart/form-data">
+                <div class="card-body">
+                  <h4 class="card-title">등록 페이지</h4>
+                  <div class="form-group row">
+                    <label for="fname" class="col-sm-3 text-end control-label col-form-label"></label>
+                  </div>
+                  <!-- title start -->
+                  <div class="form-group row">
+                    <label for="title" class="col-sm-3 text-end control-label col-form-label">Title</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="title" name="title" th:required = "required"/>
+                    </div>
+                  </div>
+                  <!-- writer start -->
+                  <div class="form-group row">
+                    <label for="writer" class="col-sm-3 text-end control-label col-form-label">Writer</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="writer" name="writer" th:required = "required"/>
+                    </div>
+                  </div>
+                  <!-- content start -->
+                  <div class="form-group row">
+                    <label for="content" class="col-sm-3 text-end control-label col-form-label">Content</label>
+                    <div class="col-sm-9">
+                      <textarea class="form-control" name="content" th:required = "required"></textarea>
+                    </div>
+                  </div>
+                </div>
+            <!-- File input start -->
+              <div class="form-group row">
+                <label for="fileUpload" class="col-sm-3 text-end control-label col-form-label">Files</label>
+                <div class="col-sm-9">
+                    <input type="file" class="form-control" id="fileUpload" name="fileUpload" multiple>
+                  <!-- 미리보기 이미지를 표시할 요소 -->
+                    <div>
+                      <div id="preview">
+                      </div>
+                    </div>
+                  <!-- 미리보기 이미지를 표시할 요소 -->
+                </div>
+              </div>
+              <!-- File input end -->
+
+                <!-- button start -->
+                <div class="border-top">
+                  <div class="card-body">
+                    <button type="button" class="btn btn-primary createButton">
+                      게시글 등록
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+     </div>
+     <!-- modal 창 start -->
+     <div class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+     <!-- javaScript start -->
+     <script layout:fragment="script" th:inline="javascript">
+
+      // querySelector 등록 
+      const actionForm = document.querySelector(".actionButton");
+      const actionCreate = document.querySelector(".createButton");
+      const modalView = new bootstrap.Modal(document.querySelector(".modal"));
+      const createValueCheck = document.querySelector(".modal .modal-body");
+
+      document.getElementById('fileUpload').addEventListener('change', function() {
+    const preview = document.getElementById('preview');
+    preview.innerHTML = ''; // 미리보기 영역을 초기화합니다.
+
+          // 선택된 모든 파일에 대해 반복
+          for (let i = 0; i < this.files.length; i++) {
+              const file = this.files[i];
+              const imageType = /^image\//;
+
+              // 파일이 이미지인지 확인
+              if (!imageType.test(file.type)) {
+                  continue;
+              }
+
+              // FileReader를 사용하여 이미지 읽기
+              const reader = new FileReader();
+              reader.readAsDataURL(file);
+
+              // 이미지가 로드되면 미리보기를 표시
+              reader.onload = function(e) {
+                  const img = document.createElement('img');
+                  img.src = e.target.result;
+                  img.width = 100; // 너비를 100px로 설정
+                  img.height = 100; // 높이를 100px로 설정
+                  preview.appendChild(img);
+              };
+          }
+      });
+
+  
+      // actionCreate 버튼 click 시 event 
+      actionCreate.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // 사용자가 입력한 값을 check 하기위한 valueCheck
+    const frm = document.forms['valueCheck'];
+
+    if (frm.title.value == "") {
+        createValueCheck.innerHTML = "제목을 입력해주세요.";
+        modalView.show();
+        setTimeout(() => modalView.hide(), 1000);
+    } else if (frm.content.value == "") {
+        createValueCheck.innerHTML = "내용을 입력해주세요.";
+        modalView.show();
+        setTimeout(() => modalView.hide(), 1000);
+    } else if (frm.writer.value == "") {
+        createValueCheck.innerHTML = "작성자를 입력해주세요.";
+        modalView.show();
+        setTimeout(() => modalView.hide(), 1000);
+    } else {
+        // First, upload files
+        const fileInput = document.getElementById('fileUpload');
+        const files = fileInput.files;
+        const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+            formData.append("multipartFiles", files[i]);
+        }
+
+        // Submit the form
+        actionForm.setAttribute("action", "/board/create");
+        actionForm.setAttribute("method", "post");
+        actionForm.addEventListener("submit", (event) => {
+            event.preventDefault(); // Prevent the default form submission
+            fetch("/board/create", {
+                method: "POST",
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                // Handle the response if needed
+                console.log(data);
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        actionForm.submit();
+    }
+}, false);
+    </script>
+  </body>
+</html>

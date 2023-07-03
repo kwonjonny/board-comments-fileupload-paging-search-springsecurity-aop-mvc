@@ -1,22 +1,35 @@
 package board.file.controller;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import board.file.dto.board.BoardCreateDTO;
 import board.file.dto.board.BoardDTO;
 import board.file.dto.board.BoardListDTO;
 import board.file.dto.board.BoardUpdateDTO;
+import board.file.dto.file.FileUploadResultDTO;
 import board.file.dto.page.PageRequestDTO;
 import board.file.dto.page.PageResponseDTO;
 import board.file.service.BoardService;
+import board.file.service.FileService;
 import lombok.extern.log4j.Log4j2;
+import net.coobird.thumbnailator.Thumbnailator;
 
 // Board Controller Class 
 @Log4j2
@@ -26,18 +39,22 @@ public class BoardController {
 
     // 의존성 주입 
     private final BoardService boardServce;
-    
+    private final FileService fileService;
+     @Value("${org.zerock.upload.path}")
+    private String uploadPath;
     // Autowired 명시적 표시
     @Autowired
-    public BoardController(BoardService boardService) {
+    public BoardController(BoardService boardService, FileService fileService) {
+        log.info("Constructor Called, Service Injected.");
         this.boardServce = boardService;
+        this.fileService = fileService;
     }
 
     // GET : Create
     @GetMapping("create")
     public String getBoardCreate() {
         log.info("GET | Board Create");
-        return "/board/list";
+        return "/board/create";
     }
 
      // GET : List 
@@ -67,15 +84,6 @@ public class BoardController {
         return "/board/update";
     }
 
-    // POST : Create
-    @PostMapping("create")
-    public String postBoardCreate(BoardCreateDTO boardCreateDTO, RedirectAttributes redirectAttributes) {
-        log.info("POST | Board Create");
-        boardServce.createBoard(boardCreateDTO);
-        redirectAttributes.addFlashAttribute("message", boardCreateDTO.getTno() + " 번 게시물로 등록되었습니다.");
-        return "redirect:/board/list";
-    }
-
     // POST : Delete
     @PostMapping("delete/{tno}")
     public String postBoardDelete(@PathVariable("tno") Long tno, RedirectAttributes redirectAttributes) {
@@ -91,6 +99,67 @@ public class BoardController {
         log.info("POST | Board Update");
         boardServce.updateBoard(boardUpdateDTO);
         redirectAttributes.addFlashAttribute("message", "게시물이 업데이트 되었습니다.");
-        return "redirect:/board/read" + boardUpdateDTO.getTno();
+        return "redirect:/board/read/" + boardUpdateDTO.getTno();
     }
+
+
+
+
+     @PostMapping("/create")
+    public String postBoardCreate(BoardCreateDTO boardCreateDTO, MultipartFile[] multipartFiles, RedirectAttributes redirectAttributes) {
+    log.info("POST | Board Create");
+
+    // 게시물 생성 부분
+    Long tno = boardServce.createBoard(boardCreateDTO);
+
+    // 파일 업로드 부분
+    if (multipartFiles != null && multipartFiles.length > 0) {
+        List<FileUploadResultDTO> resultList = new ArrayList<>();
+        for (MultipartFile file : multipartFiles) {
+            FileUploadResultDTO result = null;
+            String fileName = file.getOriginalFilename();
+            log.info(fileName);
+
+            Long size = file.getSize();
+            String uuidStr = UUID.randomUUID().toString();
+            String saveFileName = uuidStr + "_" + fileName;
+            File saveFile = new File(uploadPath, saveFileName);
+
+            try {
+                FileCopyUtils.copy(file.getBytes(), saveFile);
+                result = FileUploadResultDTO.builder()
+                        .uuid(uuidStr)
+                        .fileName(fileName)
+                        .build();
+                // 이미지 파일 여부 확인
+                String mimeType = Files.probeContentType(saveFile.toPath());
+                log.info(mimeType);
+
+                if (mimeType.startsWith("image")) {
+                    // 업로드 성공시 썸네일 생성
+                    File thumbFile = new File(uploadPath, "s_" + saveFileName);
+                    Thumbnailator.createThumbnail(saveFile, thumbFile, 100, 100);
+                    result.setImg(true);
+                }
+                resultList.add(result);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        // 생성된 UUID 값을 파일 서비스로 전달
+        List<String> uuidList = resultList.stream()
+                .map(FileUploadResultDTO::getUuid)
+                .collect(Collectors.toList());
+                log.info(uuidList+"uuidList입니다");
+                log.info(uuidList+"uuidList입니다");
+                log.info(uuidList+"uuidList입니다");
+        fileService.createFile(uuidList, tno);
+        log.info(uuidList+"uuidList입니다");
+    }
+
+    redirectAttributes.addFlashAttribute("message", boardCreateDTO.getTno() + " 번 게시물로 등록되었습니다.");
+
+    return "redirect:/board/list";
+}
 }

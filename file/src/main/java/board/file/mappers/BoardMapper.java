@@ -32,4 +32,5 @@ public interface BoardMapper {
     // Total Board 
     int total(PageRequestDTO pageRequestDTO);
 
+
 }

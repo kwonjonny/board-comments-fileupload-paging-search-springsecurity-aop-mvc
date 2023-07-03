@@ -14,7 +14,7 @@ public interface BoardService {
     PageResponseDTO<BoardListDTO> listboard(PageRequestDTO pageRequestDTO);
 
     // Create Board Service
-    int createBoard(BoardCreateDTO boardCreateDTO);
+    Long createBoard(BoardCreateDTO boardCreateDTO);
 
     // Delete Board Service 
     void deleteBoard(Long tno);

@@ -19,4 +19,6 @@ public class BoardCreateDTO {
     private String title;
     private String writer;
     private String content;
+
+    
 }

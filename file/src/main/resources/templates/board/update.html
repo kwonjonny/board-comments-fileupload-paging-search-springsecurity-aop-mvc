@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board Update Page</title>
+</head>
+
+<body>
+    <!-- Fragment Content Start -->
+    <div layout:fragment="content">
+        <h1>Board Update Page</h1>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <!-- Form Start -->
+                            <form class="form-horizontal actionForm">
+
+                                <!-- Tno Start -->
+                                <div class="form-group row">
+                                    <label for="tno" class="col-sm-3 text-end control-label col-form-label">Tno</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="tno" id="tno" th:value="${list.tno}" readonly/>
+                                    </div>
+                                </div>
+                                <!-- Tno End -->
+
+                                <!-- Title Start -->
+                                <div class="form-group row">
+                                    <label for="title" class="col-sm-3 text-end control-label col-form-label">Title</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="title" id="title" th:value="${list.title}"/>
+                                    </div>
+                                </div>
+                                <!-- Title End -->
+
+                                <!-- Writer Start -->
+                                <div class="form-group row">
+                                    <label for="writer" class="col-sm-3 text-end control-label col-form-label">Writer</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="writer" id="writer" th:value="${list.writer}"/>
+                                    </div>
+                                </div>
+                                <!-- Writer End -->
+
+                                <!-- Regist Date Start -->
+                                <div class="form-group row">
+                                    <label for="registDate" class="col-sm-3 text-end control-label col-form-label">Regist Date</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="registDate" id="registDate" th:value="${list.registDate}" readonly/>
+                                    </div>
+                                </div>
+                                <!-- Regist Date End -->
+
+                                <!-- Update Date Start -->
+                                <div class="form-group row">
+                                    <label for="modifyDate" class="col-sm-3 text-end control-label col-form-label">Update Date</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="modifyDate" id="modifyDate" th:value="${list.updateDate}" readonly/>
+                                    </div>
+                                </div>
+                                <!-- Update Date End -->
+
+                                <!-- Content Start -->
+                                <div class="form-group row">
+                                    <label for="content" class="col-sm-3 text-end control-label col-form-label">Content</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" name="content" id="content" th:text="${list.content}"></textarea>
+                                    </div>
+                                </div>
+                                <!-- Content End -->
+
+                                 <!-- Update Button Start -->
+                                <div class="border-top">
+                                    <div class="card-body">
+                                    <button type="button" class="btn btn-primary updateButton">게시글 수정 submit</button>
+                                    </div>
+                                </div>
+                                <!-- Update Button End -->
+
+                            </form>
+                            <!-- Form End -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fragment Content End -->
+
+    <!-- JavaScript Start -->
+    <script layout:fragment ="script" th:inline = "javascript">
+
+        // actionForm 등록 
+        const actionForm = document.querySelector(".actionForm");
+        // actionUpdate 등록 
+        const actionUpdate = document.querySelector(".updateButton")
+
+        // Update Action Method Start 
+        actionUpdate.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            actionForm.setAttribute("action", `/board/update`)
+            actionForm.setAttribute("method", `post`)
+            actionForm.submit();
+        },false)
+        // JavaScript End
+    </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- BoardMapper Xml -->
+<mapper namespace="board.file.mappers.FileMapper">
+
+
+<insert id="createFile" useGeneratedKeys="true" keyProperty="imgId" keyColumn="imgid">
+    INSERT INTO tbl_board_img (uuid, filename, ord, tno) VALUES
+    <foreach collection="list" item="item" separator=",">
+        (#{item.uuid}, #{item.fileName}, #{item.ord}, #{item.tno})
+    </foreach>
+</insert>
+
+
+<delete id="deleteFile" parameterType="long">
+    DELETE FROM tbl_board_img
+    WHERE imgId = #{imgId}
+</delete>
+
+
+<insert id="updateFile">
+    INSERT INTO tbl_board_img (uuid, tno, filename, ord) VALUES
+    <foreach collection="list" item="item" separator=",">
+        (#{item.uuid}, #{item.tno}, #{item.fileName}, #{item.ord})
+    </foreach>
+</insert>
+
+
+<select id="readListFile" resultType="board.file.dto.file.FileListDTO">
+   SELECT CONCAT(uuid, '_', fileName) AS file
+   WEHRE tno = #{tno}
+   ORDER BY ord ASC
+</select>
+
+
+<select id="listFile" resultType="board.file.dto.file.FileListDTO">
+    SELECT imgid, CONCAT(uuid, '_', filename) AS file, tno, ord
+    FROM tbl_board_img
+    WHERE tno = #{tno} AND ord = 0
+    ORDER BY imgid DESC
+    LIMIT #{page.skip}, #{page.size}
+</select>
+
+
+
+</mapper>

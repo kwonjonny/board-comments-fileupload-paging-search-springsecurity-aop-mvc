@@ -65,7 +65,7 @@ public class BoardServiceTests {
         // GIVEN 
         log.info("===== Start Board Service Create Test =====");
         // WHEN 
-        int insertCount = boardService.createBoard(boardCreateDTO);
+        Long insertCount = boardService.createBoard(boardCreateDTO);
         // THEN 
         Assertions.assertEquals(1, insertCount, "Create Board Service Should Successful");
         log.info("===== End Board Service Create Test =====");
