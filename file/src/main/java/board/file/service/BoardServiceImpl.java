@@ -32,7 +32,7 @@ public class BoardServiceImpl implements BoardService {
     
     // List BoardServiceImpl 
     @Override
-    @Transactional(readonly = true)
+    @Transactional(readOnly = true)
     public PageResponseDTO<BoardListDTO> listboard(PageRequestDTO pageRequestDTO) {
         log.info("List BoardServiceImpl Is Running");
         List<BoardListDTO> list = boardMapper.listBoard(pageRequestDTO);
@@ -71,7 +71,7 @@ public class BoardServiceImpl implements BoardService {
 
     // Read BoardServiceImpl
     @Override
-    @Transactional(readonly = true)
+    @Transactional(readOnly = true)
     public BoardDTO readBoard(Long tno) {
        log.info("Read BoardServiceImpl Is Running");
        return boardMapper.readBoard(tno);

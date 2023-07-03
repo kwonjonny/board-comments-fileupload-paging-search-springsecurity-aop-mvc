@@ -1,6 +1,7 @@
 package board.file.dto.board;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,4 +23,5 @@ public class BoardUpdateDTO {
     private String content;
     private String writer;
     private LocalDate updateDate;
+    private List<String> fileNames;
 }

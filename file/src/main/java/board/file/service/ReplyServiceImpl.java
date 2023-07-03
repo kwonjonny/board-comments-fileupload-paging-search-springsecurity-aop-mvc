@@ -80,7 +80,7 @@ public class ReplyServiceImpl implements ReplyService {
 
     // Read Reply ServiceImpl
     @Override
-    @Transactional(readonly = true)
+    @Transactional(readOnly = true)
     public ReplyDTO readReply(Long rno) {
         log.info("Read ServiceImpl Is Running");
         return replyMapper.readReply(rno);
@@ -88,7 +88,7 @@ public class ReplyServiceImpl implements ReplyService {
 
     // List Reply ServiceImpl
     @Override
-    @Transactional(readonly = true)
+    @Transactional(readOnly = true)
     public PageResponseDTO<ReplyDTO> listReply(PageRequestDTO pageRequestDTO, Long tno) {
         log.info("List ServiceImpl Is Running");
         List<ReplyDTO> list = replyMapper.listReply(pageRequestDTO, tno);

@@ -1,5 +1,7 @@
 package board.file.dto.board;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +21,5 @@ public class BoardCreateDTO {
     private String title;
     private String writer;
     private String content;
-
-    
+    private List<String> fileNames;
 }
