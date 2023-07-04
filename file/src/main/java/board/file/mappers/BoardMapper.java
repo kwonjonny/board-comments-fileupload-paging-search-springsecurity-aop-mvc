@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import board.file.dto.File.FileDTO;
 import board.file.dto.board.BoardCreateDTO;
 import board.file.dto.board.BoardDTO;
 import board.file.dto.board.BoardListDTO;
@@ -14,10 +15,10 @@ import board.file.dto.page.PageRequestDTO;
 @Mapper
 public interface BoardMapper {
 
-    // List Board 
+    // List Board & Read Image 
     List<BoardListDTO> listBoard(PageRequestDTO pageRequestDTO);
 
-    // Read Board 
+    // Read Board & Read Image 
     BoardDTO readBoard(Long tno);
 
     // Create Board 
@@ -32,5 +33,6 @@ public interface BoardMapper {
     // Total Board 
     int total(PageRequestDTO pageRequestDTO);
 
-
+    // Read Image 
+    List<FileDTO> readImage(Long tno);
 }

@@ -46,10 +46,10 @@ public class BoardController {
     }
 
     // GET : Create
-    @GetMapping("create")
+    @GetMapping("create2")
     public String getBoardCreate() {
         log.info("GET | Board Create");
-        return "/board/create";
+        return "/board/create2";
     }
 
      // GET : List 
@@ -71,12 +71,12 @@ public class BoardController {
     }
 
     // GET : Update
-    @GetMapping("update/{tno}")
+    @GetMapping("update2/{tno}")
     public String getBoardUpdate(@PathVariable("tno") Long tno, Model model) {
         log.info("GET | Board Update");
         BoardDTO list = boardServce.readBoard(tno);
         model.addAttribute("list", list);
-        return "/board/update";
+        return "/board/update2";
     }
 
     // POST : Delete
@@ -98,7 +98,7 @@ public class BoardController {
     }
 
     // POST : Create 
-    @PostMapping("/create")
+    @PostMapping("/create2")
     public String postBoardCreate(BoardCreateDTO boardCreateDTO,RedirectAttributes redirectAttributes) {
         log.info("POST | Board Create");
         // 게시물 생성 부분

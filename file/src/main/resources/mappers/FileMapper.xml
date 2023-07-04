@@ -7,43 +7,28 @@
 <mapper namespace="board.file.mappers.FileMapper">
 
 
-<insert id="createFile" useGeneratedKeys="true" keyProperty="imgId" keyColumn="imgid">
-    INSERT INTO tbl_board_img (uuid, filename, ord, tno) VALUES
+<insert id="createImage" parameterType="java.util.List">
+    INSERT INTO tbl_board_img (uuid, fileName, ord, tno)
+    VALUES
     <foreach collection="list" item="item" separator=",">
         (#{item.uuid}, #{item.fileName}, #{item.ord}, #{item.tno})
     </foreach>
 </insert>
 
 
-<delete id="deleteFile" parameterType="long">
+<delete id="deleteImage"> 
     DELETE FROM tbl_board_img
-    WHERE imgId = #{imgId}
+    WHERE tno = #{tno}
 </delete>
 
 
-<insert id="updateFile">
-    INSERT INTO tbl_board_img (uuid, tno, filename, ord) VALUES
+<insert id="updateImage" parameterType="java.util.List">
+    INSERT INTO tbl_board_img (uuid, filename, ord, tno)
+    VALUES
     <foreach collection="list" item="item" separator=",">
-        (#{item.uuid}, #{item.tno}, #{item.fileName}, #{item.ord})
+        (#{item.uuid}, #{item.fileName}, #{item.ord}, #{item.tno})
     </foreach>
 </insert>
-
-
-<select id="readListFile" resultType="board.file.dto.file.FileListDTO">
-   SELECT CONCAT(uuid, '_', fileName) AS file
-   WEHRE tno = #{tno}
-   ORDER BY ord ASC
-</select>
-
-
-<select id="listFile" resultType="board.file.dto.file.FileListDTO">
-    SELECT imgid, CONCAT(uuid, '_', filename) AS file, tno, ord
-    FROM tbl_board_img
-    WHERE tno = #{tno} AND ord = 0
-    ORDER BY imgid DESC
-    LIMIT #{page.skip}, #{page.size}
-</select>
-
 
 
 </mapper>

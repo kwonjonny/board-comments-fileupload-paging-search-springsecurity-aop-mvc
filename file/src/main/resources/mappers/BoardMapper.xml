@@ -70,8 +70,16 @@
     FROM (SELECT * FROM tbl_board 
     WHERE tno > 0 
     LIMIT #{countEnd}
-    )
-    tbl_board
+    ) tbl_board
+</select>
+
+<!-- BoardMapper id = "readImage" -->
+<select id="readImage" parameterType="long" resultType="string">
+    SELECT 
+    CONCAT(uuid,'_',fileName) AS fileName
+    FROM tbl_board_img 
+    WHERE tno = #{tno}
+    ORDER BY ord desc 
 </select>
 
 </mapper>

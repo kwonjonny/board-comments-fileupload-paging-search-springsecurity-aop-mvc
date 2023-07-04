@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import board.file.dto.File.FileDTO;
+
 @Mapper
 public interface FileMapper {
     
@@ -12,11 +14,9 @@ public interface FileMapper {
     int createImage(List<Map<String,String>> imageList);
 
     // Delete Image 
-    int deleteImage(String fileName);
+    int deleteImage(Long tno);
 
     // Update Image
     int updateImage(List<Map<String,String>> imageList);
-
-    // Read Image 
 
 }

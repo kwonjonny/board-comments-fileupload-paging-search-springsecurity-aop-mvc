@@ -1,5 +1,8 @@
 package board.file.service;
 
+import java.util.List;
+
+import board.file.dto.File.FileDTO;
 import board.file.dto.board.BoardCreateDTO;
 import board.file.dto.board.BoardDTO;
 import board.file.dto.board.BoardListDTO;
@@ -20,9 +23,12 @@ public interface BoardService {
     void deleteBoard(Long tno);
 
     // Update Board Service
-    void updateBoard(BoardUpdateDTO boardUpdateDTO);
+    Long updateBoard(BoardUpdateDTO boardUpdateDTO);
 
     // Read Board Service
     BoardDTO readBoard(Long tno);
+
+    // Read Image 
+    List<FileDTO> readImage(Long tno);
 
 }

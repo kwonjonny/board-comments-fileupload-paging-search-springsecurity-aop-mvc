@@ -1,6 +1,7 @@
 package board.file.dto.board;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,4 +25,5 @@ public class BoardDTO {
     private LocalDate registDate;
     private LocalDate updateDate;
     private int replyCnt;
+    private List<String> fileNames;
 }
