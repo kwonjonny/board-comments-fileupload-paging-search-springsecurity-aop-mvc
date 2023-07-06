@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout.html}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout.html}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,69 +11,71 @@
             font-weight: bold;
             margin-right: 10px;
         }
-    
+
         .reply-count {
             font-size: 0.8em;
             color: rgb(49, 129, 0);
         }
     </style>
 </head>
+
 <body>
-  <div layout:fragment="content">
-      <h1>Board List Page</h1>
-      <div class="card">
-          <div class="card-header"></div>
-          <div class="card-body">
-              <!-- Search Form Start -->
-              <form action="/board/list" method="get" class="input-group mb-3 searchAction" id="searchForm">
-                  <div class="input-group-prepend">
-                      <select  name="searchType" class="searchTypeSelect">
-                          <option class="dropdown-item" data-searchType="writer">Writer</option>
-                          <option class="dropdown-item" data-searchType="title">Title</option>
-                          <option class="dropdown-item" data-searchType="content">Content</option>
-                          <!-- <option class="dropdown-item" data-searchType="all">All Search</option> -->
-                      </select>
-                  </div>
-                  <input type="hidden" class="searchType">
-                  <input type="text" name="keyword" class="form-control keyword" aria-label="검색어를 입력 해주세요." th:value="${pageRequestDTO.keyword}">
-                  <button type="submit" class="btn btn-outline-secondary">Search</button>
-              </form>
+    <div layout:fragment="content">
+        <h1>Board List Page</h1>
+        <div class="card">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <!-- Search Form Start -->
+                <form action="/board/list" method="get" class="input-group mb-3 searchAction" id="searchForm">
+                    <div class="input-group-prepend">
+                        <select name="searchType" class="searchTypeSelect">
+                            <option class="dropdown-item" data-searchType="writer">Writer</option>
+                            <option class="dropdown-item" data-searchType="title">Title</option>
+                            <option class="dropdown-item" data-searchType="content">Content</option>
+                            <!-- <option class="dropdown-item" data-searchType="all">All Search</option> -->
+                        </select>
+                    </div>
+                    <input type="hidden" class="searchType">
+                    <input type="text" name="keyword" class="form-control keyword" aria-label="검색어를 입력 해주세요."
+                        th:value="${pageRequestDTO.keyword}">
+                    <button type="submit" class="btn btn-outline-secondary">Search</button>
+                </form>
 
-              <!-- List Start -->
-              <table class="table table-bordered boardTable">
-                  <thead>
-                      <tr>
-                          <th>tno</th>
-                          <th>제목:title 댓글:replyCount</th>
-                          <th>writer</th>
-                          <th>craeteDate</th>
-                          <th>IMG</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr th:each="board :${list.list}">
-                          <td class="boardRead" th:data-tno="${board.tno}">[[${board.tno}]]</td>
-                          <td>
-                              <span class="title" th:text="${board.title}"></span>
-                              <span class="reply-count" th:text="'댓글: ' + ${board.replyCnt}"></span>
-                          </td>
-                          <td>[[${board.writer}]]</td>
-                          <td>[[${board.registDate}]]</td>
-                          <td><img th:src ="|http://localhost/s_${board.fileName}|"></td>
-                      </tr>
-                  </tbody>
-              </table>
-              <!-- List End -->
-          </div>
+                <!-- List Start -->
+                <table class="table table-bordered boardTable">
+                    <thead>
+                        <tr>
+                            <th>tno</th>
+                            <th>제목:title 댓글:replyCount</th>
+                            <th>writer</th>
+                            <th>craeteDate</th>
+                            <th>IMG</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="board :${list.list}">
+                            <td class="boardRead" th:data-tno="${board.tno}">[[${board.tno}]]</td>
+                            <td>
+                                <span class="title" th:text="${board.title}"></span>
+                                <span class="reply-count" th:text="'댓글: ' + ${board.replyCnt}"></span>
+                            </td>
+                            <td>[[${board.writer}]]</td>
+                            <td>[[${board.registDate}]]</td>
+                            <td><img th:src="|http://localhost/s_${board.fileName}|"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- List End -->
+            </div>
 
-          <!-- Pagination Start -->
-          <div class="card-footer clearfix">
-              <ul class="pagination boardUl">
-              </ul>
-          </div>
-          <!-- Pagination End -->
-      </div>
-      
+            <!-- Pagination Start -->
+            <div class="card-footer clearfix">
+                <ul class="pagination boardUl">
+                </ul>
+            </div>
+            <!-- Pagination End -->
+        </div>
+
         <!-- Action Form Start -->
         <form class="actionForm" action="/board/list" method="get">
             <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
@@ -81,28 +83,28 @@
             <button type="button" class="btn btn-primary createButton">게시글 글쓰기</button>
         </form>
         <!-- Action Form End -->
-    
-         <!-- Update Complete Message Start -->
-         <div class="modal alertModal" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-body">[[${message}]]</div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-              </div>
+
+        <!-- Update Complete Message Start -->
+        <div class="modal alertModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">[[${message}]]</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
         <!-- Update Complete Message End -->
 
-      <!-- PageNation JavaScript Code Start -->
-      <script src = "/js/pageUtil.js">
-      </script>
-     <!-- PageNation JavaScript Code End -->
-      </div>
+        <!-- PageNation JavaScript Code Start -->
+        <script src="/js/pageUtil.js">
+        </script>
+        <!-- PageNation JavaScript Code End -->
+    </div>
 
-      <!-- JavaScript Start -->
-      <script layout:fragment ="script" th:inline = "javascript">
+    <!-- JavaScript Start -->
+    <script layout:fragment="script" th:inline="javascript">
         // actionForm 등록 
         const actionForm = document.querySelector(".actionForm")
         // boardRead 등록 
@@ -123,17 +125,17 @@
             const pageNum = target.getAttribute("href");
 
             pageObj.value = pageNum
-            actionForm.setAttribute("action" , `/board/list`)
+            actionForm.setAttribute("action", `/board/list`)
             actionForm.submit();
-        },false)
+        }, false)
 
         // PageNation => page, size, total 값 가져오기 
-        const {page,size} = [[${pageRequestDTO}]]
-        const {total} = [[${list}]]
-        const pageList = makePages(page,size,total)
+        const { page, size } = [[${ pageRequestDTO }]]
+        const { total } = [[${ list }]]
+        const pageList = makePages(page, size, total)
         // PageNation => Show client 
         boardUl.innerHTML = pageList
-        
+
         // Read Action Method Start 
         actionRead.forEach(actionRead => {
             actionRead.addEventListener("click", (e) => {
@@ -142,14 +144,15 @@
                 const target = e.target;
 
                 if (!target.getAttribute("data-tno")) {
-                    return; }
+                    return;
+                }
 
                 const tno = target.getAttribute("data-tno");
                 actionForm.setAttribute("action", `/board/read/${tno}`);
                 actionForm.submit();
             }, false);
         });
-        
+
         // Create Action Method Start
         actionCreate.addEventListener("click", (e) => {
             e.preventDefault()
@@ -158,13 +161,14 @@
             actionForm.setAttribute("action", `/board/create`)
             actionForm.setAttribute("method", `get`)
             actionForm.submit();
-        },false)
+        }, false)
 
         // Update & Delete Message Modal Start 
         const alertModal = new bootstrap.Modal(document.querySelector(".alertModal"))
-        if([[${message}]] != null){
-        alertModal.show()
+        if ([[${ message }]] != null) {
+            alertModal.show()
         }
-      </script>
+    </script>
 </body>
+
 </html>

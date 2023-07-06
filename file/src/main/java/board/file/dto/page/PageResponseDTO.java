@@ -11,7 +11,7 @@ public class PageResponseDTO<E> {
     private List<E> list;
     private int total;
 
-    @Builder(builderMethodName  = "withAll")
+    @Builder(builderMethodName = "withAll")
     public PageResponseDTO(List<E> list, int total) {
         this.list = list;
         this.total = total;

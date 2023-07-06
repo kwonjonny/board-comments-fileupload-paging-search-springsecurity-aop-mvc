@@ -1,438 +1,446 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout.html}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout.html}">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Board Read Page</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Board Read Page</title>
 </head>
+
 <body>
   <!-- Fragment Content Start -->
-    <div layout:fragment="content">
-        <h1>Board Read Page</h1>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <form class="form-horizontal actionForm" method="get" action="/board/read">
-                                  [[#{list.fileName}]]
-                                  <!-- tno satrt -->
-                                    <div class="form-group row">
-                                        <label for="tno" class="col-sm-3 text-end control-label col-form-label">Tno</label>
-                                        <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="tno" id="tno" th:value="${list.tno}" readonly/>
-                                        </div>
-                                    </div>
-                                  <!-- tno end -->
-
-                                  <!-- Title Start -->
-                                    <div class="form-group row">
-                                        <label for="Title" class="col-sm-3 text-end control-label col-form-label">Title</label>
-                                        <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="title" id="title" th:value="${list.title}" readonly/>
-                                        </div>
-                                    </div>
-                                  <!-- Title End -->
-
-                                  <!-- Writer Start -->
-                                    <div class="form-group row">
-                                        <label for="writer" class="col-sm-3 text-end control-label col-form-label">Writer</label>
-                                        <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="writer" id="writer" th:value="${list.writer}" readonly/>
-                                        </div>
-                                    </div>
-                                  <!-- Writer End -->
-
-                                  <!-- Regist Date Start -->
-                                    <div class="form-group row">
-                                        <label for="registDate" class="col-sm-3 text-end control-label col-form-label">RegistDate</label>
-                                        <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="registDate" id="registDate" th:value="${list.registDate}"readonly/>
-                                        </div>
-                                    </div>
-                                  <!-- Regist Date End -->
-
-                                  <!-- Update Date Start -->
-                                    <div class="form-group row">
-                                        <label for="modfiyDate" class="col-sm-3 text-end control-label col-form-label">UpdateDate</label>
-                                        <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="modfiyDate" id="modfyDate" th:value="${list.updateDate}" readonly/>
-                                        </div>
-                                    </div>
-                                  <!-- Update Date End -->
-
-                                  <!-- Content Start -->
-                                    <div class="form-group row">
-                                        <label for="content" class="col-sm-3 text-end control-label col-form-label">Content</label>
-                                        <div class="col-sm-9">
-                                        <textarea class="form-control" name="content" id="content" th:text="${list.content}" readonly></textarea>
-                                        </div>
-                                    </div>
-                                  <!-- Content End-->
-
-                                  <!-- img Start -->
-                                  <div class="form-group row">
-                                    <label for="content" class="col-sm-3 text-end control-label col-form-label">filename</label>
-                                    <div class="col-sm-9 d-flex align-items-center">
-                                        <div th:each="fileName : ${list.fileName}">
-                                            <img th:src="@{|http://localhost/${fileName}|}" class="my-2">
-                                        </div>
-                                    </div>
-                                  </div>
-                                  <!-- img End -->
-
-
-
-                                  <!-- 상세 페이지 이미지 표시 영역 start -->
-                                    <div id="imageDisplayArea">
-                                    </div>
-                                  <!-- 상세 페이지 이미지 표시 영역 end  -->
-
-                                  <!-- 수정, 삭제, 목록 버튼 start -->
-                                    <div class="border-top">
-                                        <div class="card-body">
-                                        <button type="button" class="btn btn-primary updateButton">게시글 수정 page</button>
-                                        <button type="button" class="btn btn-primary deleteButton">게시글 삭제 submit</button>
-                                        <button type="button" class="btn btn-primary listButton">return list page</button>
-                                        </div>
-                                    </div>
-                                  <!-- 수정, 삭제, 목록 버튼 end -->
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+  <div layout:fragment="content">
+    <h1>Board Read Page</h1>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <form class="form-horizontal actionForm" method="get" action="/board/read">
+                [[#{list.fileName}]]
+                <!-- tno satrt -->
+                <div class="form-group row">
+                  <label for="tno" class="col-sm-3 text-end control-label col-form-label">Tno</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="tno" id="tno" th:value="${list.tno}" readonly />
+                  </div>
                 </div>
-            </div>
-            <!-- Modal Start -->
-              <div class="replyModal modal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Modal title</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    
-                    <div class="modal-body">
-                        <input type="text" name ="rno" readonly>
-                        <input type="text" name ="gno" readonly>
-                        <input type="text" name="reply" value="AAA">
-                        <input type="text" name="replyer" value= "BBB">
-                    </div>
-    
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-danger btnDelete">DELETE</button>
-                      <button type="button" class="btn btn-primary btnModify">MODIFY</button>
-                      <button type="button" class="btn btn-primary btnReturnReply">답글 달기</button>
-                      <button type="button" class="btn btn-secondary modalClose" data-dismiss="modal">ClOSE</button>
+                <!-- tno end -->
+
+                <!-- Title Start -->
+                <div class="form-group row">
+                  <label for="Title" class="col-sm-3 text-end control-label col-form-label">Title</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="title" id="title" th:value="${list.title}" readonly />
+                  </div>
+                </div>
+                <!-- Title End -->
+
+                <!-- Writer Start -->
+                <div class="form-group row">
+                  <label for="writer" class="col-sm-3 text-end control-label col-form-label">Writer</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="writer" id="writer" th:value="${list.writer}"
+                      readonly />
+                  </div>
+                </div>
+                <!-- Writer End -->
+
+                <!-- Regist Date Start -->
+                <div class="form-group row">
+                  <label for="registDate" class="col-sm-3 text-end control-label col-form-label">RegistDate</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="registDate" id="registDate"
+                      th:value="${list.registDate}" readonly />
+                  </div>
+                </div>
+                <!-- Regist Date End -->
+
+                <!-- Update Date Start -->
+                <div class="form-group row">
+                  <label for="modfiyDate" class="col-sm-3 text-end control-label col-form-label">UpdateDate</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="modfiyDate" id="modfyDate"
+                      th:value="${list.updateDate}" readonly />
+                  </div>
+                </div>
+                <!-- Update Date End -->
+
+                <!-- Content Start -->
+                <div class="form-group row">
+                  <label for="content" class="col-sm-3 text-end control-label col-form-label">Content</label>
+                  <div class="col-sm-9">
+                    <textarea class="form-control" name="content" id="content" th:text="${list.content}"
+                      readonly></textarea>
+                  </div>
+                </div>
+                <!-- Content End-->
+
+                <!-- img Start -->
+                <div class="form-group row">
+                  <label for="content" class="col-sm-3 text-end control-label col-form-label">filename</label>
+                  <div class="col-sm-9 d-flex align-items-center">
+                    <div th:each="fileName : ${list.fileName}">
+                      <img th:src="@{|http://localhost/${fileName}|}" class="my-2">
                     </div>
                   </div>
                 </div>
-            </div>
-          <!-- Modal End -->
+                <!-- img End -->
 
-            <!-- Reply Add Start -->
-              <div class="card-body">
-                <form class="form-horizontal replyAdd">
-                  <div class="row">
+                <!-- 상세 페이지 이미지 표시 영역 start -->
+                <div id="imageDisplayArea">
+                </div>
+                <!-- 상세 페이지 이미지 표시 영역 end  -->
 
-                    <div class="form-group col-sm-8">
-                      <input class="form-control input-sm" name="registReply" id="newReplyText" type="text" placeholder="댓글 입력...">
-                    </div>
+                <!-- 수정, 삭제, 목록 버튼 start -->
+                <div class="border-top">
+                  <div class="card-body">
+                    <button type="button" class="btn btn-primary updateButton">게시글 수정 page</button>
+                    <button type="button" class="btn btn-primary deleteButton">게시글 삭제 submit</button>
+                    <button type="button" class="btn btn-primary listButton">return list page</button>
+                  </div>
+                </div>
+                <!-- 수정, 삭제, 목록 버튼 end -->
 
-                    <div class="form-group col-sm-2">
-                      <input class="form-control input-sm" name="registReplyer" id="newReplyWriter" type="text" placeholder="작성자">
-                    </div>
-
-                    <div class="form-group col-sm-2" data-tno=${tno}>
-                      <button type="button" class="btn btn-primary btn-sm btn-block replyAddBtn">
-                      <i class="fa fa-save"></i> 댓글 달기</button>
-                    </div>
-
-                  </div>	
-                </form>	
-              </div>
-            <!-- Reply Add End-->
-
-         <!-- Reply List Start -->
-          <div>
-            <ul class="listUl">
-            </ul>
-          </div>
-         <!-- Reply List End -->
-         <!-- Pagination Container Start -->
-          <div class="pagination-container">
-          </div>
-          <!-- Pagination Container End -->
-
-         <!-- Ajax Start -->
-          <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-         <!-- Ajax End -->
-          
-         <!-- Reply Start -->
-          <script src="/js/reply.js"></script>
-        <!-- Replt End -->
-
-        <!-- Update Modal Message Start -->
-         <div class="modal alertModal" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-body">[[${message}]]</div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-              </div>
+              </form>
             </div>
           </div>
         </div>
-      <!-- Update Modal Message End -->
+      </div>
+    </div>
+    <!-- Modal Start -->
+    <div class="replyModal modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <input type="text" name="rno" readonly>
+            <input type="text" name="gno" readonly>
+            <input type="text" name="reply" value="AAA">
+            <input type="text" name="replyer" value="BBB">
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger btnDelete">DELETE</button>
+            <button type="button" class="btn btn-primary btnModify">MODIFY</button>
+            <button type="button" class="btn btn-primary btnReturnReply">답글 달기</button>
+            <button type="button" class="btn btn-secondary modalClose" data-dismiss="modal">ClOSE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal End -->
+
+    <!-- Reply Add Start -->
+    <div class="card-body">
+      <form class="form-horizontal replyAdd">
+        <div class="row">
+
+          <div class="form-group col-sm-8">
+            <input class="form-control input-sm" name="registReply" id="newReplyText" type="text"
+              placeholder="댓글 입력...">
+          </div>
+
+          <div class="form-group col-sm-2">
+            <input class="form-control input-sm" name="registReplyer" id="newReplyWriter" type="text" placeholder="작성자">
+          </div>
+
+          <div class="form-group col-sm-2" data-tno=${tno}>
+            <button type="button" class="btn btn-primary btn-sm btn-block replyAddBtn">
+              <i class="fa fa-save"></i> 댓글 달기</button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+    <!-- Reply Add End-->
+
+    <!-- Reply List Start -->
+    <div>
+      <ul class="listUl">
+      </ul>
+    </div>
+    <!-- Reply List End -->
+    <!-- Pagination Container Start -->
+    <div class="pagination-container">
+    </div>
+    <!-- Pagination Container End -->
+
+    <!-- Ajax Start -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Ajax End -->
+
+    <!-- Reply Start -->
+    <script src="/js/reply.js"></script>
+    <!-- Replt End -->
+
+    <!-- Update Modal Message Start -->
+    <div class="modal alertModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">[[${message}]]</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Update Modal Message End -->
 
   </div>
-<!-- Fragment Content End -->
+  <!-- Fragment Content End -->
 
-    <!-- JavaScript Start -->
-    <script layout:fragment ="script" th:inline = "javascript">
-        // actonForm 등록 
-        const actionForm = document.querySelector(".actionForm");
-        // tno 의 값을 boardDTO.tno 를 통해 get 
-        const tno = [[${list.tno}]]
+  <!-- JavaScript Start -->
+  <script layout:fragment="script" th:inline="javascript">
+    // actonForm 등록 
+    const actionForm = document.querySelector(".actionForm");
+    // tno 의 값을 boardDTO.tno 를 통해 get 
+    const tno = [[${ list.tno }]]
 
-        // Update Action Start 
-        const actionUpdate = document.querySelector(".updateButton");
-        actionUpdate.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            window.location.href = `/board/update/${tno}`;
-        },false);
+    // Update Action Start 
+    const actionUpdate = document.querySelector(".updateButton");
+    actionUpdate.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.location.href = `/board/update/${tno}`;
+    }, false);
 
-        // Delete Action Start 
-        const actionDelete = document.querySelector(".deleteButton");
-        actionDelete.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
+    // Delete Action Start 
+    const actionDelete = document.querySelector(".deleteButton");
+    actionDelete.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-            actionForm.setAttribute("action", `/board/delete/${tno}`);
-            actionForm.setAttribute("method", `post`);
-            actionForm.submit();
-        }, false);
+      actionForm.setAttribute("action", `/board/delete/${tno}`);
+      actionForm.setAttribute("method", `post`);
+      actionForm.submit();
+    }, false);
 
-        // List Action Start 
-        const actionList = document.querySelector(".listButton");
-        actionList.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            window.location.href = `/board/list`;
-        }, false);
+    // List Action Start 
+    const actionList = document.querySelector(".listButton");
+    actionList.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.location.href = `/board/list`;
+    }, false);
 
-        //////////////////////////////
-        // Reply & ReplyChild Start // 
-        //////////////////////////////
+    //////////////////////////////
+    // Reply & ReplyChild Start // 
+    //////////////////////////////
 
-        // RestController Action Link 
-        const link = `http://localhost:8084/replies/`
-        // Reply And ReplyChild List 등록 
-        const listUl = document.querySelector(".listUl");
+    // RestController Action Link 
+    const link = `http://localhost:8084/replies/`
+    // Reply And ReplyChild List 등록 
+    const listUl = document.querySelector(".listUl");
 
-        // modal input name data 등록  
-        const raplyAdd = document.querySelector(".replyAdd")
-        const modalGno = document.querySelector("input[name='gno']")
-        const modalRno = document.querySelector("input[name='rno']")
-        const modalReply = document.querySelector("input[name='reply']")
-        const modalReplyer = document.querySelector("input[name='replyer']")
+    // modal input name data 등록  
+    const raplyAdd = document.querySelector(".replyAdd")
+    const modalGno = document.querySelector("input[name='gno']")
+    const modalRno = document.querySelector("input[name='rno']")
+    const modalReply = document.querySelector("input[name='reply']")
+    const modalReplyer = document.querySelector("input[name='replyer']")
 
-        // 댓글 창의 input name date 
-        const getReply = document.querySelector("input[name='registReply']")
-        const getReplyer = document.querySelector("input[name='registReplyer']")
+    // 댓글 창의 input name date 
+    const getReply = document.querySelector("input[name='registReply']")
+    const getReplyer = document.querySelector("input[name='registReplyer']")
 
-        // 댓글 이밴트 (버튼) 
-        listUl.addEventListener("click", (e) => {
-          e.preventDefault();
-          replyModal.show()
-          const target = e.target;
-          const targetName = target.tagName;
-          if(targetName === 'BUTTON'){
-            const liObj = target.closest("li");
-            modalGno.value = liObj.getAttribute("data-gno");
-            modalRno.value = liObj.getAttribute("data-rno");
-            modalReply.value = liObj.getAttribute("data-reply");
-            modalReplyer.value = liObj.getAttribute("data-replyer");
-          }
-        }, false)
+    // 댓글 이밴트 (버튼) 
+    listUl.addEventListener("click", (e) => {
+      e.preventDefault();
+      replyModal.show()
+      const target = e.target;
+      const targetName = target.tagName;
+      if (targetName === 'BUTTON') {
+        const liObj = target.closest("li");
+        modalGno.value = liObj.getAttribute("data-gno");
+        modalRno.value = liObj.getAttribute("data-rno");
+        modalReply.value = liObj.getAttribute("data-reply");
+        modalReplyer.value = liObj.getAttribute("data-replyer");
+      }
+    }, false)
 
-        // Reply Create Action Start 
-        raplyAdd.addEventListener(("click"), (e) => {
-        e.preventDefault();
+    // Reply Create Action Start 
+    raplyAdd.addEventListener(("click"), (e) => {
+      e.preventDefault();
 
-        const target = e.target;
-        const tag = target.tagName;
+      const target = e.target;
+      const tag = target.tagName;
 
-        if (tag === "BUTTON") {
-            const list = {
-            tno: tno,
-            reply: getReply.value,
-            replyer: getReplyer.value
-            };
-            console.log("list의 데이터 확인:", list);
+      if (tag === "BUTTON") {
+        const list = {
+          tno: tno,
+          reply: getReply.value,
+          replyer: getReplyer.value
+        };
+        console.log("list의 데이터 확인:", list);
 
-            registReply(list).then((value) => {
-            getReply.value = "";
-            getReplyer.value = "";
-            loadReply(1, true);
-            });
+        registReply(list).then((value) => {
+          getReply.value = "";
+          getReplyer.value = "";
+          loadReply(1, true);
+        });
 
-        }});
-        // Reply Create Action End 
-        
-        // Reply List Action Start 
-        const loadReply = async(page, goEnd=false) => {
+      }
+    });
+    // Reply Create Action End 
 
-          const data = await loadList(page)
+    // Reply List Action Start 
+    const loadReply = async (page, goEnd = false) => {
 
-          const {list, total} = data
+      const data = await loadList(page)
 
-          let str = ""
-        
-          // For 문을 통한 List Action 
-          for (let i = 0; i < list.length; i++) {
-          const { rno, reply, replyer, replyDate, modifyDate, gno, step } = list[i];
+      const { list, total } = data
 
-          // Reply Child List 
-          if (step === 1) {
-              str += `<li data-rno=${rno} data-gno=${gno} data-reply=${reply} data-replyer=${replyer} data-tno=${tno} style="margin-left: 60px">
+      let str = ""
+
+      // For 문을 통한 List Action 
+      for (let i = 0; i < list.length; i++) {
+        const { rno, reply, replyer, replyDate, modifyDate, gno, step } = list[i];
+        console.log(list[i])
+        // Reply Child List 
+        if (step === 1) {
+          str += `<li data-rno=${rno} data-gno=${gno} data-reply=${reply} data-replyer=${replyer} data-tno=${tno} style="margin-left: 200px">
               작성자 : ${replyer} | ${replyDate} <br> 내용 : ${reply}  
               <button>답글</button>
               <button>수정</button>
               <button>삭제</button>
               </li>
               <hr>`;
-          } else {
-            // Reply List 
-              str += `<li data-rno=${rno} data-gno=${gno} data-reply=${reply} data-replyer=${replyer} data-tno=${tno}>
+        } else {
+          // Reply List 
+          str += `<li data-rno=${rno} data-gno=${gno} data-reply=${reply} data-replyer=${replyer} data-tno=${tno}>
               작성자 : ${replyer} | ${replyDate} <br> 내용 : ${reply}  
               <button>답글</button>
               <button>수정</button>
               <button>삭제</button>
               </li>
               <hr>`;
-          }}
-            listUl.innerHTML = str
+        }
+      }
+      listUl.innerHTML = str
 
-            if (total > 0) {
-            const pagination = makePages(page, 10, total);
-            document.querySelector('.pagination-container').innerHTML = pagination;
-            } else {
-                document.querySelector('.pagination-container').innerHTML = '';
-            }
-          }
-          // Reply List Action End
+      if (total > 0) {
+        const pagination = makePages(page, 10, total);
+        document.querySelector('.pagination-container').innerHTML = pagination;
+      } else {
+        document.querySelector('.pagination-container').innerHTML = '';
+      }
+    }
+    // Reply List Action End
 
 
-          function makePages(currentPage, size, total) {
-          const totalPages = Math.ceil(total / size);
-          const pageGroupSize = 10;
-          const currentGroup = Math.ceil(currentPage / pageGroupSize);
+    function makePages(currentPage, size, total) {
+      const totalPages = Math.ceil(total / size);
+      const pageGroupSize = 10;
+      const currentGroup = Math.ceil(currentPage / pageGroupSize);
 
-          let paginationHTML = '<ul class="pagination">';
+      let paginationHTML = '<ul class="pagination">';
 
-          const startPage = (currentGroup - 1) * pageGroupSize + 1;
-          const endPage = Math.min(currentGroup * pageGroupSize, totalPages);
+      const startPage = (currentGroup - 1) * pageGroupSize + 1;
+      const endPage = Math.min(currentGroup * pageGroupSize, totalPages);
 
-          // 이전 버튼
-          if (currentGroup > 1) {
-              paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="event.preventDefault(); loadReply(${startPage - 1})">Previous</a></li>`;
-          }
-
-          // 페이지 번호들
-          for (let i = startPage; i <= endPage; i++) {
-              paginationHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="event.preventDefault(); loadReply(${i})">${i}</a></li>`;
-          }
-
-          // 다음 버튼
-          if (currentGroup < Math.ceil(totalPages / pageGroupSize)) {
-              paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="event.preventDefault(); loadReply(${endPage + 1})">Next</a></li>`;
-          }
-
-          paginationHTML += '</ul>';
-          return paginationHTML;
+      // 이전 버튼
+      if (currentGroup > 1) {
+        paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="event.preventDefault(); loadReply(${startPage - 1})">Previous</a></li>`;
       }
 
+      // 페이지 번호들
+      for (let i = startPage; i <= endPage; i++) {
+        paginationHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="event.preventDefault(); loadReply(${i})">${i}</a></li>`;
+      }
+
+      // 다음 버튼
+      if (currentGroup < Math.ceil(totalPages / pageGroupSize)) {
+        paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="event.preventDefault(); loadReply(${endPage + 1})">Next</a></li>`;
+      }
+
+      paginationHTML += '</ul>';
+      return paginationHTML;
+    }
 
 
 
-        // Reply Modal Action Close Start 
-        const replyModal = new bootstrap.Modal(document.querySelector(".replyModal"))
 
-        document.querySelector(".modalClose").addEventListener("click", (e) => {
-          replyModal.hide();
-        })
-        // Reply Modal Action Close End 
+    // Reply Modal Action Close Start 
+    const replyModal = new bootstrap.Modal(document.querySelector(".replyModal"))
+
+    document.querySelector(".modalClose").addEventListener("click", (e) => {
+      replyModal.hide();
+    })
+    // Reply Modal Action Close End 
 
 
-        // Reply Modal Action Delete Start 
-        document.querySelector(".btnDelete").addEventListener("click", () => {
+    // Reply Modal Action Delete Start 
+    document.querySelector(".btnDelete").addEventListener("click", () => {
 
-          deleteReply(modalRno.value).then(result => {
+      deleteReply(modalRno.value).then(result => {
 
-            modalReply.value = '';
-            modalReplyer.value = '';
+        modalReply.value = '';
+        modalReplyer.value = '';
 
-            replyModal.hide();
-            loadReply(1, true);
-          })
-        })
-        // Reply Modal Action Delete End 
+        replyModal.hide();
+        loadReply(1, true);
+      })
+    })
+    // Reply Modal Action Delete End 
 
-        // Reply Modal Action Update Start 
-        document.querySelector(".btnModify").addEventListener("click", () => {
-          const list = 
-          {tno:tno,
-          gno:modalGno.value,
-          reply:modalReply.value,
-          replyer:modalReplyer.value,
-          rno:modalRno.value
-          }
+    // Reply Modal Action Update Start 
+    document.querySelector(".btnModify").addEventListener("click", () => {
+      const list =
+      {
+        tno: tno,
+        gno: modalGno.value,
+        reply: modalReply.value,
+        replyer: modalReplyer.value,
+        rno: modalRno.value
+      }
 
-          modifyReply(list).then((value) => {
+      modifyReply(list).then((value) => {
 
-            replyModal.hide();
-            loadReply(1, true)
-          });
-        })
-        // Reply Modal Action Update End
+        replyModal.hide();
+        loadReply(1, true)
+      });
+    })
+    // Reply Modal Action Update End
 
-        // RepltChild Modal Add Action Start 
-        document.querySelector(".btnReturnReply").addEventListener("click", () => {
-          const list = {
-                tno:tno,
-                reply:modalReply.value,
-                replyer:modalReplyer.value,
-                gno : modalGno.value
-              }
-              registReply(list).then((value) => {
-                replyModal.hide();
+    // RepltChild Modal Add Action Start 
+    document.querySelector(".btnReturnReply").addEventListener("click", () => {
+      const list = {
+        tno: tno,
+        reply: modalReply.value,
+        replyer: modalReplyer.value,
+        gno: modalGno.value
+      }
+      registReply(list).then((value) => {
+        replyModal.hide();
 
-                loadReply(1, true)
-              });
-            },false)
-        // ReplyChild Modal Add Action End 
-    
-      // Reply & ReplyChild List Start 
-      loadReply(1,true)
-      // Reply & ReplyChild List end 
+        loadReply(1, true)
+      });
+    }, false)
+    // ReplyChild Modal Add Action End 
+
+    // Reply & ReplyChild List Start 
+    loadReply(1, true)
+    // Reply & ReplyChild List end 
 
     // Update Message Modal Start 
-      const alertModal = new bootstrap.Modal(document.querySelector(".alertModal"))
-      if([[${message}]] != null) {
+    const alertModal = new bootstrap.Modal(document.querySelector(".alertModal"))
+    if ([[${ message }]] != null) {
       alertModal.show()
     }
-    // Update Message Modal End  
+    // Update Message Modal End
 
 
 
 
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>

@@ -20,8 +20,8 @@ public class UploadResultDTO {
     private boolean img;
 
     public String getLink() {
-        if(img) {
-            return "s_"+uuid+"_"+fileName;
+        if (img) {
+            return "s_" + uuid + "_" + fileName;
         } else {
             return "default.jpg";
         }

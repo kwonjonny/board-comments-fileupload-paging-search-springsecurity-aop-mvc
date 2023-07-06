@@ -18,10 +18,10 @@ public interface ReplyService {
     // Update Reply Service
     int updateReply(ReplyUpdateDTO replyUpdateDTO);
 
-    // Read Reply Service 
+    // Read Reply Service
     ReplyDTO readReply(Long rno);
 
     // List Reply Service
     PageResponseDTO<ReplyDTO> listReply(PageRequestDTO pageRequestDTO, Long tno);
-    
+
 }

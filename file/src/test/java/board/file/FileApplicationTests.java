@@ -14,15 +14,15 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @SpringBootTest
 class FileApplicationTests {
-	
-	// 의존성 주입 
+
+	// 의존성 주입
 	@Autowired
 	private DataSource dataSource;
 
-	// DataBase Connection Check 
+	// DataBase Connection Check
 	@Test
 	public void dataConnectionTest() {
-		try(Connection connection = dataSource.getConnection()) {
+		try (Connection connection = dataSource.getConnection()) {
 			log.info("Let's Do It");
 		} catch (Exception e) {
 			log.info("Find Your Errors Your Connection Is Not Ok");

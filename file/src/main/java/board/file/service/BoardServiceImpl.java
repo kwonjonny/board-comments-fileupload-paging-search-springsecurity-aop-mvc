@@ -1,6 +1,5 @@
 package board.file.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import board.file.dto.File.FileDTO;
-import board.file.dto.File.FileReadDTO;
 import board.file.dto.board.BoardCreateDTO;
 import board.file.dto.board.BoardDTO;
 import board.file.dto.board.BoardListDTO;
@@ -26,36 +23,34 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Service
 public class BoardServiceImpl implements BoardService {
-    
-    // 의존성 주입 
-    private final BoardMapper boardMapper;
-    private final FileMapper fileMapper;
 
-    // Autowired 명시적 표시 
-    @Autowired
-    public BoardServiceImpl(BoardMapper boardMapper, FileMapper fileMapper) {
-        log.info("Constructor Called, Mapper Injected.");
-        this.boardMapper = boardMapper;
-        this.fileMapper = fileMapper;
-    }
-    
-    
-    // List BoardServiceImpl 
-    @Override
-    @Transactional(readOnly = true)
-    public PageResponseDTO<BoardListDTO> listboard(PageRequestDTO pageRequestDTO) {
-        log.info("List BoardServiceImpl Is Running");
-        List<BoardListDTO> list = boardMapper.listBoard(pageRequestDTO);
-        int total = boardMapper.total(pageRequestDTO);
+   // 의존성 주입
+   private final BoardMapper boardMapper;
+   private final FileMapper fileMapper;
 
-         return PageResponseDTO.<BoardListDTO>withAll()
-                .list(list)
-                .total(total)
-                .build();
-    }
+   // Autowired 명시적 표시
+   @Autowired
+   public BoardServiceImpl(BoardMapper boardMapper, FileMapper fileMapper) {
+      log.info("Constructor Called, Mapper Injected.");
+      this.boardMapper = boardMapper;
+      this.fileMapper = fileMapper;
+   }
 
+   // List BoardServiceImpl
+   @Override
+   @Transactional(readOnly = true)
+   public PageResponseDTO<BoardListDTO> listboard(PageRequestDTO pageRequestDTO) {
+      log.info("List BoardServiceImpl Is Running");
+      List<BoardListDTO> list = boardMapper.listBoard(pageRequestDTO);
+      int total = boardMapper.total(pageRequestDTO);
 
-    // Create BoardServiceImpl & Create FileServiceImpl
+      return PageResponseDTO.<BoardListDTO>withAll()
+            .list(list)
+            .total(total)
+            .build();
+   }
+
+   // Create BoardServiceImpl & Create FileServiceImpl
    @Override
    @Transactional
    public Long createBoard(BoardCreateDTO boardCreateDTO) {
@@ -65,15 +60,14 @@ public class BoardServiceImpl implements BoardService {
       List<String> fileNames = boardCreateDTO.getFileNames();
       Long tno = boardCreateDTO.getTno();
 
-      List<Map<String,String>> list = fileNames.stream().map(str -> {
+      List<Map<String, String>> list = fileNames.stream().map(str -> {
          String uuid = str.substring(0, 36);
          String fileName = str.substring(37);
          return Map.of("uuid", uuid, "fileName", fileName, "tno", "" + tno, "ord", "" + index.getAndIncrement());
-         }).collect(Collectors.toList());
-         fileMapper.createImage(list);
-         return boardCreateDTO.getTno();
+      }).collect(Collectors.toList());
+      fileMapper.createImage(list);
+      return boardCreateDTO.getTno();
    }
-
 
    // Update BoardServiceImpl & Update FileServiceImpl
    @Override
@@ -86,7 +80,7 @@ public class BoardServiceImpl implements BoardService {
 
       List<String> fileNames = boardUpdateDTO.getFileNames();
       Long tno = boardUpdateDTO.getTno();
-      List<Map<String,String>> list = fileNames.stream().map(str -> {
+      List<Map<String, String>> list = fileNames.stream().map(str -> {
          String uuid = str.substring(0, 36);
          String fileName = str.substring(37);
          return Map.of("uuid", uuid, "fileName", fileName, "tno", "" + tno, "ord", "" + index.getAndIncrement());
@@ -95,29 +89,26 @@ public class BoardServiceImpl implements BoardService {
       return boardUpdateDTO.getTno();
    }
 
-
-    // Delete BoardServiceImpl
-    @Override
-    @Transactional
-    public void deleteBoard(Long tno) {
-      log.info("Delete BoardServiceImpl Is Running");
-      boardMapper.deleteBoard(tno);
-    }
-
-  
-    // Read BoardServiceImpl
-    @Override
-    @Transactional(readOnly = true)
-    public BoardDTO readBoard(Long tno) {
-       log.info("Read BoardServiceImpl Is Running");
-       return boardMapper.readBoard(tno);
-    }
-
-
+   // Delete BoardServiceImpl
    @Override
    @Transactional
+   public void deleteBoard(Long tno) {
+      log.info("Delete BoardServiceImpl Is Running");
+      boardMapper.deleteBoard(tno);
+   }
+
+   // Read BoardServiceImpl
+   @Override
+   @Transactional(readOnly = true)
+   public BoardDTO readBoard(Long tno) {
+      log.info("Read BoardServiceImpl Is Running");
+      return boardMapper.readBoard(tno);
+   }
+
+   @Override
+   @Transactional(readOnly = true)
    public List<String> getBoardFile(Long tno) {
-       log.info("Read File BoardServiceImpl Is Running");
-       return fileMapper.readImage(tno);
+      log.info("Read File BoardServiceImpl Is Running");
+      return fileMapper.readImage(tno);
    }
 }

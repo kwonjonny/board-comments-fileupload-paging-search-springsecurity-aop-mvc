@@ -19,7 +19,7 @@ import lombok.extern.log4j.Log4j2;
 @SpringBootTest
 public class BoardMapperTests {
 
-    // 의존성 주입 
+    // 의존성 주입
     @Autowired(required = false)
     private BoardMapper boardMapper;
 
@@ -28,7 +28,7 @@ public class BoardMapperTests {
     private static final String TEST_CONTENT = "JunitTestContentMapper";
     private static final Long TEST_TNO = 1L;
 
-    // BoeforeEach 사용을 위한 BoardCreateDTO, BoardUpdateDTO 정의 
+    // BoeforeEach 사용을 위한 BoardCreateDTO, BoardUpdateDTO 정의
     private BoardCreateDTO boardCreateDTO;
     private BoardUpdateDTO boardUpdateDTO;
 
@@ -37,55 +37,55 @@ public class BoardMapperTests {
     @BeforeEach
     public void setUp() {
         boardCreateDTO = BoardCreateDTO.builder()
-       .title(TEST_TITLE)
-       .writer(TEST_WRITER)
-       .content(TEST_CONTENT)
-       .build();
+                .title(TEST_TITLE)
+                .writer(TEST_WRITER)
+                .content(TEST_CONTENT)
+                .build();
 
-       boardUpdateDTO = BoardUpdateDTO.builder()
-       .tno(TEST_TNO)
-       .title(TEST_TITLE)
-       .writer(TEST_WRITER)
-       .content(TEST_CONTENT)
-       .build();
+        boardUpdateDTO = BoardUpdateDTO.builder()
+                .tno(TEST_TNO)
+                .title(TEST_TITLE)
+                .writer(TEST_WRITER)
+                .content(TEST_CONTENT)
+                .build();
     }
 
-    // List Board 
+    // List Board
     @Test
     @DisplayName("List Board Test Mapper")
     public void listBoardTest() {
         log.info("===== Start Board List Test Mapper =====");
-        // WHEN 
+        // WHEN
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder().build();
-        // THEN 
+        // THEN
         log.info(boardMapper.listBoard(pageRequestDTO));
         log.info("===== End Board List Test Mapper =====");
     }
 
-    // Create Board 
+    // Create Board
     @Test
     @Transactional
     @DisplayName("Create Board Test Mapper")
     public void createBoardTest() {
-        // GIVEN 
+        // GIVEN
         log.info("===== Start Board Create Test Mapper =====");
-        // WHEN 
+        // WHEN
         int insertCount = boardMapper.createBoard(boardCreateDTO);
-        // THEN 
-        Assertions.assertEquals(1 , insertCount, "Create Should Be Successful");
+        // THEN
+        Assertions.assertEquals(1, insertCount, "Create Should Be Successful");
         log.info("===== End Board Create Test Mapper =====");
     }
 
-    // Delete Board 
+    // Delete Board
     @Test
     @Transactional
     @DisplayName("Delete Board Test Mapper")
     public void deleteBoardTest() {
         // GIVEN
         log.info("===== Start Board Delete Test Mapper =====");
-        // WHEN 
+        // WHEN
         boardMapper.deleteBoard(TEST_TNO);
-        // THEN 
+        // THEN
         BoardDTO deletedBoardDTO = boardMapper.readBoard(TEST_TNO);
         log.info(deletedBoardDTO);
         Assertions.assertNull(deletedBoardDTO, "deletedBoardDTO Should Be Null");
@@ -97,11 +97,11 @@ public class BoardMapperTests {
     @Transactional
     @DisplayName("Read Board Test Mapper")
     public void readBoardTest() {
-        // GIVEN 
+        // GIVEN
         log.info("===== Start Read Board Test Mapper =====");
-        // WHEN 
+        // WHEN
         BoardDTO boardDTO = boardMapper.readBoard(TEST_TNO);
-        // THEN 
+        // THEN
         log.info(boardDTO);
         Assertions.assertNotNull(boardDTO, "boardDTO Should Be Not Null");
         log.info("===== End Board Read Test Mapper =====");
@@ -114,9 +114,9 @@ public class BoardMapperTests {
     public void updateBoardTest() {
         // GIVEN
         log.info("===== Start Update Board Test Mapper =====");
-        // WHEN 
+        // WHEN
         boardMapper.updateBoard(boardUpdateDTO);
-        // THEN 
+        // THEN
         BoardDTO updatedBoardDTO = boardMapper.readBoard(TEST_TNO);
         Assertions.assertNotNull(updatedBoardDTO, "updatedBoardDTO Should Be Successful");
         log.info("===== End Board Update Test Mapper =====");

@@ -20,7 +20,7 @@
 
 
 <!-- ReplyMapper id = "updateReplyGno" -->
-<update id="updateReplyGno" parameterType="long">
+<update id="updateReplyGno">
         UPDATE tbl_reply
         SET gno = #{gno}
         WHERE rno = #{rno}

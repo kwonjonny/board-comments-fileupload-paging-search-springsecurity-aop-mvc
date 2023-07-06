@@ -26,7 +26,6 @@ import net.coobird.thumbnailator.Thumbnailator;
 @RequiredArgsConstructor
 public class FileUploadController {
 
-
     // File Upload Path = Enginx
     @Value("${org.zerock.upload.path}")
     private String uploadPath;
@@ -34,24 +33,24 @@ public class FileUploadController {
     @PostMapping("/upload")
     public List<UploadResultDTO> postFileUpload(MultipartFile[] files) {
         log.info("Is Running UploadFile RestController");
-        if(files == null || files.length == 0) {
+        if (files == null || files.length == 0) {
             return null;
         }
         List<UploadResultDTO> resultList = new ArrayList<>();
-        for(MultipartFile file : files) {
+        for (MultipartFile file : files) {
             UploadResultDTO result = null;
             String fileNmae = file.getOriginalFilename();
             Long size = file.getSize();
             String uuidStr = UUID.randomUUID().toString();
-            String saveFileName = uuidStr+"_"+fileNmae;
+            String saveFileName = uuidStr + "_" + fileNmae;
             File saveFile = new File(uploadPath, saveFileName);
             try {
                 FileCopyUtils.copy(file.getBytes(), saveFile);
                 result = UploadResultDTO.builder().uuid(uuidStr).fileName(fileNmae).build();
-                // Values Check Img 
+                // Values Check Img
                 String mimeType = Files.probeContentType(saveFile.toPath());
-                if(mimeType != null || mimeType.startsWith("image")) {
-                    File thumFile = new File(uploadPath, "s_"+saveFileName);
+                if (mimeType != null || mimeType.startsWith("image")) {
+                    File thumFile = new File(uploadPath, "s_" + saveFileName);
                     Thumbnailator.createThumbnail(saveFile, thumFile, 100, 100);
                     result.setImg(true);
                 }
@@ -61,26 +60,26 @@ public class FileUploadController {
             }
         }
         return resultList;
-    } 
+    }
 
-    // Delete File 
+    // Delete File
     @DeleteMapping("removeFile/{fileName}")
-    public Map<String,String> deleteFile(@PathVariable("fileName") String fileName) {
+    public Map<String, String> deleteFile(@PathVariable("fileName") String fileName) {
         File originFile = new File(uploadPath, fileName);
 
-            // JVM외부랑 연결되는 소스는 exception 처리
-            try {
-                String mimeType = Files.probeContentType(originFile.toPath());
+        // JVM외부랑 연결되는 소스는 exception 처리
+        try {
+            String mimeType = Files.probeContentType(originFile.toPath());
 
-                if(mimeType.startsWith("image")){
-                    File thumbFile = new File(uploadPath, "s_"+fileName);
-                    thumbFile.delete();
-                }
-                originFile.delete();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (mimeType.startsWith("image")) {
+                File thumbFile = new File(uploadPath, "s_" + fileName);
+                thumbFile.delete();
             }
-
-            return Map.of("result", "success");
+            originFile.delete();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        return Map.of("result", "success");
+    }
 }

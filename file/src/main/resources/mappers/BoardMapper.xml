@@ -24,6 +24,7 @@
                 tb.writer LIKE CONCAT('%', #{keyword}, '%')
             </if>
         )
+       
     </if>
     LEFT JOIN tbl_board_img tbi ON tb.tno = tbi.tno AND tbi.ord = 0
     WHERE tb.tno > 0
@@ -68,6 +69,8 @@ FROM tbl_board b
 LEFT OUTER JOIN tbl_board_img i ON b.tno = i.tno
 WHERE b.tno = #{tno};
 </select>
+
+
 <!-- 여러개의 사진을 가져오기 위한 resultMap using -->
 <resultMap id="BoardResultMap" type="board.file.dto.board.BoardDTO">
   <id property="tno" column="tno"/>
@@ -81,13 +84,13 @@ WHERE b.tno = #{tno};
 </resultMap>
 
 
-
 <!-- BoardMapper id = "updateBoard" -->
 <update id="updateBoard" parameterType="board.file.dto.board.BoardUpdateDTO">
     UPDATE tbl_board
     SET title = #{title}, content = #{content}, writer = #{writer}, updateDate = now()
     WHERE tno = #{tno}
 </update>
+
 
 <!-- BoardMapper id = "total" -->
 <select id="total" resultType="int">

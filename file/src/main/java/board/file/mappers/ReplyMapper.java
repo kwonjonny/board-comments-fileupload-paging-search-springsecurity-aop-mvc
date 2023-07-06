@@ -13,34 +13,34 @@ import board.file.dto.reply.ReplyUpdateDTO;
 // Reply Mapper Class 
 @Mapper
 public interface ReplyMapper {
-    
+
     // Create Reply
     int createReply(ReplyCreateDTO replyCreateDTO);
 
     // Create Reply Child
     int createReplyChild(ReplyCreateDTO replyCreateDTO);
 
-    // Update Gno 댓글 대댓글 구분 
-    int updateReplyGno(Long gno);
+    // Update Gno 댓글 대댓글 구분
+    int updateReplyGno(@Param("rno") Long rno, @Param("gno") Long gno);
 
     // Update Reply
     int updateReply(ReplyUpdateDTO replyUpdateDTO);
 
-    // Delete Reply 
+    // Delete Reply
     int deleteReply(Long rno);
 
     // Read Reply
     ReplyDTO readReply(Long rno);
 
-    // List Reply 
+    // List Reply
     List<ReplyDTO> listReply(@Param("page") PageRequestDTO pageRequestDTO, @Param("tno") Long tno);
 
     // Total Reply
     int totalReply(Long tno);
 
-    // Increment Reply Count 
+    // Increment Reply Count
     int incrementReplyCount(Long tno);
 
-    // Decrement Reply Count 
+    // Decrement Reply Count
     int decrementReplyCount(Long tno);
 }

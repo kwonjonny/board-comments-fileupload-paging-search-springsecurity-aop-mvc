@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import board.file.dto.page.PageRequestDTO;
 import board.file.dto.page.PageResponseDTO;
 import board.file.dto.reply.ReplyCreateDTO;
@@ -28,10 +26,10 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/replies/")
 public class ReplyController {
 
-    // 의존성 주입 
+    // 의존성 주입
     private final ReplyService replyService;
 
-    // Autowired 명시적 표시 
+    // Autowired 명시적 표시
     @Autowired
     public ReplyController(ReplyService replyService) {
         log.info("Constructor Called, Service Injected.");
@@ -40,21 +38,23 @@ public class ReplyController {
 
     // List Reply
     @GetMapping("{tno}/list")
-    public ResponseEntity<PageResponseDTO<ReplyDTO>> getListReply(@PathVariable("tno") Long tno, PageRequestDTO pageRequestDTO) {
+    public ResponseEntity<PageResponseDTO<ReplyDTO>> getListReply(@PathVariable("tno") Long tno,
+            PageRequestDTO pageRequestDTO) {
         log.info("RestController : Is Running List Reply");
         PageResponseDTO<ReplyDTO> replyList = replyService.listReply(pageRequestDTO, tno);
         return new ResponseEntity<>(replyList, HttpStatus.OK);
     }
 
-   // Create Reply & Reply Child 
+    // Create Reply & Reply Child
     @PostMapping("{tno}/create")
-    public ResponseEntity<Map<String, Long>> postCreateReply(@PathVariable("tno") Long tno, @RequestBody ReplyCreateDTO replyCreateDTO) {
+    public ResponseEntity<Map<String, Long>> postCreateReply(@PathVariable("tno") Long tno,
+            @RequestBody ReplyCreateDTO replyCreateDTO) {
         log.info("RestController : Is Running Create Reply");
         Long insertCount = replyService.createReply(replyCreateDTO);
         return new ResponseEntity<>(Map.of("insertCount", insertCount), HttpStatus.CREATED);
     }
 
-    // Delete Reply 
+    // Delete Reply
     @DeleteMapping("{rno}")
     public ResponseEntity<Map<String, String>> deleteReply(@PathVariable("rno") Long rno) {
         log.info("RestController : Is Running Delete Reply");
@@ -62,8 +62,7 @@ public class ReplyController {
         return new ResponseEntity<>(Map.of("message", "삭제가 완료되었습니다."), HttpStatus.NO_CONTENT);
     }
 
-
-   // Update Reply
+    // Update Reply
     @PutMapping("update")
     public ResponseEntity<Map<String, String>> updateReply(@RequestBody ReplyUpdateDTO replyUpdateDTO) {
         log.info("RestController : Is Running Update Reply");
@@ -71,8 +70,7 @@ public class ReplyController {
         return new ResponseEntity<>(Map.of("message", "업데이트가 완료되었습니다."), HttpStatus.OK);
     }
 
-
-    // Read Reply 
+    // Read Reply
     @GetMapping("{rno}")
     public ResponseEntity<ReplyDTO> readReply(@PathVariable("rno") Long rno) {
         log.info("RestController : Is Running Read Reply");

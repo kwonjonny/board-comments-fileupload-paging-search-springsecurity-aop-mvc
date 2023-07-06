@@ -24,18 +24,18 @@ public class ReplyServiceTests {
 
     @Autowired
     private ReplyService replyService;
-    
+
     private static final String TEST_REPLY = "Junit Reply Service Test";
     private static final String TEST_REPLYER = "Junit Replyer Service Test";
 
     private static final String TEST_REPLY_CHILD = "Junit Reply Child Service Test";
-    private static final String TEST_RPELYER_CHILD ="Junit Replyer Child Service Test";
+    private static final String TEST_RPELYER_CHILD = "Junit Replyer Child Service Test";
 
     private static final Long TEST_RNO = 23L;
     private static final Long TEST_TNO = 1L;
     private static final Long TEST_GNO = 23L;
 
-    // BeforeEach 사용을 위한 ReplyCreateDTO , ReplyUpdateDTO 정의 
+    // BeforeEach 사용을 위한 ReplyCreateDTO , ReplyUpdateDTO 정의
     private ReplyCreateDTO replyCreateDTO;
     private ReplyCreateDTO replyChildCreateDTO;
 
@@ -43,41 +43,41 @@ public class ReplyServiceTests {
     private ReplyUpdateDTO replyChildUpdateDTO;
 
     // Reply Create Serivce Child Set Up
-    // Reply Create Serivce Set Up 
+    // Reply Create Serivce Set Up
     // Reply Update Service Child Set Up
     // Reply Update Service Set Up
     @BeforeEach
     public void setUp() {
         replyCreateDTO = ReplyCreateDTO.builder()
-        .tno(TEST_TNO)
-        .reply(TEST_REPLY)
-        .replyer(TEST_REPLYER)
-        .build();
+                .tno(TEST_TNO)
+                .reply(TEST_REPLY)
+                .replyer(TEST_REPLYER)
+                .build();
 
         replyChildCreateDTO = ReplyCreateDTO.builder()
-        .tno(TEST_TNO)
-        .reply(TEST_REPLY_CHILD)
-        .replyer(TEST_RPELYER_CHILD)
-        .gno(TEST_GNO)
-        .build();
+                .tno(TEST_TNO)
+                .reply(TEST_REPLY_CHILD)
+                .replyer(TEST_RPELYER_CHILD)
+                .gno(TEST_GNO)
+                .build();
 
         replyUpdateDTO = ReplyUpdateDTO.builder()
-        .tno(TEST_TNO)
-        .reply(TEST_REPLY)
-        .replyer(TEST_REPLYER)
-        .rno(TEST_RNO)
-        .build();
+                .tno(TEST_TNO)
+                .reply(TEST_REPLY)
+                .replyer(TEST_REPLYER)
+                .rno(TEST_RNO)
+                .build();
 
         replyChildUpdateDTO = ReplyUpdateDTO.builder()
-        .tno(TEST_TNO)
-        .reply(TEST_REPLY_CHILD)
-        .replyer(TEST_RPELYER_CHILD)
-        .rno(TEST_RNO)
-        .gno(TEST_GNO)
-        .build();
+                .tno(TEST_TNO)
+                .reply(TEST_REPLY_CHILD)
+                .replyer(TEST_RPELYER_CHILD)
+                .rno(TEST_RNO)
+                .gno(TEST_GNO)
+                .build();
     }
 
-    // Create Reply Service Test 
+    // Create Reply Service Test
     @Test
     @Transactional
     @DisplayName("댓글 생성 서비스 테스트")
@@ -89,7 +89,7 @@ public class ReplyServiceTests {
         log.info("=== End Reply Service Create Test ===");
     }
 
-    // Create Reply Child Service Test 
+    // Create Reply Child Service Test
     @Test
     @Transactional
     @DisplayName("대댓글 생성 서비스 테스트")
@@ -114,7 +114,7 @@ public class ReplyServiceTests {
         log.info("=== End Reply Service Delete Test ===");
     }
 
-    // Read Reply Service Test 
+    // Read Reply Service Test
     @Test
     @Transactional
     @DisplayName("댓글 조회 서비스 테스트")
@@ -126,7 +126,7 @@ public class ReplyServiceTests {
         log.info("=== End Reply Service Read Test ===");
     }
 
-    // Update Reply Service Test 
+    // Update Reply Service Test
     @Test
     @Transactional
     @DisplayName("댓글 업데이트 테스트")
@@ -140,7 +140,7 @@ public class ReplyServiceTests {
         log.info("=== End Reply Service Update Test ===");
     }
 
-    // Update Reply Child Service Test 
+    // Update Reply Child Service Test
     @Test
     @Transactional
     @DisplayName("대댓글 업데이트 서비스 테스트")
@@ -154,7 +154,7 @@ public class ReplyServiceTests {
         log.info("=== End Reply Child Service Update Test ===");
     }
 
-    // List Reply Service Test 
+    // List Reply Service Test
     @Test
     @Transactional
     @DisplayName("댓글 리스트 서비스 테스트")

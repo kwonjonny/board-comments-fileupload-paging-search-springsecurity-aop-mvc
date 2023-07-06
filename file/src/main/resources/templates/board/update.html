@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout.html}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout.html}">
 
 <head>
     <meta charset="UTF-8">
@@ -24,81 +25,92 @@
                                 <div class="form-group row">
                                     <label for="tno" class="col-sm-3 text-end control-label col-form-label">Tno</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="tno" id="tno" th:value="${list.tno}" readonly/>
+                                        <input type="text" class="form-control" name="tno" id="tno"
+                                            th:value="${list.tno}" readonly />
                                     </div>
                                 </div>
                                 <!-- Tno End -->
 
                                 <!-- Title Start -->
                                 <div class="form-group row">
-                                    <label for="title" class="col-sm-3 text-end control-label col-form-label">Title</label>
+                                    <label for="title"
+                                        class="col-sm-3 text-end control-label col-form-label">Title</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="title" id="title" th:value="${list.title}"/>
+                                        <input type="text" class="form-control" name="title" id="title"
+                                            th:value="${list.title}" />
                                     </div>
                                 </div>
                                 <!-- Title End -->
 
                                 <!-- Writer Start -->
                                 <div class="form-group row">
-                                    <label for="writer" class="col-sm-3 text-end control-label col-form-label">Writer</label>
+                                    <label for="writer"
+                                        class="col-sm-3 text-end control-label col-form-label">Writer</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="writer" id="writer" th:value="${list.writer}"/>
+                                        <input type="text" class="form-control" name="writer" id="writer"
+                                            th:value="${list.writer}" />
                                     </div>
                                 </div>
                                 <!-- Writer End -->
 
                                 <!-- Regist Date Start -->
                                 <div class="form-group row">
-                                    <label for="registDate" class="col-sm-3 text-end control-label col-form-label">Regist Date</label>
+                                    <label for="registDate"
+                                        class="col-sm-3 text-end control-label col-form-label">Regist Date</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="registDate" id="registDate" th:value="${list.registDate}" readonly/>
+                                        <input type="text" class="form-control" name="registDate" id="registDate"
+                                            th:value="${list.registDate}" readonly />
                                     </div>
                                 </div>
                                 <!-- Regist Date End -->
 
                                 <!-- Update Date Start -->
                                 <div class="form-group row">
-                                    <label for="modifyDate" class="col-sm-3 text-end control-label col-form-label">Update Date</label>
+                                    <label for="modifyDate"
+                                        class="col-sm-3 text-end control-label col-form-label">Update Date</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="modifyDate" id="modifyDate" th:value="${list.updateDate}" readonly/>
+                                        <input type="text" class="form-control" name="modifyDate" id="modifyDate"
+                                            th:value="${list.updateDate}" readonly />
                                     </div>
                                 </div>
                                 <!-- Update Date End -->
 
                                 <!-- Content Start -->
                                 <div class="form-group row">
-                                    <label for="content" class="col-sm-3 text-end control-label col-form-label">Content</label>
+                                    <label for="content"
+                                        class="col-sm-3 text-end control-label col-form-label">Content</label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control" name="content" id="content" th:text="${list.content}"></textarea>
+                                        <textarea class="form-control" name="content" id="content"
+                                            th:text="${list.content}"></textarea>
                                     </div>
                                 </div>
                                 <!-- Content End -->
-                                
-                                
+
+
                                 <!-- Upload Start -->
                                 <div>
-                                <input class="uploadInput" type="file" name="upload" multiple>
-                                <button class="uploadBtn">UPLOAD</button>
+                                    <input class="uploadInput" type="file" name="upload" multiple>
+                                    <button class="uploadBtn">UPLOAD</button>
                                 </div>
                                 <!-- Upload End -->
 
                                 <!-- 파일 띄워주기 Start -->
                                 <div class="uploadDiv">
                                     <ul class="uploadUL">
-                            
+
                                     </ul>
                                 </div>
                                 <!-- 파일 띄워주기 End -->
 
-                                 <!-- Update Button Start -->
+                                <!-- Update Button Start -->
                                 <div class="border-top">
                                     <div class="card-body">
-                                    <button type="button" class="btn btn-primary saveBtn">게시글 수정 submit</button>
+                                        <button type="button" class="btn btn-primary saveBtn">게시글 수정 submit</button>
                                     </div>
                                 </div>
-                                <div class ="uploadHidden">
-                                
-                                  </div>
+                                <div class="uploadHidden">
+
+                                </div>
                                 <!-- Update Button End -->
 
                             </form>
@@ -113,7 +125,11 @@
     <!-- Fragment Content End -->
 
     <!-- JavaScript Start -->
-    <script layout:fragment ="script" th:inline = "javascript">
+    <script layout:fragment="script" th:inline="javascript">
+
+        const fileNames = [[${ list.fileName }]];
+        console.log('fileNames', fileNames)
+
 
         // actionForm 등록 
         const actionForm = document.querySelector(".actionForm");
@@ -125,7 +141,7 @@
         const uploadInput = document.querySelector(".uploadInput")
         const uploadUL = document.querySelector(".uploadUL")
         const uploadHidden = document.querySelector(".uploadHidden")
-        const tno = [[${list.tno}]]
+        const tno = [[${ list.tno }]]
 
         // Update Action Method Start 
         saveBtn.addEventListener("click", (e) => {
@@ -133,46 +149,46 @@
             e.stopPropagation();
             // 사용자가 업데이트 요청시 파일의 값을 Server 로 보내줍니다 
             const liArr = uploadUL.querySelectorAll("li")
-            if(!liArr || liArr.length === 0) {
+            if (!liArr || liArr.length === 0) {
                 alert("파일이 없어요")
-                return 
+                return
             }
 
             let str = ""
-            for(let liObj of liArr) {
+            for (let liObj of liArr) {
                 const uuid = liObj.getAttribute("data-uuid")
                 const fileName = liObj.getAttribute("data-filename")
                 str += `<input type='text' name='fileNames' value = '${uuid}_${fileName}'>`
             }
 
-            uploadHidden.innerHTML += str 
+            uploadHidden.innerHTML += str
             actionForm.submit();
-        },false)
+        }, false)
 
         // 사용자가 업로드 버튼 클릭시 post 요청 Enginx
         uploadBtn.addEventListener("click", e => {
             e.preventDefault()
             e.stopPropagation()
-            if(!uploadInput.files || uploadInput.files.length === 0) {
-                return 
+            if (!uploadInput.files || uploadInput.files.length === 0) {
+                return
             }
             const formData = new FormData()
-            for(let i=0; i<uploadInput.files.length; i++) {
+            for (let i = 0; i < uploadInput.files.length; i++) {
                 formData.append("files", uploadInput.files[i])
             }
-            const header = {headers : {"Content-Type" : "multipart/form-data"}}
+            const header = { headers: { "Content-Type": "multipart/form-data" } }
             axios.post('http://localhost:8084/upload', formData, header)
-            .then(res => {
-                const result = res.data
-                showProducts(result)
-            })
+                .then(res => {
+                    const result = res.data
+                    showProducts(result)
+                })
         }, false)
 
         // 사용자가 upload 버튼을 눌렀을시에 사진을 보여줍니다 
         const showProducts = (arr) => {
             let str = ""
-            for(const uploadFile of arr) {
-                const{fileName,link,uuid} = uploadFile
+            for (const uploadFile of arr) {
+                const { fileName, link, uuid } = uploadFile
 
                 str += `
                 <li data-uuid='${uuid}' data-fileName='${fileName}'>
@@ -198,32 +214,27 @@
         }
 
 
-         // 이미지 axios 통신
-         const loadImages = () => {
-            axios.get(`http://localhost:8084/board/images/${tno}`)
-            .then(res => {
-                const arr = res.data
-                console.log(arr)
+        // 파일 이름 배열을 변환하는 함수
+        const loadImages = (fileNames) => {
+            // fileNames 배열을 uuid, fileName, link 형태의 객체로 변환
+            const objArr = fileNames.map(str => {
+                const uuid = str.substring(0, 36);
+                const fileName = str.substring(37);
+                const link = 's_' + str;
+                return { uuid, fileName, link };
+            });
 
-                // 파일의 이름을 uuid, fileName, link 형식의 map으로 만든 코드 
-                const objArr = arr.map(str => {
-                    const uuid = str.substring(0, 36)
-                    const fileName = str.substring(37)
-                    const link = 's_'+str
-                    return {uuid, fileName, link} //{uuid: uuid, fileName: fileName} 
+            // 변환된 배열을 showProducts 함수에 전달
+            showProducts(objArr);
+        };
 
-                })
+        loadImages(fileNames)
 
-                // 그걸 대입
-                showProducts(objArr)
-            })
-        }
-        loadImages()
 
-        
 
 
         // JavaScript End
     </script>
-  </body>
+</body>
+
 </html>

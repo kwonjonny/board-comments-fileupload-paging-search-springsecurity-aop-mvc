@@ -11,8 +11,8 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @SpringBootTest
 public class TimeCheckTests {
-    
-    // 의존성 주입 
+
+    // 의존성 주입
     @Autowired(required = false)
     private TimeCheck timeCheck;
 

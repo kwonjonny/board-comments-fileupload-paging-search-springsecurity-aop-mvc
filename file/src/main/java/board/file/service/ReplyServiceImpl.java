@@ -19,10 +19,10 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class ReplyServiceImpl implements ReplyService {
 
-    // 의존성 주입 
+    // 의존성 주입
     private final ReplyMapper replyMapper;
 
-    // Autowired 명시적 표시 
+    // Autowired 명시적 표시
     @Autowired
     public ReplyServiceImpl(ReplyMapper replyMapper) {
         log.info("Constructor Called, Mapper Injected.");
@@ -36,18 +36,18 @@ public class ReplyServiceImpl implements ReplyService {
         log.info("Create ServiceImpl Is Running");
         Long result = null;
         Long gno = replyCreateDTO.getGno();
-        if(gno == null || gno == 0) {
+        if (gno == null || gno == 0) {
             int count = replyMapper.createReply(replyCreateDTO);
-            if(count != 1) {
+            if (count != 1) {
                 throw new RuntimeException("Failed Create Reply");
             }
             Long rno = replyCreateDTO.getRno();
-            replyMapper.updateReplyGno(gno);
+            replyMapper.updateReplyGno(rno, rno);
             replyMapper.incrementReplyCount(replyCreateDTO.getTno());
             result = rno;
         } else {
             int count = replyMapper.createReplyChild(replyCreateDTO);
-            if(count != 1) {
+            if (count != 1) {
                 throw new RuntimeException("Failed Create Reply Child");
             }
             result = replyCreateDTO.getRno();
@@ -56,13 +56,13 @@ public class ReplyServiceImpl implements ReplyService {
         return result;
     }
 
-    // Delete Reply ServiceImpl 
+    // Delete Reply ServiceImpl
     @Override
     @Transactional
     public int deleteReply(Long rno) {
         log.info("Delete ServiceImpl Is Running");
         ReplyDTO replyDTO = replyMapper.readReply(rno);
-        if(replyDTO == null) {
+        if (replyDTO == null) {
             throw new RuntimeException("Reply not found for rno: " + rno);
         }
         Long tno = replyDTO.getTno();
@@ -95,8 +95,8 @@ public class ReplyServiceImpl implements ReplyService {
         int total = replyMapper.totalReply(tno);
 
         return PageResponseDTO.<ReplyDTO>withAll()
-        .list(list)
-        .total(total)
-        .build();
+                .list(list)
+                .total(total)
+                .build();
     }
 }
