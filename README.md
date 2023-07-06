@@ -88,7 +88,7 @@
 | registDate | TIMESTAMP        | Board 의 생성 날짜          |
 | updateDate  | TIMESTAMP           | Board 의 업데이트 날짜                        |
 
-### Board Image 테이블 (tbl_board_img)
+### Board Image 테이블 (`tbl_board_img`)
 | 컬럼명   | 데이터 타입     | 설명                                       |
 |----------|----------------|--------------------------------------------|
 |uuid	|VARCHAR(50)	|이미지 항목의 고유 식별자 (Primary Key)
@@ -107,6 +107,15 @@ CREATE TABLE tbl_board (
 	writer VARCHAR(100) NOT NULL,
 	registDate TIMESTAMP default NOW(),
 	updateDate TIMESTAMP default NOW()
+)
+;
+
+CREATE TABLE tbl_board_img (
+  uuid varchar(50) PRIMARY KEY,
+	filename varchar(200) not null,
+	tno int not null,
+	ord int default 0,
+	FOREIGN KEY (tno) REFERENCES tbl_board(tno) ON DELETE CASCADE
 )
 ;
 
