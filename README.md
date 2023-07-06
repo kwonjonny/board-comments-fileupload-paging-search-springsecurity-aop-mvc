@@ -34,9 +34,9 @@
 3. 웹 브라우저에서 `/board/list`로 이동합니다.
 
 ## 부트스트랩 사용
-- [AdminSB](https://startbootstrap.com/theme/sb-admin-2) 템플릿을 사용합니다.
+- [AdminLTE](https://adminlte.io/) 템플릿을 사용합니다.
 
-## boardMvc: Board 게시판 연습 소개 
+## board-comments-fileupload-paging-search-mvc: Board 게시판 토이 프로젝트 소개 
 - 데이터 규모 
 - 이 토이 프로젝트에서는 약 3000만건의 데이터를 사용하여 페이지네이션 기능을 테스트하고 최적화하였습니다. 
 - 이를 통해 대규모 데이터셋에 대해 어플리케이션의 성능을 측정하고, 사용자에게 빠른 응답 시간을 제공하는 방법을 연구하였습니다.
@@ -72,7 +72,7 @@
 4. 웹 브라우저에서 애플리케이션에 접속합니다: `http://localhost:8084/board/list`
 
 ## 부트스트랩 사용
-이 프로젝트는 부트스트랩 템플릿을 사용하여 사용자 인터페이스를 구성합니다. 템플릿에 대한 자세한 정보는 [AdminSB](https://startbootstrap.com/theme/sb-admin-2)를 참조하세요.
+이 프로젝트는 부트스트랩 템플릿을 사용하여 사용자 인터페이스를 구성합니다. 템플릿에 대한 자세한 정보는 [AdminLTE](https://adminlte.io/)를 참조하세요.
 
 ## 개발자 정보
 - 이름: [권성준]
