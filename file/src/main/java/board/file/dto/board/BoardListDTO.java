@@ -25,5 +25,5 @@ public class BoardListDTO {
     private LocalDate registDate;
     private LocalDate updateDate;
     private int replyCnt;
-    private List<String> fileNames;
+    private String fileName;
 }

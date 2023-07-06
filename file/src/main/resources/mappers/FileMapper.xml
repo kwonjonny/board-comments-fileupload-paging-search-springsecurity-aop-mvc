@@ -3,10 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- BoardMapper Xml -->
+<!-- FileMapper Xml -->
 <mapper namespace="board.file.mappers.FileMapper">
 
 
+<!-- FileMapper id = "createImage" -->
 <insert id="createImage" parameterType="java.util.List">
     INSERT INTO tbl_board_img (uuid, fileName, ord, tno)
     VALUES
@@ -16,12 +17,14 @@
 </insert>
 
 
+<!-- FileMapper id = "deleteImage" -->
 <delete id="deleteImage"> 
     DELETE FROM tbl_board_img
     WHERE tno = #{tno}
 </delete>
 
 
+<!-- FileMapper id = "updateImage" -->
 <insert id="updateImage" parameterType="java.util.List">
     INSERT INTO tbl_board_img (uuid, filename, ord, tno)
     VALUES

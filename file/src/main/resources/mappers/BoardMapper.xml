@@ -6,28 +6,31 @@
 <!-- BoardMapper Xml -->
 <mapper namespace="board.file.mappers.BoardMapper">
 
-<!-- BoardMapper id = "listBoard" -->
-<select id="listBoard" parameterType = "board.file.dto.board.BoardListDTO" resultType="board.file.dto.board.BoardListDTO">
-    SELECT * FROM tbl_board
-    WHERE tno > 0
-     <if test="searchType != null and keyword != null">
-        AND (
+
+<select id="listBoard" parameterType="board.file.dto.board.BoardListDTO" resultType="board.file.dto.board.BoardListDTO">
+    SELECT tb.*, CONCAT(tbi.uuid, '_', tbi.filename) AS fileName
+    FROM tbl_board tb
+    <if test="searchType != null and keyword != null">
+        WHERE (
             <if test="searchType == 'title' or searchType == 'all'">
-                title LIKE CONCAT('%', #{keyword}, '%')
+                tb.title LIKE CONCAT('%', #{keyword}, '%')
             </if>
             <if test="searchType == 'content' or searchType == 'all'">
                 <if test="searchType == 'all'">OR</if>
-                content LIKE CONCAT('%', #{keyword}, '%')
+                tb.content LIKE CONCAT('%', #{keyword}, '%')
             </if>
             <if test="searchType == 'writer' or searchType == 'all'">
                 <if test="searchType == 'all'">OR</if>
-                writer LIKE CONCAT('%', #{keyword}, '%')
+                tb.writer LIKE CONCAT('%', #{keyword}, '%')
             </if>
         )
     </if>
-    ORDER BY tno DESC 
-    LIMIT #{skip} , #{size}
+    LEFT JOIN tbl_board_img tbi ON tb.tno = tbi.tno AND tbi.ord = 0
+    WHERE tb.tno > 0
+    ORDER BY tb.tno DESC 
+    LIMIT #{skip}, #{size}
 </select>
+
 
 <!-- BoardMapper id = "createBoard" -->
 <insert id="createBoard" parameterType="board.file.dto.board.BoardCreateDTO"
@@ -50,11 +53,33 @@
 </delete>
 
 
+<!-- fileNames의 resultMap -->
+<!-- 파일명 결과 매핑 -->
+<resultMap id="FileNameResultMap" type="java.lang.String">
+  <id property="fileName" column="fileName"/>
+</resultMap>
+
+
 <!-- BoardMapper id = "readBoard" -->
-<select id="readBoard" parameterType="long" resultType="board.file.dto.board.BoardDTO">
-    SELECT * FROM tbl_board
-    WHERE tno = #{tno}
+<select id="readBoard" parameterType="long" resultMap="BoardResultMap">
+  SELECT b.tno, b.title, b.content, b.writer, b.registDate, b.updateDate,
+    CONCAT(i.uuid, '_', i.filename) AS fileName
+FROM tbl_board b
+LEFT OUTER JOIN tbl_board_img i ON b.tno = i.tno
+WHERE b.tno = #{tno};
 </select>
+<!-- 여러개의 사진을 가져오기 위한 resultMap using -->
+<resultMap id="BoardResultMap" type="board.file.dto.board.BoardDTO">
+  <id property="tno" column="tno"/>
+  <result property="title" column="title"/>
+  <result property="content" column="content"/>
+  <result property="writer" column="writer"/>
+  <result property="registDate" column="registDate"/>
+  <result property="updateDate" column="updateDate"/>
+  <result property="replyCnt" column="replyCnt"/>
+  <collection property="fileName" ofType="java.lang.String" resultMap="FileNameResultMap"/>
+</resultMap>
+
 
 
 <!-- BoardMapper id = "updateBoard" -->
@@ -71,15 +96,6 @@
     WHERE tno > 0 
     LIMIT #{countEnd}
     ) tbl_board
-</select>
-
-<!-- BoardMapper id = "readImage" -->
-<select id="readImage" parameterType="long" resultType="string">
-    SELECT 
-    CONCAT(uuid,'_',fileName) AS fileName
-    FROM tbl_board_img 
-    WHERE tno = #{tno}
-    ORDER BY ord desc 
 </select>
 
 </mapper>

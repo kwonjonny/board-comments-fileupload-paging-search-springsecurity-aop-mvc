@@ -32,7 +32,4 @@ public interface BoardMapper {
 
     // Total Board 
     int total(PageRequestDTO pageRequestDTO);
-
-    // Read Image 
-    List<FileDTO> readImage(Long tno);
 }

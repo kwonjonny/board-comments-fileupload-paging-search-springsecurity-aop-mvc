@@ -3,6 +3,7 @@ package board.file.service;
 import java.util.List;
 
 import board.file.dto.File.FileDTO;
+import board.file.dto.File.FileReadDTO;
 import board.file.dto.board.BoardCreateDTO;
 import board.file.dto.board.BoardDTO;
 import board.file.dto.board.BoardListDTO;
@@ -28,7 +29,7 @@ public interface BoardService {
     // Read Board Service
     BoardDTO readBoard(Long tno);
 
-    // Read Image 
-    List<FileDTO> readImage(Long tno);
+    // read Image
+    List<String> getBoardFile(Long tno);
 
 }

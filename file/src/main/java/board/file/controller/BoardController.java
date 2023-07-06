@@ -1,24 +1,19 @@
 package board.file.controller;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import board.file.dto.File.FileReadDTO;
 import board.file.dto.board.BoardCreateDTO;
 import board.file.dto.board.BoardDTO;
 import board.file.dto.board.BoardListDTO;
@@ -27,7 +22,6 @@ import board.file.dto.page.PageRequestDTO;
 import board.file.dto.page.PageResponseDTO;
 import board.file.service.BoardService;
 import lombok.extern.log4j.Log4j2;
-import net.coobird.thumbnailator.Thumbnailator;
 
 // Board Controller Class 
 @Log4j2
@@ -46,10 +40,10 @@ public class BoardController {
     }
 
     // GET : Create
-    @GetMapping("create2")
+    @GetMapping("create")
     public String getBoardCreate() {
         log.info("GET | Board Create");
-        return "/board/create2";
+        return "/board/create";
     }
 
      // GET : List 
@@ -70,13 +64,14 @@ public class BoardController {
         return "/board/read" ;
     }
 
+    
     // GET : Update
-    @GetMapping("update2/{tno}")
+    @GetMapping("update/{tno}")
     public String getBoardUpdate(@PathVariable("tno") Long tno, Model model) {
         log.info("GET | Board Update");
         BoardDTO list = boardServce.readBoard(tno);
         model.addAttribute("list", list);
-        return "/board/update2";
+        return "/board/update";
     }
 
     // POST : Delete
@@ -98,10 +93,9 @@ public class BoardController {
     }
 
     // POST : Create 
-    @PostMapping("/create2")
+    @PostMapping("/create")
     public String postBoardCreate(BoardCreateDTO boardCreateDTO,RedirectAttributes redirectAttributes) {
         log.info("POST | Board Create");
-        // 게시물 생성 부분
         Long tno = boardServce.createBoard(boardCreateDTO);
         redirectAttributes.addFlashAttribute("message", boardCreateDTO.getTno() + " 번 게시물로 등록되었습니다.");
         return "redirect:/board/list";

@@ -18,6 +18,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class BoardDTO {
     // tbl_board
+
+    // board & img read 
     private Long tno;
     private String title;
     private String content;
@@ -25,5 +27,5 @@ public class BoardDTO {
     private LocalDate registDate;
     private LocalDate updateDate;
     private int replyCnt;
-    private List<String> fileNames;
+    private List<String> fileName;
 }

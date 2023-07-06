@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import board.file.dto.File.FileDTO;
+import board.file.dto.File.FileReadDTO;
 import board.file.dto.board.BoardCreateDTO;
 import board.file.dto.board.BoardDTO;
 import board.file.dto.board.BoardListDTO;
@@ -61,9 +62,9 @@ public class BoardServiceImpl implements BoardService {
       log.info("Create BoardServiceImpl Is Running");
       int count = boardMapper.createBoard(boardCreateDTO);
       AtomicInteger index = new AtomicInteger(0);
-
       List<String> fileNames = boardCreateDTO.getFileNames();
       Long tno = boardCreateDTO.getTno();
+
       List<Map<String,String>> list = fileNames.stream().map(str -> {
          String uuid = str.substring(0, 36);
          String fileName = str.substring(37);
@@ -104,7 +105,6 @@ public class BoardServiceImpl implements BoardService {
     }
 
   
-
     // Read BoardServiceImpl
     @Override
     @Transactional(readOnly = true)
@@ -114,10 +114,10 @@ public class BoardServiceImpl implements BoardService {
     }
 
 
-    // Read Image BoardServiceImpl 
    @Override
-   @Transactional(readOnly = true)
-   public List<FileDTO> readImage(Long tno) {
-       return boardMapper.readImage(tno);
+   @Transactional
+   public List<String> getBoardFile(Long tno) {
+       log.info("Read File BoardServiceImpl Is Running");
+       return fileMapper.readImage(tno);
    }
 }

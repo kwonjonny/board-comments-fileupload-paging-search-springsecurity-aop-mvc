@@ -18,7 +18,7 @@
                         <div class="card-body">
 
                             <!-- Form Start -->
-                            <form class="form-horizontal actionForm">
+                            <form class="form-horizontal actionForm" method="post" action="/board/update">
 
                                 <!-- Tno Start -->
                                 <div class="form-group row">
@@ -73,13 +73,32 @@
                                     </div>
                                 </div>
                                 <!-- Content End -->
+                                
+                                
+                                <!-- Upload Start -->
+                                <div>
+                                <input class="uploadInput" type="file" name="upload" multiple>
+                                <button class="uploadBtn">UPLOAD</button>
+                                </div>
+                                <!-- Upload End -->
+
+                                <!-- 파일 띄워주기 Start -->
+                                <div class="uploadDiv">
+                                    <ul class="uploadUL">
+                            
+                                    </ul>
+                                </div>
+                                <!-- 파일 띄워주기 End -->
 
                                  <!-- Update Button Start -->
                                 <div class="border-top">
                                     <div class="card-body">
-                                    <button type="button" class="btn btn-primary updateButton">게시글 수정 submit</button>
+                                    <button type="button" class="btn btn-primary saveBtn">게시글 수정 submit</button>
                                     </div>
                                 </div>
+                                <div class ="uploadHidden">
+                                
+                                  </div>
                                 <!-- Update Button End -->
 
                             </form>
@@ -89,6 +108,7 @@
                 </div>
             </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     </div>
     <!-- Fragment Content End -->
 
@@ -98,17 +118,111 @@
         // actionForm 등록 
         const actionForm = document.querySelector(".actionForm");
         // actionUpdate 등록 
-        const actionUpdate = document.querySelector(".updateButton")
+        const saveBtn = document.querySelector(".saveBtn")
+
+        // fileUpload 등록 
+        const uploadBtn = document.querySelector(".uploadBtn")
+        const uploadInput = document.querySelector(".uploadInput")
+        const uploadUL = document.querySelector(".uploadUL")
+        const uploadHidden = document.querySelector(".uploadHidden")
+        const tno = [[${list.tno}]]
 
         // Update Action Method Start 
-        actionUpdate.addEventListener("click", (e) => {
+        saveBtn.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
+            // 사용자가 업데이트 요청시 파일의 값을 Server 로 보내줍니다 
+            const liArr = uploadUL.querySelectorAll("li")
+            if(!liArr || liArr.length === 0) {
+                alert("파일이 없어요")
+                return 
+            }
 
-            actionForm.setAttribute("action", `/board/update`)
-            actionForm.setAttribute("method", `post`)
+            let str = ""
+            for(let liObj of liArr) {
+                const uuid = liObj.getAttribute("data-uuid")
+                const fileName = liObj.getAttribute("data-filename")
+                str += `<input type='text' name='fileNames' value = '${uuid}_${fileName}'>`
+            }
+
+            uploadHidden.innerHTML += str 
             actionForm.submit();
         },false)
+
+        // 사용자가 업로드 버튼 클릭시 post 요청 Enginx
+        uploadBtn.addEventListener("click", e => {
+            e.preventDefault()
+            e.stopPropagation()
+            if(!uploadInput.files || uploadInput.files.length === 0) {
+                return 
+            }
+            const formData = new FormData()
+            for(let i=0; i<uploadInput.files.length; i++) {
+                formData.append("files", uploadInput.files[i])
+            }
+            const header = {headers : {"Content-Type" : "multipart/form-data"}}
+            axios.post('http://localhost:8084/upload', formData, header)
+            .then(res => {
+                const result = res.data
+                showProducts(result)
+            })
+        }, false)
+
+        // 사용자가 upload 버튼을 눌렀을시에 사진을 보여줍니다 
+        const showProducts = (arr) => {
+            let str = ""
+            for(const uploadFile of arr) {
+                const{fileName,link,uuid} = uploadFile
+
+                str += `
+                <li data-uuid='${uuid}' data-fileName='${fileName}'>
+                <div>
+                    <a href='http://localhost/${uuid}_${fileName}' target="_blank">
+                    <img src='http://localhost/${link}'/>
+                    </a>
+                    <p>${fileName} <button onclick="javascript:removeFile(event, '${uuid}', '${fileName}')">x</button></p>
+                <div>   
+                </li>
+                `
+            }
+            uploadUL.innerHTML += str
+        }
+
+        // 사용자가 removeButton 을 클릭시에 post요청을보내고 사진을 삭제합니다 
+        const removeFile = (e, uuid, fileName) => {
+            e.preventDefault()
+            e.stopPropagation()
+            const liObj = e.target.closest("li")
+            axios.delete(`http://localhost:8084/removeFile/${uuid}_${fileName}`)
+            liObj.remove()
+        }
+
+
+         // 이미지 axios 통신
+         const loadImages = () => {
+            axios.get(`http://localhost:8084/board/images/${tno}`)
+            .then(res => {
+                const arr = res.data
+                console.log(arr)
+
+                // 파일의 이름을 uuid, fileName, link 형식의 map으로 만든 코드 
+                const objArr = arr.map(str => {
+                    const uuid = str.substring(0, 36)
+                    const fileName = str.substring(37)
+                    const link = 's_'+str
+                    return {uuid, fileName, link} //{uuid: uuid, fileName: fileName} 
+
+                })
+
+                // 그걸 대입
+                showProducts(objArr)
+            })
+        }
+        loadImages()
+
+        
+
+
         // JavaScript End
     </script>
   </body>

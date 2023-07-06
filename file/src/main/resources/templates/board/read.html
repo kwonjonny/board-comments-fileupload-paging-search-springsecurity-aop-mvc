@@ -17,7 +17,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <form class="form-horizontal actionForm" method="get" action="/board/read">
-                                    
+                                  [[#{list.fileName}]]
                                   <!-- tno satrt -->
                                     <div class="form-group row">
                                         <label for="tno" class="col-sm-3 text-end control-label col-form-label">Tno</label>
@@ -71,6 +71,24 @@
                                         </div>
                                     </div>
                                   <!-- Content End-->
+
+                                  <!-- img Start -->
+                                  <div class="form-group row">
+                                    <label for="content" class="col-sm-3 text-end control-label col-form-label">filename</label>
+                                    <div class="col-sm-9 d-flex align-items-center">
+                                        <div th:each="fileName : ${list.fileName}">
+                                            <img th:src="@{|http://localhost/${fileName}|}" class="my-2">
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <!-- img End -->
+
+
+
+                                  <!-- 상세 페이지 이미지 표시 영역 start -->
+                                    <div id="imageDisplayArea">
+                                    </div>
+                                  <!-- 상세 페이지 이미지 표시 영역 end  -->
 
                                   <!-- 수정, 삭제, 목록 버튼 start -->
                                     <div class="border-top">
@@ -411,6 +429,9 @@
       alertModal.show()
     }
     // Update Message Modal End  
+
+
+
 
     </script>
   </body>

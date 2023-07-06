@@ -24,7 +24,6 @@
       <div class="card">
           <div class="card-header"></div>
           <div class="card-body">
-
               <!-- Search Form Start -->
               <form action="/board/list" method="get" class="input-group mb-3 searchAction" id="searchForm">
                   <div class="input-group-prepend">
@@ -32,6 +31,7 @@
                           <option class="dropdown-item" data-searchType="writer">Writer</option>
                           <option class="dropdown-item" data-searchType="title">Title</option>
                           <option class="dropdown-item" data-searchType="content">Content</option>
+                          <!-- <option class="dropdown-item" data-searchType="all">All Search</option> -->
                       </select>
                   </div>
                   <input type="hidden" class="searchType">
@@ -47,6 +47,7 @@
                           <th>제목:title 댓글:replyCount</th>
                           <th>writer</th>
                           <th>craeteDate</th>
+                          <th>IMG</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -58,6 +59,7 @@
                           </td>
                           <td>[[${board.writer}]]</td>
                           <td>[[${board.registDate}]]</td>
+                          <td><img th:src ="|http://localhost/s_${board.fileName}|"></td>
                       </tr>
                   </tbody>
               </table>
