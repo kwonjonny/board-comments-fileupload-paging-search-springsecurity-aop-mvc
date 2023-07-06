@@ -2,12 +2,13 @@
 
 # 개발 상태 : [개발완료]
 
-# boardMvc
-- 프로젝트 유형: Board 게시판 만들기 연습 
+# board-comments-fileupload-paging-search-mvc
+- 프로젝트 유형: Board 게시판 토이 프로젝트
 - 목표: JavaScript, Thymeleaf, Spring Boot 를 활용하여 페이지네이션, 검색 기능이 포함된 Board 애플리케이션 개발
 - 목표: 개발의 순서 정립 DataBase 설계 
 - 목표: 개발의 순서 정립 MapperInterface 개발 => Mapper.xml 개발 => MapperTestCode 작성 => ServiceInterface 개발 => ServiceImpl 개발 => ServiceTestCode 작성
-- 목표: 개발의 순서 정립 controller 개발 => html 개발 => 페이징 개발 
+- 목표: 개발의 순서 정립 controller 개발 => html 개발 => 페이징 개발
+- 목표: 개발의 순서 정립 위의 순서대로 Fileupload 기능과 reply 기능도 순차적으로 개발 
 
 ## Spring Boot 프로젝트 설정
 
@@ -47,6 +48,13 @@
 - Board 항목 필터링 및 정렬 기능
 - Bootstrap을 이용한 반응형 웹 디자인
 
+- Reply 항목 생성, 조회, 수정, 삭제
+- 페이지네이션 지원
+
+- File 항목 생성, 조회, 수정, 삭제
+- File 항목 생성 수정 시 Thumnail 생성
+- Eningx 를 통한 Ajax 통신 
+
 ## 시작하기
 
 ### 사전 요구 사항
@@ -59,10 +67,9 @@
 
 ### 빌드 및 실행 방법
 1. 이 저장소를 복제하거나 다운로드합니다: `git clone [repository_url]`
-2. 프로젝트 디렉토리로 이동합니다: `cd boardMvc`
-3. 프로젝트를 빌드합니다: `./gradlew build`
-4. 애플리케이션을 실행합니다: `./gradlew bootRun`
-5. 웹 브라우저에서 애플리케이션에 접속합니다: `http://localhost:8085/board/list`
+2. 프로젝트를 빌드합니다: `./gradlew build`
+3. 애플리케이션을 실행합니다: `./gradlew bootRun`
+4. 웹 브라우저에서 애플리케이션에 접속합니다: `http://localhost:8084/board/list`
 
 ## 부트스트랩 사용
 이 프로젝트는 부트스트랩 템플릿을 사용하여 사용자 인터페이스를 구성합니다. 템플릿에 대한 자세한 정보는 [AdminSB](https://startbootstrap.com/theme/sb-admin-2)를 참조하세요.
@@ -96,6 +103,17 @@
 |tno	|INT	|관련 Board 항목의 고유 식별자
 |ord	|INT	|이미지 순서 (기본값 0)
 
+### Reply 테이블 (`tbl_reply`)
+| 컬럼명 | 데이터 타입 | 설명 |
+| --- | --- | --- |
+| rno | INT | 답글 항목의 고유 식별자 (Primary Key, 자동 증가) |
+| tno | VARCHAR(500) | 관련 Board 항목의 고유 식별자 |
+| reply | VARCHAR(1000) | 답글의 내용 |
+| replyer | VARCHAR(100) | 답글을 작성한 사용자명 |
+| replyDate | TIMESTMAP | 답글이 작성된 날짜와 시간 (기본값은 현재 시간) |
+| modifyDate | TIMESTMAP | 답글이 수정된 날짜와 시간 (기본값은 현재 시간) |
+| gno | INT | 그룹 번호 (기본값 0) |
+|isDeleted| TINYINT | 댓글.대댓글이 삭제되었는지 확인하고 업데이트|
 
 SQL 스키마:
 ```sql
@@ -116,6 +134,19 @@ CREATE TABLE tbl_board_img (
 	tno int not null,
 	ord int default 0,
 	FOREIGN KEY (tno) REFERENCES tbl_board(tno) ON DELETE CASCADE
+)
+;
+
+CREATE TABLE tbl_reply (
+    rno INT AUTO_INCREMENT PRIMARY KEY,
+    tno INT NOT NULL,
+    reply VARCHAR(1000) NOT NULL,
+    replyer VARCHAR(100) NOT NULL,
+    replyDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    modifyDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    gno INT DEFAULT 0,
+    isDeleted TINYINT DEFAULT 0,
+    FOREIGN KEY (tno) REFERENCES tbl_board(tno) ON DELETE CASCADE
 )
 ;
 
