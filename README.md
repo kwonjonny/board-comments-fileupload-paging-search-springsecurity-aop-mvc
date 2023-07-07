@@ -129,7 +129,7 @@ CREATE TABLE tbl_board (
 ;
 
 CREATE TABLE tbl_board_img (
-  uuid varchar(50) PRIMARY KEY,
+	uuid varchar(50) PRIMARY KEY,
 	filename varchar(200) not null,
 	tno int not null,
 	ord int default 0,
