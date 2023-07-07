@@ -104,11 +104,4 @@ public class BoardServiceImpl implements BoardService {
       log.info("Read BoardServiceImpl Is Running");
       return boardMapper.readBoard(tno);
    }
-
-   @Override
-   @Transactional(readOnly = true)
-   public List<String> getBoardFile(Long tno) {
-      log.info("Read File BoardServiceImpl Is Running");
-      return fileMapper.readImage(tno);
-   }
 }

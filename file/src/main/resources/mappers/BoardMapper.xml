@@ -6,7 +6,7 @@
 <!-- BoardMapper Xml -->
 <mapper namespace="board.file.mappers.BoardMapper">
 
-
+<!-- BoardMapper id = "listBoard" -->
 <select id="listBoard" parameterType="board.file.dto.board.BoardListDTO" resultType="board.file.dto.board.BoardListDTO">
     SELECT tb.*, CONCAT(tbi.uuid, '_', tbi.filename) AS fileName
     FROM tbl_board tb
@@ -23,8 +23,7 @@
                 <if test="searchType == 'all'">OR</if>
                 tb.writer LIKE CONCAT('%', #{keyword}, '%')
             </if>
-        )
-       
+        ) 
     </if>
     LEFT JOIN tbl_board_img tbi ON tb.tno = tbi.tno AND tbi.ord = 0
     WHERE tb.tno > 0

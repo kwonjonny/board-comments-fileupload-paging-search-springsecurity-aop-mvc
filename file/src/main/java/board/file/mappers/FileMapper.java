@@ -20,8 +20,4 @@ public interface FileMapper {
     // Update Image
     int updateImage(List<Map<String, String>> imageList);
 
-    // read Image
-    @Select("select concat(uuid, '_' , filename) as fileName from tbl_board_img where tno = #{tno} order by ord asc")
-    List<String> readImage(Long tno);
-
 }
