@@ -89,7 +89,7 @@ public class ReplyMapperTets {
 
         // Update rno
         Long rno = replyCreateDTO.getRno();
-        replyMapper.updateReplyGno(rno);
+        replyMapper.updateReplyGno(rno ,rno);
 
         // Create Reply Check
         ReplyDTO replyDTO = replyMapper.readReply(rno);
