@@ -115,6 +115,24 @@
 | gno | INT | 그룹 번호 (기본값 0) |
 |isDeleted| TINYINT | 댓글.대댓글이 삭제되었는지 확인하고 업데이트|
 
+### Member 테이블 (`tbl_member`)
+| 컬럼명 | 데이터 타입 | 설명 |
+| --- | --- | --- |
+|email|VARCHAR(100)| 회원의 이메일 주소 (Primary Key)|
+|mpw|VARCHAR(100) |회원의 비밀번호|
+|mname|VARCHAR(100) | 회원의 이름|
+
+Member Role 테이블 (tbl_member_role)
+email: 회원의 이메일 주소
+rolename: 회원의 역할 이름
+
+Persistent Logins 테이블 (persistent_logins)
+username: 사용자 이름 (Primary Key)
+series: 로그인 시리즈 (Primary Key)
+token: 로그인 토큰
+last_used: 마지막으로 사용된 날짜 및 시간
+
+
 SQL 스키마:
 ```sql
 
@@ -147,6 +165,27 @@ CREATE TABLE tbl_reply (
     gno INT DEFAULT 0,
     isDeleted TINYINT DEFAULT 0,
     FOREIGN KEY (tno) REFERENCES tbl_board(tno) ON DELETE CASCADE
+)
+;
+
+CREATE TABLE tbl_member (
+	email varchar(100) PRIMARY KEY,
+	mpw varchar(100) NOT NULL,
+	mname varchar(100) NOT NULL
+)
+;
+
+CREATE TABLE tbl_member_role (
+	email varchar(100) not null,
+	rolename varchar(50) not null
+)
+;
+
+create table persistent_logins (
+       username varchar(64) not null,
+       series varchar(64) primary key,
+       token varchar(64) not null,
+       last_used timestamp not null
 )
 ;
 
