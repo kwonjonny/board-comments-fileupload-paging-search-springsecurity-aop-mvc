@@ -141,8 +141,8 @@ CREATE TABLE tbl_board (
 	title VARCHAR(500) NOT NULL,
 	content VARCHAR(1000) NOT NULL,
 	writer VARCHAR(100) NOT NULL,
-	registDate TIMESTAMP default NOW(),
-	updateDate TIMESTAMP default NOW()
+	registDate TIMESTAMP DEFAULT NOW(),
+	updateDate TIMESTAMP DEFAULT NOW()
 )
 ;
 
@@ -160,8 +160,8 @@ CREATE TABLE tbl_reply (
     tno INT NOT NULL,
     reply VARCHAR(1000) NOT NULL,
     replyer VARCHAR(100) NOT NULL,
-    replyDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    modifyDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    replyDate TIMESTAMP DEFAULT NOW(),
+    modifyDate TIMESTAMP DEFAULT NOW(),
     gno INT DEFAULT 0,
     isDeleted TINYINT DEFAULT 0,
     FOREIGN KEY (tno) REFERENCES tbl_board(tno) ON DELETE CASCADE
