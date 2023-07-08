@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content">
+
+        <form action="/member/join" method="post">
+            <h1>Member Join Page</h1>
+
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="mname" name="mname" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="mpw" name="mpw" required>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Join">
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

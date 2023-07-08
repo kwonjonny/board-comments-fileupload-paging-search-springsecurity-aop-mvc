@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import board.file.dto.member.MemberReadDTO;
 import board.file.dto.member.MemberConvertDTO;
+import board.file.dto.member.MemberDTO;
 
 @Mapper
 public interface MemberMapper {
@@ -28,6 +29,9 @@ public interface MemberMapper {
 
     // Delete Member
     int deleteMember(String email);
+
+    // Delete Member Role
+    int deleteMemberRole(String email);
 
     // Update Member 
     int updateMember(MemberConvertDTO memberConvertDTO);

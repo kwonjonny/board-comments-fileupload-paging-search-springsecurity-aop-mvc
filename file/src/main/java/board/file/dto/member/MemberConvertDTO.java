@@ -16,6 +16,6 @@ import lombok.ToString;
 public class MemberConvertDTO {
     // tbl_member
     private String email;
-    private String npw;
+    private String mpw;
     private String mname;
 }

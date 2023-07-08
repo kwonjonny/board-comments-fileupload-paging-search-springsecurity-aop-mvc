@@ -1,11 +1,9 @@
 package board.file.service;
 
 import board.file.dto.member.MemberConvertDTO;
+import board.file.dto.member.MemberDTO;
 
 public interface MemberService {
-    
-    // Read Member Service 
-    MemberConvertDTO selectMember(String email);
 
     // Create Member Service 
     int joinMember(MemberConvertDTO memberConvertDTO);
@@ -15,4 +13,7 @@ public interface MemberService {
 
     // Delete Member Service 
     int deleteMember(String email);
+
+    // readMember 
+    MemberConvertDTO readMember(String email);
 }

@@ -112,20 +112,4 @@ public class BoardServiceImpl implements BoardService {
       log.info("ViewCount BoardServiceImpl Is Running");
       boardMapper.viewCount(tno);
    }
-
-   // Board Like Count ServiceImpl
-   @Override
-   @Transactional
-   public void likeStatus(Long tno) {
-     BoardDTO board = boardMapper.readBoard(tno);
-      if (board.getLikeCnt() == 0) {
-        board.setLikeCnt(1L); // 좋아요 상태를 변경
-        board.setLikeCnt(board.getLikeCnt() + 1); // 좋아요 수 증가
-    } else {
-        board.setLikeCnt(0L); // 좋아요 상태를 변경
-        board.setLikeCnt(board.getLikeCnt() - 1); // 좋아요 수 감소
-    }
-    
-    boardMapper.likeCount(board); // 게시글 업데이트
-   }
 }

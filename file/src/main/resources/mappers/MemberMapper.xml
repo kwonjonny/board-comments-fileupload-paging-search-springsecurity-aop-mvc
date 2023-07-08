@@ -9,7 +9,7 @@
     <resultMap id="memberMap" type="board.file.dto.member.MemberReadDTO">
         <id property ="email" column ="email"/>
         <result property="mname" column="mname"/>
-        <result property="npw" column="npw"/>
+        <result property="mpw" column="mpw"/>
         <collection property="rolenames" resultMap="authMap"/>
     </resultMap>
 
@@ -29,8 +29,8 @@
     <insert id="joinMember" parameterType="board.file.dto.member.MemberConvertDTO">
         INSERT INTO 
         tbl_member
-        (email, npw, mname)
-        VALUES(#{email}, #{npw}, #{mname})
+        (email, mpw, mname)
+        VALUES(#{email}, #{mpw}, #{mname})
     </insert>
 
     <!-- MemberMapper id = "deleteMember" -->
@@ -43,7 +43,7 @@
     <update id="updateMember" parameterType="board.file.dto.member.MemberConvertDTO">
         UPDATE 
         tbl_member SET 
-        memberPassword = #{memberPassword}, memberName = #{memberName}
+        mpw = #{mpw}, mname = #{mname}
         WHERE email = #{email}
     </update>
 
@@ -53,5 +53,12 @@
         tbl_member
         WHERE email = #{email}
     </select>
+
+    <!-- MemberMapper id = "deleteMemberRole" -->
+    <delete id="deleteMemberRole" parameterType="java.lang.String">
+        DELETE FROM 
+        tbl_member_role
+        WHERE email = #{email}
+    </delete>
 
 </mapper>

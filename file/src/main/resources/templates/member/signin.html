@@ -1,34 +1,78 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/layout.html}">
+    layout:decorate="~{layout/layout.html}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <div layout:fragment="content">
 
-    <h1>WELCOME USER SIGN IN PAGE</h1>
-    <form action="/member/signin" method="post">
-        <p>
-            <input type="text" name="username">
-        </p>
-        <p>
-            <input type="text" name="password">
-        </p>
-        <p>
-        <input type="checkbox" name="remember-me">
-        이 컴퓨터에 쿠키를 저장하실겁니까 ? 
-        </p>
-        <p>
-            <button>signin</button>
-        </p>
-    </form>
+        <h1>WELCOME USER SIGN IN PAGE</h1>
+        <form action="/member/signin" method="post">
+            <p>
+                <input type="text" name="username">
+            </p>
+            <p>
+                <input type="password" name="password">
+            </p>
+            <p>
+                <input type="checkbox" name="remember-me">
+                이 컴퓨터에 쿠키를 저장하실겁니까 ?
+            </p>
+            <p>
+                <button>signin</button>
+            </p>
+        </form>
 
-    <a href="http://localhost:8084/oauth2/authorization/kakao">kakao 로그인</a>
+        <a href="http://localhost:8084/oauth2/authorization/kakao">kakao 로그인</a>
+
+        <p>
+            <a href="/member/join">Join as a new member</a>
+        </p>
+
+        <!-- Modal -->
+        <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="messageModalLabel">Notification</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="messageModalBody">
+                        <!-- The message will be inserted here by JavaScript -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
 
     </div>
-    
+
+    < <script layout:fragment="script" th:inline="javascript">
+        $(document).ready(function () {
+        var message = /*[[${message}]]*/ '';
+        if (message !== '') {
+        $('#messageModalBody').text(message);
+        $('#messageModal').modal('show');
+        setTimeout(function () {
+        $('#messageModal').modal('hide');
+        }, 1000);
+        }
+        });
+        </script>
+
+
+
 </body>
+
 </html>

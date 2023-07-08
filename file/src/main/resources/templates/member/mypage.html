@@ -1,19 +1,125 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/layout.html}">
+    layout:decorate="~{layout/layout.html}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <div layout:fragment="content">
-        [[${#authentication.principal.mname}]]
-  
+        <h1>Member My Page</h1>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
 
-        <hr>
-        [[${#authentication.principal}]]
+                            <form onsubmit="onSubmitForm(event)" method="get">
+
+                                <div class="form-group row">
+                                    <label for="mname" class="col-sm-3 text-end control-label col-form-label">Member
+                                        Name</label>
+                                    <div class="col-sm-9">
+                                        <span th:text="${member.mname}"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="email" class="col-sm-3 text-end control-label col-form-label">Member
+                                        Email</label>
+                                    <div class="col-sm-9">
+                                        <span class="email" th:text="${member.email}"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="email" class="col-sm-3 text-end control-label col-form-label">Member
+                                        Password (Protected)</label>
+                                    <div class="col-sm-9">
+                                        <span th:text="${member.mpw}"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-9 offset-sm-3">
+                                        <button type="submit">Go Update Page</button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                            <!-- 로그아웃 버튼 -->
+                            <form action="/member/logout" method="post">
+                                <button type="submit">Logout</button>
+                            </form>
+                            <!-- 회원 탈퇴 버튼 -->
+                            <form onsubmit="return false;" action="/member/delete" method="post">
+                                <button type="submit" onclick="confirmDelete()">Delete Account</button>
+                            </form>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog"
+                                aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteConfirmationLabel">Confirm Update</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            회원 정보 업데이트가 완료되었습니다.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
+    </div>
+
+    <script layout:fragment="script" th:inline="javascript">
+        function onSubmitForm(event) {
+            event.preventDefault();
+            var form = event.target;
+            var email = form.querySelector('span.email').textContent;
+            form.action = '/member/update/' + encodeURIComponent(email);
+            form.submit();
+        }
+
+        function confirmDelete() {
+            if (confirm("정말로 탈퇴하시겠습니까?")) {
+                var email = document.querySelector('span.email').textContent;
+                var form = document.querySelector('form[action="/member/delete"]');
+                form.action = '/member/delete/' + encodeURIComponent(email);
+                form.submit();
+            }
+        }
+
+        $(document).ready(function () {
+            var message = /*[[${message}]]*/ '';
+            if (message === '회원 업데이트 완료') {
+                $('#deleteConfirmationModal').modal('show');
+                setTimeout(function () {
+                    $('#deleteConfirmationModal').modal('hide');
+                }, 1000);
+            }
+        });
+    </script>
+
 </body>
+
 </html>

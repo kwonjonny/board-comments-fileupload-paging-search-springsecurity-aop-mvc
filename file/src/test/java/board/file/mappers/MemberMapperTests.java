@@ -23,16 +23,15 @@ public class MemberMapperTests {
 
     // Join Member Mapper Test 
     @Test
-    @Transactional
     @DisplayName("회원 가입 테스트")
     public void joinMemberTest() {
         // GIVEN 
         MemberConvertDTO memberConvertDTO = MemberConvertDTO.builder()
         .email("thistrik@naver.com")
-        .npw(passwordEncoder.encode(("1111")))
+        .mpw(passwordEncoder.encode(("1111")))
         .mname("권성준")
         .build();
-        String roleName = "ROLE_USER";
+        String roleName = "USER";
         // WHEN 
         memberMapper.joinMember(memberConvertDTO);
         memberMapper.createJoinMemberRole(memberConvertDTO.getEmail(), roleName);
@@ -41,13 +40,13 @@ public class MemberMapperTests {
 
     // Update Member Mapper Test 
     @Test
-    @Transactional
+    
     @DisplayName("회원 업데이트 테스트")
     public void updateMemberTest() {
         // GIVEN 
         MemberConvertDTO memberConvertDTO = MemberConvertDTO.builder()
         .email("thistrik@naver.com")
-        .npw(passwordEncoder.encode("1111"))
+        .mpw(passwordEncoder.encode("1111"))
         .mname("김선제")
         .build();
         String roleName = "ROLE_USER";
@@ -68,6 +67,7 @@ public class MemberMapperTests {
         String email = "thistrik@naver.com";
         // WHEN 
         memberMapper.deleteMember(email);
+        memberMapper.deleteMemberRole(email);
         // THEN 
         MemberConvertDTO readMember = memberMapper.selectMember(email);
         Assertions.assertNull(readMember, "readMember Should Be Null");

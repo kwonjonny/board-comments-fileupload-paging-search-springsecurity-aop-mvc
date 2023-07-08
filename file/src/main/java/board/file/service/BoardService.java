@@ -27,7 +27,4 @@ public interface BoardService {
 
     // Board View Count 
     void viewCount(Long tno);
-
-    // Board Like Count 
-    void likeStatus(Long tno);
 }
