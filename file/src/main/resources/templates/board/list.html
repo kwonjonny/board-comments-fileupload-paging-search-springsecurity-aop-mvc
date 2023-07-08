@@ -49,6 +49,7 @@
                             <th>제목:title 댓글:replyCount</th>
                             <th>writer</th>
                             <th>craeteDate</th>
+                            <th>조회수</th>
                             <th>IMG</th>
                         </tr>
                     </thead>
@@ -61,6 +62,7 @@
                             </td>
                             <td>[[${board.writer}]]</td>
                             <td>[[${board.registDate}]]</td>
+                            <td>[[${board.viewCnt}]]</td>
                             <td><img th:src="|http://localhost/s_${board.fileName}|"></td>
                         </tr>
                     </tbody>

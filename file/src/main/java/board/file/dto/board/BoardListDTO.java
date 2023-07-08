@@ -25,6 +25,7 @@ public class BoardListDTO {
     private LocalDate updateDate;
     private int replyCnt;
     private String fileName;
+    private Long viewCnt;
     /*
      * String 으로 BoardMapper id =
      * "List<BoardListDTO> listBoard(PageRequestDTO pageRequestDTO);"

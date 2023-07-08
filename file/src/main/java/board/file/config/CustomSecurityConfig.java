@@ -2,9 +2,9 @@ package board.file.config;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,32 +13,29 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import board.file.security.CustomOAuth2UserService;
 import board.file.security.handler.CustomAccessDeniedHandler;
+import board.file.security.handler.CustomOAuthSuccessHandler;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Configuration
-@EnableMethodSecurity // @Preauthorize using in controller
+@EnableMethodSecurity   // @Preauthorize 쓰려고 등록 
+@RequiredArgsConstructor
 public class CustomSecurityConfig {
 
-    // 의존성 주입
     private final DataSource dataSource;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    
 
-    // Autowired 명시적 표시
-    @Autowired
-    public CustomSecurityConfig(DataSource dataSource) {
-        log.info("Constructor Called, DataSource Injected.");
-        this.dataSource = dataSource;
-    }
-
-    // PasswordEncoder Using
+    // passwordEncoder 정의 bean 등록 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        log.info("Is Running PasswordEncoder");
         return new BCryptPasswordEncoder();
     }
 
-    // PresistentTokenRepository Using
+
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
@@ -46,37 +43,50 @@ public class CustomSecurityConfig {
         return repo;
     }
 
-    // FilterChain Method Using 
+    
+    
+    // filterChain 메소드 정의 bean 등록 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        log.info("Security Filter Chain Is Running");
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        
+        // seucirty statring log check 
+        log.info("=================== security config is ready ======================");
 
-        // Using Custom Login Page
+        // default seucirty login page use 
+        // httpSecurity.formLogin(Customizer.withDefaults());
+
+        // we will use custom login page 
         httpSecurity.formLogin(config -> {
-            config.loginPage("/member/login");
+            config.loginPage("/member/signin");
+            config.successHandler(new CustomOAuthSuccessHandler());
         });
 
-        // Using ExcptionHanlder 
+        // CustomAccessDeniedHandler.java 클래스의 
+        // acess deinedHandler 의 커스텀 메소드 요소를 쓴다 
         httpSecurity.exceptionHandling(config -> {
             config.accessDeniedHandler(new CustomAccessDeniedHandler());
         });
 
-        // Csrf Disable
-        httpSecurity.csrf(config -> {
+
+        // csrf disable 
+         httpSecurity.csrf(config -> {
             config.disable();
         });
 
-        // Social Login KaKao 
+        // 카카오로그인 경로지정 
         httpSecurity.oauth2Login(config -> {
-            config.loginPage("/mebmer/login");
+            config.loginPage("/member/signin");
+            config.successHandler(new CustomOAuthSuccessHandler());
         });
 
-        // Using RememberMe
+
+        // remberme
         httpSecurity.rememberMe(config -> {
             config.tokenRepository(persistentTokenRepository());
-            config.tokenValiditySeconds(60*60*24*7);    // 1 week RememberMe
+            config.tokenValiditySeconds(60*60*24*7); // 1 week 
         });
-
+    
+        // return security build
         return httpSecurity.build();
-    }
+    }   
 }

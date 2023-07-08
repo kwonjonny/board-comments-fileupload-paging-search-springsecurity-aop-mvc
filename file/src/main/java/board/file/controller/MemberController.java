@@ -1,45 +1,38 @@
 package board.file.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-// Spring Secuirty Member Controller Class 
 @Log4j2
 @Controller
-@RequestMapping("/member/")
+@RequiredArgsConstructor
+@RequestMapping("/member")
 public class MemberController {
     
-    // GET : Login
-    @GetMapping("login")
-    public String getLogin() {
-        log.info("GET | Member Login");
-        return "/member/login";
-    }
-
-    // GET : MyPage
-    @GetMapping("mypage")
-    public String getMyPage() {
-        log.info("GET | Member My Page");
-        return "/member/mypage";
-    }
-
-    // GET : Join Member 
-    @GetMapping("join")
-    public String getJoinMember() {
-        log.info("GET | Member Join");
-        return "/member/join";
-    }
-
-    // Post : Join Member 
-    @PostMapping("join")
-    public String postJoinMember() {
-        log.info("GET | Member join");
-        return "redirect:/member/mypage";
+    @PreAuthorize("permitAll")
+    @GetMapping("/signp")
+    public void signup() {
+        log.info("GET | /member/signup");
     }
 
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    // ("hasRole('USER')")
+    // ("hasRole('ADMIN')")
+    @GetMapping("/mypage")
+    public void myPage() {
+        log.info("GET | /member/mypage");
+    }
+
+    @PreAuthorize("permitAll")
+    @GetMapping("/signin")
+    public void signin() {
+        log.info("GET | /member/signin");
+    }
+    
 }

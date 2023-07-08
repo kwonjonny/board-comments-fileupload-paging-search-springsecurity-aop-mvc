@@ -10,25 +10,26 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j2;
 
 @Getter
 @Setter
+@Log4j2
 public class MemberDTO extends User implements OAuth2User {
-    
-    // tbl_member
-    private String email;
-    private String memberPassword;
-    private String memberName;
 
-    public MemberDTO(String email, String memberPassword, String memberName, List<String> roleNames){
+  private String mname;
+  private String email;
+  private String pw;
 
-    super(email,memberPassword,roleNames.stream().map(str -> new SimpleGrantedAuthority("ROLE_"+str)).collect(Collectors.toList()));
-    this.memberName = memberName;
+  public MemberDTO(String email, String npw, String mname, List<String> roleNames) {
+
+    super(email, npw, roleNames.stream().map(str -> new SimpleGrantedAuthority("ROLE_" + str)).collect(Collectors.toList()));
+    this.mname = mname;
     this.email = email;
-    this.memberPassword = memberPassword;
+    this.pw = npw;
   }
 
-  // Aotuh2User를 구현함으로써 두개의 강제 메소드 정의 
+  // Aotuh2User를 구현함으로써 두개의 강제 메소드 정의
   @Override
   public Map<String, Object> getAttributes() {
     return null;

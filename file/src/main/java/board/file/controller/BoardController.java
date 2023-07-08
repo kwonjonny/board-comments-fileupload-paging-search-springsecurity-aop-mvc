@@ -1,12 +1,15 @@
 package board.file.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import board.file.dto.board.BoardCreateDTO;
@@ -16,22 +19,28 @@ import board.file.dto.board.BoardUpdateDTO;
 import board.file.dto.page.PageRequestDTO;
 import board.file.dto.page.PageResponseDTO;
 import board.file.service.BoardService;
+import board.file.util.ManagementCookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
 
 // Board Controller Class 
 @Log4j2
 @Controller
 @RequestMapping("/board/")
+@PreAuthorize("permitAll")
 public class BoardController {
 
     // 의존성 주입
     private final BoardService boardServce;
+    private final ManagementCookie managementCookie;
 
     // Autowired 명시적 표시
     @Autowired
-    public BoardController(BoardService boardService) {
+    public BoardController(BoardService boardService, ManagementCookie managementCookie) {
         log.info("Constructor Called, Service Injected.");
         this.boardServce = boardService;
+        this.managementCookie = managementCookie;
     }
 
     // GET : Create
@@ -52,8 +61,12 @@ public class BoardController {
 
     // GET : Read
     @GetMapping("read/{tno}")
-    public String getBoardRead(@PathVariable("tno") Long tno, Model model) {
+    public String getBoardRead(@PathVariable("tno") Long tno, Model model, HttpServletRequest request, HttpServletResponse response) {
         log.info("GET | Board Read");
+        if(managementCookie.createCookie(request, response, tno)) {
+            boardServce.viewCount(tno);
+            log.info("쿠키 굽는중");
+        }
         BoardDTO list = boardServce.readBoard(tno);
         model.addAttribute("list", list);
         return "/board/read";

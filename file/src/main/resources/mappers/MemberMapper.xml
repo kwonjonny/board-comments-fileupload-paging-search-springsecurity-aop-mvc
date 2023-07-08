@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- MemberMapper XML -->
 <mapper namespace="board.file.mappers.MemberMapper">
 
     <resultMap id="memberMap" type="board.file.dto.member.MemberReadDTO">
@@ -16,14 +17,41 @@
         <result column ="rolename"/>
     </resultMap>
 
-    
-     <select id="readMember" resultMap="memberMap"> 
-        select * from 
+    <!-- MemberMapper id = "readMember" -->
+     <select id="selectOne" resultMap="memberMap"> 
+        SELECT * FROM 
         tbl_member 
-        tm inner join tbl_member_role tmr on tmr.email = tm.email 
-        where tm.email = #{email}
+        tm INNER JOIN tbl_member_role tmr ON tmr.email = tm.email 
+        WHERE tm.email = #{email}
     </select>
 
+    <!-- MemberMapper id = "joinMember" -->
+    <insert id="joinMember" parameterType="board.file.dto.member.MemberConvertDTO">
+        INSERT INTO 
+        tbl_member
+        (email, npw, mname)
+        VALUES(#{email}, #{npw}, #{mname})
+    </insert>
 
+    <!-- MemberMapper id = "deleteMember" -->
+    <delete id="deleteMember" parameterType="java.lang.String">
+        DELETE FROM tbl_member
+        WHERE email = #{email}
+    </delete>
+
+    <!-- MemberMapper id = "updateMember" -->
+    <update id="updateMember" parameterType="board.file.dto.member.MemberConvertDTO">
+        UPDATE 
+        tbl_member SET 
+        memberPassword = #{memberPassword}, memberName = #{memberName}
+        WHERE email = #{email}
+    </update>
+
+    <!-- MemberMapper id = "selectMember" -->
+    <select id="selectMember" parameterType="java.lang.String">
+        SELECT * FROM
+        tbl_member
+        WHERE email = #{email}
+    </select>
 
 </mapper>

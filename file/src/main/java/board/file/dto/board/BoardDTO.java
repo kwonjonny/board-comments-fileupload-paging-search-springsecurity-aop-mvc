@@ -26,6 +26,7 @@ public class BoardDTO {
     private LocalDate updateDate;
     private int replyCnt;
     private List<String> fileName;
+    private Long likeCnt;
 
     /*
      * List<String> 의 형태로 BoardMapper id = "BoardDTO readBoard(Long tno);"

@@ -100,4 +100,13 @@ WHERE b.tno = #{tno};
     ) tbl_board
 </select>
 
+
+<!-- BoardMapper id = "viewCount" -->
+<update id="viewCount" parameterType="long">
+    UPDATE tbl_board
+    SET viewCnt = viewCnt +1
+    WHERE tno = #{tno}
+</update>
+
+
 </mapper>

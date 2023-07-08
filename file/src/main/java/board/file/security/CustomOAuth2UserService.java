@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -15,21 +14,17 @@ import org.springframework.stereotype.Service;
 import board.file.dto.member.MemberDTO;
 import board.file.dto.member.MemberReadDTO;
 import board.file.mappers.MemberMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-@Log4j2
+// kakao login 성공 페이지를 보여주기위한 서비스 클래스입니다 
 @Service
+@Log4j2
+@RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     
-    // 의존성 주입 
     private final MemberMapper memberMapper;
-
-    // Autowired 명시적 표시 
-    @Autowired
-    public CustomOAuth2UserService(MemberMapper memberMapper) {
-        log.info("Constructor Called, CustomOAuth2UserService Injected.");
-        this.memberMapper = memberMapper;
-    }
+    
 
     // 원하는 정보를 추출하는 서비스 
     @Override
@@ -53,11 +48,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 break;
         }
 
+        log.info("===============================");
+        log.info(email + " : : : : : : : : : :clientEmail");
+        log.info("===============================");
+
         // DB에 해당 사용자가 있다면
-        MemberReadDTO dbAuthCheck = memberMapper.readMember(email); 
+        MemberReadDTO dbAuthCheck = memberMapper.selectOne(email); 
         // selectOne 메소드가 사용자의 이메일을 인자로 받아 MemberDTO를 반환한다고 가정합니다.
         if(dbAuthCheck != null) {
-            return new MemberDTO(email, dbAuthCheck.getMemberPassword(), dbAuthCheck.getMemberName(), dbAuthCheck.getRolenames());
+            return new MemberDTO(email, dbAuthCheck.getNpw(), dbAuthCheck.getMname(), dbAuthCheck.getRolenames());
 
         }
 
@@ -65,9 +64,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         // db에 해당 사용자가 없다면 
         // MemberDTO 정의 
         // 패스워드는 이미 카카오가 인증을 끝내줬으므로 passwordEncoder를 아무거나 집어넣어준다 
-        MemberDTO memberDTO = new MemberDTO(email, "", "카카오사용자", List.of("USER"));
+        MemberDTO memberDTO = new MemberDTO(email, "", "카카오사용자", List.of("ROLE_USER"));
         log.info("memberDTO"+memberDTO);
-        log.info("memberDTO.getMname"+memberDTO.getMemberName());
+        log.info("memberDTO.getMname"+memberDTO.getMname());
         log.info(memberDTO.getUsername());
         // memberDTO반환 해야한다 소셜 로그인을 한 멤버를 memberDTO타입으로 반환해줘야한다 
         // 이유는 : 반환된 사용자의 정보가 똑같아야 된다 
