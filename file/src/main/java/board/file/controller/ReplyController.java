@@ -40,6 +40,7 @@ public class ReplyController {
 
     // List Reply
     @GetMapping("{tno}/list")
+    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<PageResponseDTO<ReplyDTO>> getListReply(@PathVariable("tno") Long tno,
             PageRequestDTO pageRequestDTO) {
         log.info("RestController : Is Running List Reply");
@@ -49,6 +50,7 @@ public class ReplyController {
 
     // Create Reply & Reply Child
     @PostMapping("{tno}/create")
+    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Long>> postCreateReply(@PathVariable("tno") Long tno,
             @RequestBody ReplyCreateDTO replyCreateDTO) {
         log.info("RestController : Is Running Create Reply");
@@ -58,6 +60,7 @@ public class ReplyController {
 
     // Delete Reply
     @DeleteMapping("{rno}")
+    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, String>> deleteReply(@PathVariable("rno") Long rno) {
         log.info("RestController : Is Running Delete Reply");
         replyService.deleteReply(rno);
@@ -66,6 +69,7 @@ public class ReplyController {
 
     // Update Reply
     @PutMapping("update")
+    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, String>> updateReply(@RequestBody ReplyUpdateDTO replyUpdateDTO) {
         log.info("RestController : Is Running Update Reply");
         replyService.updateReply(replyUpdateDTO);
@@ -74,6 +78,7 @@ public class ReplyController {
 
     // Read Reply
     @GetMapping("{rno}")
+    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<ReplyDTO> readReply(@PathVariable("rno") Long rno) {
         log.info("RestController : Is Running Read Reply");
         ReplyDTO replyDTO = replyService.readReply(rno);

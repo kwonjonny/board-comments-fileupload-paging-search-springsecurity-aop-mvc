@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import board.file.dto.board.BoardCreateDTO;
@@ -28,7 +26,6 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Controller
 @RequestMapping("/board/")
-@PreAuthorize("permitAll")
 public class BoardController {
 
     // 의존성 주입
@@ -45,6 +42,7 @@ public class BoardController {
 
     // GET : Create
     @GetMapping("create")
+    @PreAuthorize("hasAnyRole('USER')")
     public String getBoardCreate() {
         log.info("GET | Board Create");
         return "/board/create";
@@ -52,6 +50,7 @@ public class BoardController {
 
     // GET : List
     @GetMapping("list")
+    @PreAuthorize("hasAnyRole('USER')")
     public String getBoardList(PageRequestDTO pageRequestDTO, Model model) {
         PageResponseDTO<BoardListDTO> list = boardServce.listboard(pageRequestDTO);
         model.addAttribute("list", list);
@@ -61,6 +60,7 @@ public class BoardController {
 
     // GET : Read
     @GetMapping("read/{tno}")
+    @PreAuthorize("hasAnyRole('USER')")
     public String getBoardRead(@PathVariable("tno") Long tno, Model model, HttpServletRequest request, HttpServletResponse response) {
         log.info("GET | Board Read");
         if(managementCookie.createCookie(request, response, tno)) {
@@ -74,6 +74,7 @@ public class BoardController {
 
     // GET : Update
     @GetMapping("update/{tno}")
+    @PreAuthorize("hasAnyRole('USER')")
     public String getBoardUpdate(@PathVariable("tno") Long tno, Model model) {
         log.info("GET | Board Update");
         BoardDTO list = boardServce.readBoard(tno);
@@ -83,6 +84,7 @@ public class BoardController {
 
     // POST : Delete
     @PostMapping("delete/{tno}")
+    @PreAuthorize("hasAnyRole('USER')")
     public String postBoardDelete(@PathVariable("tno") Long tno, RedirectAttributes redirectAttributes) {
         log.info("POST | Board Delte");
         boardServce.deleteBoard(tno);
@@ -92,6 +94,7 @@ public class BoardController {
 
     // POST : Update
     @PostMapping("update")
+    @PreAuthorize("hasAnyRole('USER')")
     public String postBoardUpdate(BoardUpdateDTO boardUpdateDTO, RedirectAttributes redirectAttributes) {
         log.info("POST | Board Update");
         boardServce.updateBoard(boardUpdateDTO);
@@ -101,6 +104,7 @@ public class BoardController {
 
     // POST : Create
     @PostMapping("/create")
+    @PreAuthorize("hasAnyRole('USER')")
     public String postBoardCreate(BoardCreateDTO boardCreateDTO, RedirectAttributes redirectAttributes) {
         log.info("POST | Board Create");
         Long tno = boardServce.createBoard(boardCreateDTO);

@@ -25,7 +25,6 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Log4j2
 @RestController
 @RequiredArgsConstructor
-@PreAuthorize("permitAll")
 public class FileUploadController {
 
     // File Upload Path = Enginx
@@ -33,6 +32,7 @@ public class FileUploadController {
     private String uploadPath;
 
     @PostMapping("/upload")
+    @PreAuthorize("hasAnyRole('USER')")
     public List<UploadResultDTO> postFileUpload(MultipartFile[] files) {
         log.info("Is Running UploadFile RestController");
         if (files == null || files.length == 0) {
@@ -65,6 +65,7 @@ public class FileUploadController {
     }
 
     // Delete File
+    @PreAuthorize("hasAnyRole('USER')")
     @DeleteMapping("removeFile/{fileName}")
     public Map<String, String> deleteFile(@PathVariable("fileName") String fileName) {
         File originFile = new File(uploadPath, fileName);

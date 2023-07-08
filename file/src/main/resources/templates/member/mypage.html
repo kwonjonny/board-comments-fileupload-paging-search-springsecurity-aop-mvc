@@ -16,7 +16,6 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-
                             <form onsubmit="onSubmitForm(event)" method="get">
 
                                 <div class="form-group row">
@@ -44,20 +43,23 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <div class="col-sm-9 offset-sm-3">
-                                        <button type="submit">Go Update Page</button>
-                                    </div>
+                                    <button type="submit" class="btn btn-primary">Go Update Page</button>
                                 </div>
-
+                                
                             </form>
 
                             <!-- 로그아웃 버튼 -->
                             <form action="/member/logout" method="post">
-                                <button type="submit">Logout</button>
+                                <button type="submit" class="btn btn-primary">Logout</button>
                             </form>
                             <!-- 회원 탈퇴 버튼 -->
                             <form onsubmit="return false;" action="/member/delete" method="post">
-                                <button type="submit" onclick="confirmDelete()">Delete Account</button>
+                                <button type="submit" class="btn btn-primary" onclick="confirmDelete()">Delete
+                                    Account</button>
+                            </form>
+                            <!-- 게시판 리스트 버튼 -->
+                            <form action="/board/list" method="get">
+                                <button type="submit" class="btn btn-primary">Board List Page</button>
                             </form>
 
                             <!-- Modal -->

@@ -45,15 +45,10 @@ public class CustomSecurityConfig {
     // FilterChain
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         log.info("filter chain----------------------------");
-
-        // 스프링 기본 로그인 설정화면
-        // http.formLogin(Customizer.withDefaults());
 
         // 커스텀 로그인 페이지 경로 지정
         http.formLogin(config -> {
-
             config.loginPage("/member/signin");
 
         });
@@ -71,14 +66,12 @@ public class CustomSecurityConfig {
 
         // form 안에있는 Hidden으로 포함된 csrf input tag를 없애겠다.
         http.csrf(config -> {
-
             config.disable();
 
         });
 
         // social 로그인 signin페이지에 설정 (카카오)
         http.oauth2Login(config -> {
-
             config.loginPage("/member/signin");
             config.successHandler(new CustomOAuthSuccessHandler());
 
@@ -90,7 +83,6 @@ public class CustomSecurityConfig {
                     .invalidateHttpSession(true)
                     .logoutSuccessUrl("/member/signin");
         });
-
         return http.build();
     }
 
