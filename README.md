@@ -1,6 +1,6 @@
 
 
-# 개발 상태 : [게시판, 댓글대댓글, 파일업로드 개발 완료 , Spring Security 개발 완료]
+# 개발 상태 : [게시판 CRUD, 조회수, 댓글대댓글, 파일업로드 개발 완료 , Spring Security 개발 완료, 좋아요 개발중 ]
 
 # board-comments-fileupload-paging-search-mvc
 - 프로젝트 유형: Board 게시판 토이 프로젝트
