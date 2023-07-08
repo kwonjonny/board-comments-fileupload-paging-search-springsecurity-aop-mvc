@@ -6,6 +6,86 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Board Read Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    .container-fluid {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .card {
+      border: none;
+      border-radius: 4px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .col-form-label {
+      font-weight: bold;
+    }
+
+    .form-control {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    textarea.form-control {
+      resize: none;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background-color: #0069d9;
+    }
+
+    .border-top {
+      border-top: 1px solid #ddd;
+    }
+
+    .card-footer {
+      padding: 20px;
+    }
+
+    .card-footer .btn-primary {
+      margin-right: 10px;
+    }
+
+    .d-flex.align-items-center {
+      display: flex;
+      align-items: center;
+    }
+
+    .my-2 {
+      margin-top: 2px;
+      margin-bottom: 2px;
+    }
+  </style>
 </head>
 
 <body>
@@ -88,8 +168,6 @@
                 </div>
                 <!-- img End -->
 
-
-
                 <!-- 상세 페이지 이미지 표시 영역 start -->
                 <div id="imageDisplayArea">
                 </div>
@@ -107,6 +185,16 @@
 
               </form>
             </div>
+
+
+            <!-- Like Start -->
+            <div class="form-group row">
+              <label for="likeButton" class="col-sm-3 text-end control-label col-form-label">Like</label>
+              <div class="col-sm-9">
+                <button id="likeButton" class="btn btn-primary">Like</button>
+              </div>
+            </div>
+            <!-- Like End -->
 
           </div>
         </div>
@@ -184,6 +272,11 @@
     <script src="/js/reply.js"></script>
     <!-- Replt End -->
 
+    <!-- Like Start -->
+    <script src="/js/like.js">
+    </script>
+    <!-- Like End -->
+
     <!-- Update Modal Message Start -->
     <div class="modal alertModal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
@@ -206,6 +299,8 @@
     const actionForm = document.querySelector(".actionForm");
     // tno 의 값을 boardDTO.tno 를 통해 get 
     const tno = [[${ list.tno }]]
+
+    const likeLink = `http://localhost:8084/like/`
 
     // Update Action Start 
     const actionUpdate = document.querySelector(".updateButton");
@@ -240,6 +335,8 @@
 
     // RestController Action Link 
     const link = `http://localhost:8084/replies/`
+
+
     // Reply And ReplyChild List 등록 
     const listUl = document.querySelector(".listUl");
 
@@ -439,9 +536,28 @@
       alertModal.show()
     }
     // Update Message Modal End
-   
 
 
+    document.addEventListener('DOMContentLoaded', () => {
+      const likeButton = document.getElementById('likeButton');
+      const tnoInput = document.getElementById('tno');
+
+      likeButton.addEventListener('click', async () => {
+        const tno = tnoInput.value;
+        const likeData = {
+          tno: tno
+          // email is handled by server
+        };
+
+        try {
+          const result = await createLike(likeData);
+          console.log(result); // Process the result as needed
+        } catch (error) {
+          console.error('Error creating like:', error);
+          // Handle the error gracefully
+        }
+      });
+    });
   </script>
 </body>
 

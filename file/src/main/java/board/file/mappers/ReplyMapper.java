@@ -10,7 +10,7 @@ import board.file.dto.reply.ReplyCreateDTO;
 import board.file.dto.reply.ReplyDTO;
 import board.file.dto.reply.ReplyUpdateDTO;
 
-// Reply Mapper Class 
+// Reply Mapper Interface 
 @Mapper
 public interface ReplyMapper {
 

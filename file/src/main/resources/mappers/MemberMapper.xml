@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- MemberMapper XML -->
+<!-- MemberMapper Xml -->
 <mapper namespace="board.file.mappers.MemberMapper">
 
     <resultMap id="memberMap" type="board.file.dto.member.MemberReadDTO">

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- LikeMapper Xml -->
+<mapper namespace="board.file.mappers.LikeMapper">
+
+    <!-- LikeMapper id = "createLike" -->
+    <insert id="createLike" parameterType="board.file.dto.like.LikeDTO">
+        INSERT INTO tbl_like
+        (email , tno) 
+        VALUES(#{email}, #{tno})
+    </insert>
+
+    <!-- LikeMapper id = "deleteLike" -->
+    <delete id="deleteLike" parameterType="board.file.dto.like.LikeDTO">
+        DELETE FROM 
+        tbl_like
+        WHERE tno = #{tno} AND email = #{email}
+    </delete>
+
+    <!-- LikeMapper id = "countLike" -->
+    <select id="countLikes" parameterType="long">
+        SELECT * FROM 
+        tbl_like
+        WHERE tno = #{tno}
+    </select>
+
+</mapper>

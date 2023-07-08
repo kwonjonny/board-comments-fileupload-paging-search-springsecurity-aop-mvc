@@ -6,8 +6,8 @@ import org.apache.ibatis.annotations.Param;
 
 import board.file.dto.member.MemberReadDTO;
 import board.file.dto.member.MemberConvertDTO;
-import board.file.dto.member.MemberDTO;
 
+// MemberMapper Interface 
 @Mapper
 public interface MemberMapper {
     
@@ -15,10 +15,6 @@ public interface MemberMapper {
      * Security Member Read 
      */
     MemberReadDTO selectOne(String email);
-
-    // // Join Member
-    // @Insert("INSERT INTO tbl_member (email, memberPassword, memberName) VALUES (#{email}, #{memberPassword}, #{memberName})")
-    // int joinMember(@Param("email") String email, @Param("memberPassword") String memberPassword, @Param("memberName") String memberName);
 
     // Create Role 
     @Insert("INSERT INTO tbl_member_role (email, rolename) VALUES (#{email}, #{rolename})")
