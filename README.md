@@ -189,4 +189,14 @@ create table persistent_logins (
 )
 ;
 
+CREATE TABLE tbl_like (
+    tno INT NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    registDate TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (tno, email),
+    FOREIGN KEY (tno) REFERENCES tbl_board(tno) ON DELETE CASCADE,
+    FOREIGN KEY (email) REFERENCES tbl_member(email) ON DELETE CASCADE
+)
+;
+
 ```
