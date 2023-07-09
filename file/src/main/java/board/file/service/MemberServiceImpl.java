@@ -56,7 +56,7 @@ public class MemberServiceImpl implements MemberService {
 
     // Read Member 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public MemberConvertDTO readMember(String email) {
         return memberMapper.selectMember(email);
     }

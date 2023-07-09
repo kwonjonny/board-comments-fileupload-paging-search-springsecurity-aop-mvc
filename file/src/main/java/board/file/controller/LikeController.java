@@ -34,38 +34,24 @@ public class LikeController {
         this.likeService = likeService;
     }
 
-    // Create Like
-    @PostMapping("create")
+    // Toggle Like
+    @PostMapping("toggle/{tno}")
     @PreAuthorize("hasAnyRole('USER')")
-    public ResponseEntity<Map<String, Integer>> createLike(@RequestBody LikeDTO likeDTO,
-            Authentication authentication) {
+    public ResponseEntity<Map<String, Integer>> toggleLike(@PathVariable("tno") Long tno, Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String email = userDetails.getUsername();
-        likeDTO.setEmail(email);
-        log.info("RestController | Create Like");
-        int result = likeService.createLike(likeDTO);
-        return new ResponseEntity<>(Map.of("result", result), HttpStatus.OK);
-    }
 
-    // Delete Like
-    @PostMapping("delete")
-    @PreAuthorize("hasAnyRole('USER')")
-    public ResponseEntity<Map<String, Integer>> deleteLike(@RequestBody LikeDTO likeDTO,
-            Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String email = userDetails.getUsername();
-        likeDTO.setEmail(email);
-        log.info("RestController | Delete Like");
-        int result = likeService.deleteLike(likeDTO);
+        log.info("RestController | Toggle Like");
+        int result = likeService.toggleLike(tno, email);
         return new ResponseEntity<>(Map.of("result", result), HttpStatus.OK);
     }
 
     // Count Like
-    @GetMapping("count")
+    @GetMapping("{tno}/count")
     @PreAuthorize("hasAnyRole('USER')")
-    public ResponseEntity<Map<String, Integer>> countLike(@PathVariable("tno") Long tno) {
+    public ResponseEntity<Map<String, Long>> countLike(@PathVariable("tno") Long tno) {
         log.info("RestController | Count Like");
-        int result = likeService.countLike(tno);
+        Long result = likeService.countLike(tno);
         return new ResponseEntity<>(Map.of("result", result), HttpStatus.OK);
     }
 }

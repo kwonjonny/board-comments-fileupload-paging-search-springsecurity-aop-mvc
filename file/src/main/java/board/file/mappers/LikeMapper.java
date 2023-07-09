@@ -15,5 +15,9 @@ public interface LikeMapper {
     int deleteLike(LikeDTO likeDTO); 
 
     // Count Like 
-    int countLikes(Long tno);
+    Long countLikes(Long tno);
+
+    // Check Like Member    
+    LikeDTO checkLikeByMemberAndPost(Long tno, String email);
+
 }

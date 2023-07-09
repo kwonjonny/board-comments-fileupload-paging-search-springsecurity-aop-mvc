@@ -23,27 +23,28 @@ public class LikeServiceImpl implements LikeService {
         this.likeMapper = likeMapper;
     }
 
-    // Create Like ServiceImpl
-    @Override
-    @Transactional
-    public int createLike(LikeDTO likeDTO) {
-        log.info("CreateLike LikeServiceImpl Is Running");
-        return likeMapper.createLike(likeDTO);
-    }
-
-    // Delete Like ServiceImpl
-    @Override
-    @Transactional
-    public int deleteLike(LikeDTO likeDTO) {
-        log.info("DeleteLike LikeServiceImpl Is Running");
-        return likeMapper.deleteLike(likeDTO);
-    }
-
     // Count Like ServiceImpl
     @Override
     @Transactional(readOnly = true)
-    public int countLike(Long tno) {
+    public Long countLike(Long tno) {
         log.info("LikeCount LikeServiceImpl Is Running");
         return likeMapper.countLikes(tno);
+    }
+
+    // Toggle Like ServiceImpl
+    @Override
+    @Transactional
+    public int toggleLike(Long tno, String email) {
+        log.info("ToggleLike LikeServiceImpl Is Running");
+        LikeDTO likeDTO = LikeDTO.builder()
+                .email(email)
+                .tno(tno)
+                .build();
+        LikeDTO existingLike = likeMapper.checkLikeByMemberAndPost(tno, email);
+        if (existingLike == null) {
+            return likeMapper.createLike(likeDTO);
+        } else {
+            return likeMapper.deleteLike(likeDTO);
+        }
     }
 }

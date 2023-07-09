@@ -85,6 +85,16 @@
       margin-top: 2px;
       margin-bottom: 2px;
     }
+
+    #likeCount {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      color: #d65ece;
+      font-size: 20px;
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -187,14 +197,12 @@
             </div>
 
 
-            <!-- Like Start -->
-            <div class="form-group row">
-              <label for="likeButton" class="col-sm-3 text-end control-label col-form-label">Like</label>
-              <div class="col-sm-9">
-                <button id="likeButton" class="btn btn-primary">Like</button>
-              </div>
+            <button id="likeButton" onclick="toggleLike()">Like</button>
+            <div id="likeCount">
+              좋아요
             </div>
-            <!-- Like End -->
+
+
 
           </div>
         </div>
@@ -272,10 +280,7 @@
     <script src="/js/reply.js"></script>
     <!-- Replt End -->
 
-    <!-- Like Start -->
-    <script src="/js/like.js">
-    </script>
-    <!-- Like End -->
+
 
     <!-- Update Modal Message Start -->
     <div class="modal alertModal" tabindex="-1" role="dialog">
@@ -300,7 +305,6 @@
     // tno 의 값을 boardDTO.tno 를 통해 get 
     const tno = [[${ list.tno }]]
 
-    const likeLink = `http://localhost:8084/like/`
 
     // Update Action Start 
     const actionUpdate = document.querySelector(".updateButton");
@@ -538,26 +542,37 @@
     // Update Message Modal End
 
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const likeButton = document.getElementById('likeButton');
-      const tnoInput = document.getElementById('tno');
 
-      likeButton.addEventListener('click', async () => {
-        const tno = tnoInput.value;
-        const likeData = {
-          tno: tno
-          // email is handled by server
-        };
 
-        try {
-          const result = await createLike(likeData);
-          console.log(result); // Process the result as needed
-        } catch (error) {
-          console.error('Error creating like:', error);
-          // Handle the error gracefully
-        }
-      });
-    });
+    // 좋아요 시작 
+
+    // Like Start
+    const likeLink = "http://localhost:8084/like/";
+
+    // Count Like
+    const countLike = async (tno) => {
+      const { data } = await axios.get(`${likeLink}${tno}/count`);
+      return data;
+    };
+
+    const likeCountElement = document.getElementById("likeCount");
+
+    const loadLikeCount = async (tno) => {
+      console.log("tno:", tno); // Log the value of tno
+      const { result } = await countLike(tno);
+      const likeCount = result
+      const likeCountHTML = `<div>Likes: ${likeCount}</div>`;
+      likeCountElement.innerHTML = likeCountHTML;
+    };
+
+    loadLikeCount(tno);
+
+
+
+
+
+
+
   </script>
 </body>
 

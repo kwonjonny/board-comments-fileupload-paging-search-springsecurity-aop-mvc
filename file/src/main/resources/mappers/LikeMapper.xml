@@ -22,9 +22,15 @@
 
     <!-- LikeMapper id = "countLike" -->
     <select id="countLikes" parameterType="long">
+       SELECT COUNT(*) FROM tbl_like
+       WHERE tno = #{tno}
+    </select>
+
+    <!-- LikeMapper id = "checkLikeByMemberAndPost" -->
+    <select id="checkLikeByMemberAndPost" parameterType="map">
         SELECT * FROM 
-        tbl_like
-        WHERE tno = #{tno}
+        tbl_like 
+        WHERE tno = #{tno} AND email = #{email}
     </select>
 
 </mapper>
