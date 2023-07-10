@@ -1,6 +1,6 @@
 
 
-# 개발 상태 : [게시판 CRUD, 조회수, 댓글대댓글, 파일업로드 개발 완료 , Spring Security 개발 완료, 좋아요 개발중 ]
+# 개발 상태 : [게시판 CRUD, 조회수, 댓글대댓글, 파일업로드 개발 완료 , Spring Security 개발 완료, 좋아요 개발 완료, 공지사항 개발중  ]
 
 # board-comments-fileupload-paging-search-mvc
 - 프로젝트 유형: Board 게시판 토이 프로젝트
@@ -122,9 +122,11 @@
 |mpw|VARCHAR(100) |회원의 비밀번호|
 |mname|VARCHAR(100) | 회원의 이름|
 
-Member Role 테이블 (tbl_member_role)
-email: 회원의 이메일 주소
-rolename: 회원의 역할 이름
+### Member Role 테이블 (`tbl_member_role`)
+| 컬럼명 | 데이터 타입 | 설명 |
+| --- | --- | --- |
+|email| VARCHAR(500) |회원의 이메일 주소 |
+|rolename|VARCHAR(500)| 회원의 역할 이름|
 
 Persistent Logins 테이블 (persistent_logins)
 username: 사용자 이름 (Primary Key)
