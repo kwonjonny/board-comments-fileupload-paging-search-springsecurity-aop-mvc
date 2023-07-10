@@ -98,6 +98,7 @@
 | viewCnt | INT | Board 의 조회수|
 
 ### Board Image 테이블 (`tbl_board_img`)
+
 | 컬럼명   | 데이터 타입     | 설명                                       |
 |----------|----------------|--------------------------------------------|
 |uuid	|VARCHAR(50)	|이미지 항목의 고유 식별자 (Primary Key)
@@ -106,6 +107,7 @@
 |ord	|INT	|이미지 순서 (기본값 0)
 
 ### Reply 테이블 (`tbl_reply`)
+
 | 컬럼명 | 데이터 타입 | 설명 |
 | --- | --- | --- |
 | rno | INT | 답글 항목의 고유 식별자 (Primary Key, 자동 증가) |
@@ -118,6 +120,7 @@
 |isDeleted| TINYINT | 댓글.대댓글이 삭제되었는지 확인하고 업데이트|
 
 ### Member 테이블 (`tbl_member`)
+
 | 컬럼명 | 데이터 타입 | 설명 |
 | --- | --- | --- |
 |email|VARCHAR(100)| 회원의 이메일 주소 (Primary Key)|
@@ -125,12 +128,14 @@
 |mname|VARCHAR(100) | 회원의 이름|
 
 ### Member Role 테이블 (`tbl_member_role`)
+
 | 컬럼명 | 데이터 타입 | 설명 |
 | --- | --- | --- |
 |email| VARCHAR(500) |회원의 이메일 주소 |
 |rolename|VARCHAR(500)| 회원의 역할 이름|
 
 ### Persistent Logins 테이블 (`persistent_logins`)
+
 | 컬럼명 | 데이터 타입 | 설명 |
 | --- | --- | --- |
 |username| VARCHAR(64) |사용자 이름 (Primary Key)
@@ -138,6 +143,12 @@
 |token| VARCHAR(64)|로그인 토큰
 |last_used| TIMESTAMP |마지막으로 사용된 날짜 및 시간
 
+### Like 테이블 (`tbl_like`)
+| 컬럼명 | 데이터 타입 | 설명 |
+| --- | --- | --- |
+|tno|	INT|	"좋아요"가 달린 게시글의 고유 식별자 (외래키, tbl_board 참조)|
+|email|	VARCHAR(100)|	"좋아요"를 누른 회원의 이메일 주소 (외래키, tbl_member 참조)|
+|registDate|	TIMESTAMP|	"좋아요"가 등록된 날짜 및 시간 (기본값: 현재 시간)|
 
 SQL 스키마:
 ```sql
