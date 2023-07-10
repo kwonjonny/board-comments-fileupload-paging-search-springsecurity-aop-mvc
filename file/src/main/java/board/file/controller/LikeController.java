@@ -40,8 +40,8 @@ public class LikeController {
     public ResponseEntity<Map<String, Integer>> toggleLike(@PathVariable("tno") Long tno, Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String email = userDetails.getUsername();
-
         log.info("RestController | Toggle Like");
+        log.info("tno: " + tno + ", email: " + email);
         int result = likeService.toggleLike(tno, email);
         return new ResponseEntity<>(Map.of("result", result), HttpStatus.OK);
     }

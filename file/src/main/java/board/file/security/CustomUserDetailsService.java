@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import board.file.dto.member.MemberConvertDTO;
 import board.file.dto.member.MemberDTO;
 import board.file.dto.member.MemberReadDTO;
 import board.file.mappers.MemberMapper;
@@ -46,10 +47,10 @@ public class CustomUserDetailsService implements UserDetailsService{
         readDTO.getRolenames()
         );
 
-        // 화면단 접근시 principal.mname
-        // memberDTO.setMname("키보드워리어");
+        log.info("check password.........");
 
         return memberDTO;
+
     }
     
 }

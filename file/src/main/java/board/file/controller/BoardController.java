@@ -65,7 +65,7 @@ public class BoardController {
         log.info("GET | Board Read");
         if(managementCookie.createCookie(request, response, tno)) {
             boardServce.viewCount(tno);
-            log.info("쿠키 굽는중");
+            log.info("Making Cookie");
         }
         BoardDTO list = boardServce.readBoard(tno);
         model.addAttribute("list", list);
@@ -75,7 +75,7 @@ public class BoardController {
     // GET : Update
     @GetMapping("update/{tno}")
     @PreAuthorize("hasAnyRole('USER')")
-    public String getBoardUpdate(@PathVariable("tno") Long tno, Model model) {
+    public String getBoardUpdate(@PathVariable("tno") Long tno, Model model, PageRequestDTO pageRequestDTO) {
         log.info("GET | Board Update");
         BoardDTO list = boardServce.readBoard(tno);
         model.addAttribute("list", list);

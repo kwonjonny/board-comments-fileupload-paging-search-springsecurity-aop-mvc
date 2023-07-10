@@ -1,6 +1,7 @@
 package board.file.mappers;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import board.file.dto.like.LikeDTO;
 
@@ -18,6 +19,6 @@ public interface LikeMapper {
     Long countLikes(Long tno);
 
     // Check Like Member    
-    LikeDTO checkLikeByMemberAndPost(Long tno, String email);
+    LikeDTO checkLikeByMemberAndPost(@Param("tno") Long tno, @Param("email") String email);
 
 }

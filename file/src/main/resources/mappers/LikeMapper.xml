@@ -27,7 +27,7 @@
     </select>
 
     <!-- LikeMapper id = "checkLikeByMemberAndPost" -->
-    <select id="checkLikeByMemberAndPost" parameterType="map">
+    <select id="checkLikeByMemberAndPost" parameterType="board.file.dto.like.LikeDTO">
         SELECT * FROM 
         tbl_like 
         WHERE tno = #{tno} AND email = #{email}

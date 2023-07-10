@@ -197,7 +197,7 @@
             </div>
 
 
-            <button id="likeButton" onclick="toggleLike()">Like</button>
+            <button id="likeButton">Like</button>
             <div id="likeCount">
               좋아요
             </div>
@@ -544,8 +544,6 @@
 
 
 
-    // 좋아요 시작 
-
     // Like Start
     const likeLink = "http://localhost:8084/like/";
 
@@ -567,7 +565,15 @@
 
     loadLikeCount(tno);
 
+    // Toggle Like
+    const toggleLike = async (tno) => {
+     
+        await axios.post(`${likeLink}toggle/${tno}`);
+        // After successfully toggling the like, refresh the like count
+        loadLikeCount(tno);
+    };
 
+    document.getElementById("likeButton").addEventListener("click", () => toggleLike(tno));
 
 
 

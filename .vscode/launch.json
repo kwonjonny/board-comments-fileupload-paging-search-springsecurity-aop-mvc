@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-FileApplication<file>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "board.file.FileApplication",
+            "projectName": "file",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

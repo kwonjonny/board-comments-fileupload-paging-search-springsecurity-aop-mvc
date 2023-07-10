@@ -20,13 +20,15 @@ public class MemberDTO extends User implements OAuth2User {
 
   private String mname;
   private String email;
-  private String pw;
+  private String mpw;
 
   public MemberDTO(String email, String mpw, String mname, List<String> roleNames) {
+    
+    // super(email,mpw, List.of(new SimpleGrantedAuthority("ROLE_USER")));
     super(email, mpw, roleNames.stream().map(str -> new SimpleGrantedAuthority("ROLE_" + str)).collect(Collectors.toList()));
     this.mname = mname;
     this.email = email;
-    this.pw = mpw;
+    this.mpw = mpw;
   }
 
   @Override

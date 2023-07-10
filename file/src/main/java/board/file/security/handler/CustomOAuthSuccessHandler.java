@@ -23,7 +23,7 @@ public class CustomOAuthSuccessHandler implements AuthenticationSuccessHandler {
                 MemberDTO dto = (MemberDTO) authentication.getPrincipal();
 
                 // MemberDTO를 사용 소셜 로그인에 성공했을 시(mpw가 "" 일때) 수정페이지로 가기
-                if(dto.getPw() == null || dto.getPw().equals("")){
+                if(dto.getMpw() == null || dto.getMpw().equals("")){
 
                     // DB에 소셜로그인 email이 없을때
                     response.sendRedirect("/member/update/" + dto.getEmail());

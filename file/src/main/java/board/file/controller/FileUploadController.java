@@ -82,7 +82,6 @@ public class FileUploadController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return Map.of("result", "success");
     }
 }

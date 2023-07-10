@@ -50,7 +50,7 @@ public class CustomSecurityConfig {
         // 커스텀 로그인 페이지 경로 지정
         http.formLogin(config -> {
             config.loginPage("/member/signin");
-
+            config.successHandler(new CustomOAuthSuccessHandler());
         });
 
         // 권한이 없는 페이지를 접속했을 시 처리

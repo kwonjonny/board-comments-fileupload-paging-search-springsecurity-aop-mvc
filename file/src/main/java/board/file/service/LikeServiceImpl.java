@@ -36,6 +36,7 @@ public class LikeServiceImpl implements LikeService {
     @Transactional
     public int toggleLike(Long tno, String email) {
         log.info("ToggleLike LikeServiceImpl Is Running");
+        log.info(tno + email+ "티엔오 이메일");
         LikeDTO likeDTO = LikeDTO.builder()
                 .email(email)
                 .tno(tno)

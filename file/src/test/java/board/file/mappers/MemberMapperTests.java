@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import board.file.dto.member.MemberConvertDTO;
+import board.file.dto.member.MemberDTO;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -23,12 +24,13 @@ public class MemberMapperTests {
 
     // Join Member Mapper Test 
     @Test
+    // @Transactional
     @DisplayName("회원 가입 테스트")
     public void joinMemberTest() {
         // GIVEN 
         MemberConvertDTO memberConvertDTO = MemberConvertDTO.builder()
         .email("thistrik@naver.com")
-        .mpw(passwordEncoder.encode(("1111")))
+        .mpw(passwordEncoder.encode("1111"))
         .mname("권성준")
         .build();
         String roleName = "USER";
@@ -40,7 +42,7 @@ public class MemberMapperTests {
 
     // Update Member Mapper Test 
     @Test
-    
+    @Transactional
     @DisplayName("회원 업데이트 테스트")
     public void updateMemberTest() {
         // GIVEN 
@@ -76,6 +78,7 @@ public class MemberMapperTests {
     // Select Member Mapper Test 
     @Test
     @Transactional(readOnly = true)
+    @DisplayName("회원 조회 테스트")
     public void selectMemberTest() {
         // GIVEN
         String email = "thistrik@naver.com";
@@ -85,6 +88,4 @@ public class MemberMapperTests {
         log.info(readMember);
         Assertions.assertNotNull(readMember, "readMember Should Not Null");
     }
-
-
 }

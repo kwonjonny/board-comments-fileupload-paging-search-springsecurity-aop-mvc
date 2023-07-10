@@ -10,7 +10,10 @@
 <select id="listBoard" parameterType="board.file.dto.board.BoardListDTO" resultType="board.file.dto.board.BoardListDTO">
     SELECT tb.*, CONCAT(tbi.uuid, '_', tbi.filename) AS fileName
     FROM tbl_board tb
-    <if test="searchType != null and keyword != null">
+   
+    LEFT JOIN tbl_board_img tbi ON tb.tno = tbi.tno AND tbi.ord = 0
+    WHERE tb.tno > 0
+     <if test="searchType != null and keyword != null">
         WHERE (
             <if test="searchType == 'title' or searchType == 'all'">
                 tb.title LIKE CONCAT('%', #{keyword}, '%')
@@ -25,8 +28,6 @@
             </if>
         ) 
     </if>
-    LEFT JOIN tbl_board_img tbi ON tb.tno = tbi.tno AND tbi.ord = 0
-    WHERE tb.tno > 0
     ORDER BY tb.tno DESC 
     LIMIT #{skip}, #{size}
 </select>
