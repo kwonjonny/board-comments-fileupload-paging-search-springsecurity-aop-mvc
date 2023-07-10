@@ -94,6 +94,8 @@
 | writer   | VARCHAR(100)   | Board 항목을 생성한 사용자명 (null이 아님)     |
 | registDate | TIMESTAMP        | Board 의 생성 날짜          |
 | updateDate  | TIMESTAMP           | Board 의 업데이트 날짜                        |
+| replyCnt | INT | Board 의 댓글 개수 |
+| viewCnt | INT | Board 의 조회수|
 
 ### Board Image 테이블 (`tbl_board_img`)
 | 컬럼명   | 데이터 타입     | 설명                                       |
@@ -141,15 +143,16 @@ SQL 스키마:
 ```sql
 
 CREATE TABLE tbl_board (
-	tno INT AUTO_INCREMENT PRIMARY KEY,
-	title VARCHAR(500) NOT NULL,
-	content VARCHAR(1000) NOT NULL,
-	writer VARCHAR(100) NOT NULL,
+	tno int AUTO_INCREMENT PRIMARY KEY,
+	title varchar(500) NOT NULL,
+	content varchar(700) NOT NULL,
+	writer varchar(100) NOT NULL,
 	registDate TIMESTAMP DEFAULT NOW(),
-	updateDate TIMESTAMP DEFAULT NOW()
+	updateDate TIMESTAMP DEFAULT NOW(),
+	replyCnt INT DEFAULT 0,
+	viewCnt INT DEFAULT 0
 )
 ;
-
 CREATE TABLE tbl_board_img (
 	uuid varchar(50) PRIMARY KEY,
 	filename varchar(200) not null,
