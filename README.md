@@ -128,11 +128,13 @@
 |email| VARCHAR(500) |회원의 이메일 주소 |
 |rolename|VARCHAR(500)| 회원의 역할 이름|
 
-Persistent Logins 테이블 (persistent_logins)
-username: 사용자 이름 (Primary Key)
-series: 로그인 시리즈 (Primary Key)
-token: 로그인 토큰
-last_used: 마지막으로 사용된 날짜 및 시간
+### Persistent Logins 테이블 (`persistent_logins`)
+| 컬럼명 | 데이터 타입 | 설명 |
+| --- | --- | --- |
+|username| VARCHAR(64) |사용자 이름 (Primary Key)
+|series| VARCHAR(64)|로그인 시리즈 (Primary Key)
+|token| VARCHAR(64)|로그인 토큰
+|last_used| TIMESTAMP |마지막으로 사용된 날짜 및 시간
 
 
 SQL 스키마:
