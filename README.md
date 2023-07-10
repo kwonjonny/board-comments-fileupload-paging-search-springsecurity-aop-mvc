@@ -164,6 +164,7 @@ CREATE TABLE tbl_board (
 	viewCnt INT DEFAULT 0
 )
 ;
+
 CREATE TABLE tbl_board_img (
 	uuid varchar(50) PRIMARY KEY,
 	filename varchar(200) not null,
