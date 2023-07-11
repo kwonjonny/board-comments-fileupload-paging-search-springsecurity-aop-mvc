@@ -29,12 +29,4 @@ public interface BoardService {
 
     // Board View Count 
     void viewCount(Long tno);
-
-    // Board Create Notice
-    Long createBoardNotice(BoardNoticeCreateDTO boardNoticeCreateDTO);
-
-    // Board Update Notice
-    Long updateBoardNotice(BoardNoticeUpdateDTO boardNoticeUpdateDTO);
-
-    BoardDTO readBoardNotice(Long tno);
 }

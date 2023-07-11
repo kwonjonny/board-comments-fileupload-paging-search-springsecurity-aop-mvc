@@ -6,8 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 import board.file.dto.board.BoardCreateDTO;
 import board.file.dto.board.BoardDTO;
 import board.file.dto.board.BoardListDTO;
-import board.file.dto.board.BoardNoticeCreateDTO;
-import board.file.dto.board.BoardNoticeUpdateDTO;
 import board.file.dto.board.BoardUpdateDTO;
 import board.file.dto.page.PageRequestDTO;
 
@@ -38,13 +36,4 @@ public interface BoardMapper {
 
     // Board LikeCount
     int likeCount(BoardDTO boardDTO);
-
-    // Board Create Notice 
-    int createBoardNotice(BoardNoticeCreateDTO boardNoticeCreateDTO);
-
-    // Board Update Notice
-    int updateBoardNotice(BoardNoticeUpdateDTO boardNoticeUpdateDTO);
-
-    // Board Read Notice
-    BoardDTO readBoardNotice(Long tno);
 }

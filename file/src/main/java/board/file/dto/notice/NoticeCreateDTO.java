@@ -1,4 +1,4 @@
-package board.file.dto.board;
+package board.file.dto.notice;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardNoticeCreateDTO {
-    // tbl_board
+    // tbl_notice
     private Long tno;
     private String title;
     private String writer;

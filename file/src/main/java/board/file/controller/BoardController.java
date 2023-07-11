@@ -83,6 +83,12 @@ public class BoardController {
 
     // GET : Update Notice 
     @GetMapping("updatenotice/{tno}")
+    public String getBoardUpdateNotice(@PathVariable("tno") Long tno, Model model) {
+        log.info("GET | Board Notice Update");
+        BoardDTO list = boardServce.readBoardNotice(tno);
+        model.addAttribute("list", list);
+        return "/board/updatenotice";
+    }
 
     // POST : Update Notice 
     @PostMapping("updatenotice/{tno}")
