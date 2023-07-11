@@ -26,6 +26,7 @@ public class BoardListDTO {
     private int replyCnt;
     private String fileName;
     private Long viewCnt;
+    private Long notice;
     /*
      * String 으로 BoardMapper id =
      * "List<BoardListDTO> listBoard(PageRequestDTO pageRequestDTO);"

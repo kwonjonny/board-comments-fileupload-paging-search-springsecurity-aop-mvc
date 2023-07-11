@@ -27,6 +27,7 @@ public class BoardDTO {
     private int replyCnt;
     private List<String> fileName;
     private Long likeCnt;
+    private Long notice;
 
     /*
      * List<String> 의 형태로 BoardMapper id = "BoardDTO readBoard(Long tno);"

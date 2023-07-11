@@ -95,6 +95,10 @@
       font-size: 20px;
       font-weight: bold;
     }
+
+    .like-button-active {
+      color: red;
+    }
   </style>
 </head>
 
@@ -566,14 +570,20 @@
     loadLikeCount(tno);
 
     // Toggle Like
+    const likeButton = document.getElementById("likeButton");
+
+    // Toggle Like
     const toggleLike = async (tno) => {
-     
-        await axios.post(`${likeLink}toggle/${tno}`);
-        // After successfully toggling the like, refresh the like count
-        loadLikeCount(tno);
+      await axios.post(`${likeLink}toggle/${tno}`);
+
+      // After successfully toggling the like, refresh the like count
+      loadLikeCount(tno);
+
+      // Toggle the active class on the like button
+      likeButton.classList.toggle("like-button-active");
     };
 
-    document.getElementById("likeButton").addEventListener("click", () => toggleLike(tno));
+    likeButton.addEventListener("click", () => toggleLike(tno));
 
 
 

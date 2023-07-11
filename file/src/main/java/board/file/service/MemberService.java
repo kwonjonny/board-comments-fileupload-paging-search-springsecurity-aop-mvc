@@ -1,7 +1,6 @@
 package board.file.service;
 
 import board.file.dto.member.MemberConvertDTO;
-import board.file.dto.member.MemberDTO;
 
 public interface MemberService {
 

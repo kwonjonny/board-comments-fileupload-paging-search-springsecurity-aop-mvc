@@ -13,6 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import board.file.dto.board.BoardCreateDTO;
 import board.file.dto.board.BoardDTO;
 import board.file.dto.board.BoardListDTO;
+import board.file.dto.board.BoardNoticeCreateDTO;
+import board.file.dto.board.BoardNoticeUpdateDTO;
 import board.file.dto.board.BoardUpdateDTO;
 import board.file.dto.page.PageRequestDTO;
 import board.file.dto.page.PageResponseDTO;
@@ -48,6 +50,49 @@ public class BoardController {
         return "/board/create";
     }
 
+    // GET : Create Notice 
+    @GetMapping("createnotice")
+    @PreAuthorize("hasAnyRole('USER')")
+    public String getBoardCreateNotice() {
+        log.info("GET | Board Notice Create");
+        return "/board/createnotice";
+    }
+
+    // POST : Create Notice
+    @PostMapping("createntoice")
+    @PreAuthorize("hasAnyRole('USER')")
+    public String postBoardCreateNotice(BoardNoticeCreateDTO boardNoticeCreateDTO) {
+        log.info("POST | Board Notice Create");
+        boardServce.createBoardNotice(boardNoticeCreateDTO);
+        return "redirect:/board/list";
+    }
+
+    // GET : Read Notice 
+    @GetMapping("readnotice/{tno}")
+    @PreAuthorize("hasAnyRole('USER')")
+    public String getBoardReadNotice(@PathVariable("tno") Long tno, Model model, HttpServletRequest request, HttpServletResponse response) {
+        log.info("GET | Board Notice Read");
+        if(managementCookie.createCookie(request, response, tno)) {
+            boardServce.viewCount(tno);
+            log.info("Making Cookie Notice Read");
+        }
+        BoardDTO list = boardServce.readBoardNotice(tno);
+        model.addAttribute("list", list);
+        return "/board/readnotice";
+    }
+
+    // GET : Update Notice 
+    @GetMapping("updatenotice/{tno}")
+
+    // POST : Update Notice 
+    @PostMapping("updatenotice/{tno}")
+    @PreAuthorize("hasAnyRole('USER')")
+    public String postBoardUpdateNotice(BoardNoticeUpdateDTO boardNoticeUpdateDTO) {
+        log.info("POST | Board Notice Update");
+        boardServce.updateBoardNotice(boardNoticeUpdateDTO);
+        return "redirect:/board/readnotice" + boardNoticeUpdateDTO.getTno();
+    }
+ 
     // GET : List
     @GetMapping("list")
     @PreAuthorize("hasAnyRole('USER')")

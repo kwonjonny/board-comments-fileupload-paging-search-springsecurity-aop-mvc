@@ -1,7 +1,5 @@
 package board.file.service;
 
-import board.file.dto.like.LikeDTO;
-
 // Like Service Interface
 public interface LikeService {
 

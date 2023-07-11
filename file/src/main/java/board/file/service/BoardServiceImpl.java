@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import board.file.dto.board.BoardCreateDTO;
 import board.file.dto.board.BoardDTO;
 import board.file.dto.board.BoardListDTO;
+import board.file.dto.board.BoardNoticeCreateDTO;
+import board.file.dto.board.BoardNoticeUpdateDTO;
 import board.file.dto.board.BoardUpdateDTO;
 import board.file.dto.page.PageRequestDTO;
 import board.file.dto.page.PageResponseDTO;
@@ -111,5 +113,50 @@ public class BoardServiceImpl implements BoardService {
    public void viewCount(Long tno) {
       log.info("ViewCount BoardServiceImpl Is Running");
       boardMapper.viewCount(tno);
+   }
+
+   // Board Notice Create ServiceImpl
+   @Override
+   @Transactional
+   public Long createBoardNotice(BoardNoticeCreateDTO boardNoticeCreateDTO) {
+      log.info("Create Notice BoardServiceImpl Is Running");
+      int count = boardMapper.createBoardNotice(boardNoticeCreateDTO);
+      AtomicInteger index = new AtomicInteger(0);
+      List<String> fileNames = boardNoticeCreateDTO.getFileNames();
+      Long tno = boardNoticeCreateDTO.getTno();
+
+      List<Map<String, String>> list = fileNames.stream().map(str -> {
+         String uuid = str.substring(0, 36);
+         String fileName = str.substring(37);
+         return Map.of("uuid", uuid, "fileName", fileName, "tno", "" + tno, "ord", "" + index.getAndIncrement());
+      }).collect(Collectors.toList());
+      fileMapper.createImage(list);
+      return boardNoticeCreateDTO.getTno();
+   }
+
+   // Board Notice Update ServiceImpl
+   @Override
+   @Transactional
+   public Long updateBoardNotice(BoardNoticeUpdateDTO boardNoticeUpdateDTO) {
+      log.info("Update Notice BoardServiceImpl Is Running");
+      int count = boardMapper.updateBoardNotice(boardNoticeUpdateDTO);
+      fileMapper.deleteImage(boardNoticeUpdateDTO.getTno());
+      AtomicInteger index = new AtomicInteger(0);
+      List<String> fileNames = boardNoticeUpdateDTO.getFileNames();
+      Long tno = boardNoticeUpdateDTO.getTno();
+
+      List<Map<String, String>> list = fileNames.stream().map(str -> {
+         String uuid = str.substring(0, 36);
+         String fileName = str.substring(37);
+         return Map.of("uuid", uuid, "fileName", fileName, "tno", "" + tno, "ord", "" + index.getAndIncrement());
+      }).collect(Collectors.toList());
+      fileMapper.createImage(list);
+      return boardNoticeUpdateDTO.getTno();
+   }
+
+   @Override
+   @Transactional(readOnly = true)
+   public BoardDTO readBoardNotice(Long tno) {
+      return boardMapper.readBoardNotice(tno);
    }
 }

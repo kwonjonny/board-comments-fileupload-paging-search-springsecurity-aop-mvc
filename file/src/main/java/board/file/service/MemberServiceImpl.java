@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import board.file.dto.member.MemberConvertDTO;
-import board.file.dto.member.MemberDTO;
 import board.file.mappers.MemberMapper;
 import lombok.extern.log4j.Log4j2;
 

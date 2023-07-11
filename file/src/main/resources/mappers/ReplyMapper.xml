@@ -28,11 +28,11 @@
 
 
 <!-- ReplyMapper id = "incrementReplyCount" -->
-<insert id="incrementReplyCount" parameterType="long">
+<update id="incrementReplyCount" parameterType="long">
         UPDATE tbl_board
         SET replyCnt = replyCnt + 1
         WHERE tno = #{tno}
-</insert>
+</update>
 
 
 <!-- ReplyMapper id = "readReply" -->

@@ -3,6 +3,8 @@ package board.file.service;
 import board.file.dto.board.BoardCreateDTO;
 import board.file.dto.board.BoardDTO;
 import board.file.dto.board.BoardListDTO;
+import board.file.dto.board.BoardNoticeCreateDTO;
+import board.file.dto.board.BoardNoticeUpdateDTO;
 import board.file.dto.board.BoardUpdateDTO;
 import board.file.dto.page.PageRequestDTO;
 import board.file.dto.page.PageResponseDTO;
@@ -27,4 +29,12 @@ public interface BoardService {
 
     // Board View Count 
     void viewCount(Long tno);
+
+    // Board Create Notice
+    Long createBoardNotice(BoardNoticeCreateDTO boardNoticeCreateDTO);
+
+    // Board Update Notice
+    Long updateBoardNotice(BoardNoticeUpdateDTO boardNoticeUpdateDTO);
+
+    BoardDTO readBoardNotice(Long tno);
 }
