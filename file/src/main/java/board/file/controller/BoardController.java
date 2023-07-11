@@ -61,7 +61,7 @@ public class BoardController {
     // POST : Create Notice
     @PostMapping("createntoice")
     @PreAuthorize("hasAnyRole('USER')")
-    public String postBoardCreateNotice(BoardNoticeCreateDTO boardNoticeCreateDTO) {
+    public String postBoardCreateNotice(NoticeCreateDTO boardNoticeCreateDTO) {
         log.info("POST | Board Notice Create");
         boardServce.createBoardNotice(boardNoticeCreateDTO);
         return "redirect:/board/list";
@@ -93,7 +93,7 @@ public class BoardController {
     // POST : Update Notice 
     @PostMapping("updatenotice/{tno}")
     @PreAuthorize("hasAnyRole('USER')")
-    public String postBoardUpdateNotice(BoardNoticeUpdateDTO boardNoticeUpdateDTO) {
+    public String postBoardUpdateNotice(NoticeUpdateDTO boardNoticeUpdateDTO) {
         log.info("POST | Board Notice Update");
         boardServce.updateBoardNotice(boardNoticeUpdateDTO);
         return "redirect:/board/readnotice" + boardNoticeUpdateDTO.getTno();

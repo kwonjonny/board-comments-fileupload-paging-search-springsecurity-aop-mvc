@@ -16,7 +16,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardNoticeDTO {
+public class NoticeDTO {
     // tbl_notice
     private Long nno;
     private String content;

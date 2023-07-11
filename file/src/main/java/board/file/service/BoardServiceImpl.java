@@ -118,7 +118,7 @@ public class BoardServiceImpl implements BoardService {
    // Board Notice Create ServiceImpl
    @Override
    @Transactional
-   public Long createBoardNotice(BoardNoticeCreateDTO boardNoticeCreateDTO) {
+   public Long createBoardNotice(NoticeCreateDTO boardNoticeCreateDTO) {
       log.info("Create Notice BoardServiceImpl Is Running");
       int count = boardMapper.createBoardNotice(boardNoticeCreateDTO);
       AtomicInteger index = new AtomicInteger(0);
@@ -137,7 +137,7 @@ public class BoardServiceImpl implements BoardService {
    // Board Notice Update ServiceImpl
    @Override
    @Transactional
-   public Long updateBoardNotice(BoardNoticeUpdateDTO boardNoticeUpdateDTO) {
+   public Long updateBoardNotice(NoticeUpdateDTO boardNoticeUpdateDTO) {
       log.info("Update Notice BoardServiceImpl Is Running");
       int count = boardMapper.updateBoardNotice(boardNoticeUpdateDTO);
       fileMapper.deleteImage(boardNoticeUpdateDTO.getTno());
