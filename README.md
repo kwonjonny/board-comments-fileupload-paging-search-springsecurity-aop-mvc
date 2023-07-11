@@ -1,6 +1,6 @@
 
 
-# 개발 상태 : [게시판 CRUD, 조회수, 댓글대댓글, 파일업로드 개발 완료 , Spring Security 개발 완료, 좋아요 개발중 ]
+# 개발 상태 : [게시판 CRUD, 조회수, 댓글대댓글, 파일업로드 개발 완료 , Spring Security 개발 완료, 좋아요 개발 완료, 공지사항 개발중  ]
 
 # board-comments-fileupload-paging-search-mvc
 - 프로젝트 유형: Board 게시판 토이 프로젝트
@@ -94,8 +94,11 @@
 | writer   | VARCHAR(100)   | Board 항목을 생성한 사용자명 (null이 아님)     |
 | registDate | TIMESTAMP        | Board 의 생성 날짜          |
 | updateDate  | TIMESTAMP           | Board 의 업데이트 날짜                        |
+| replyCnt | INT | Board 의 댓글 개수 |
+| viewCnt | INT | Board 의 조회수|
 
 ### Board Image 테이블 (`tbl_board_img`)
+
 | 컬럼명   | 데이터 타입     | 설명                                       |
 |----------|----------------|--------------------------------------------|
 |uuid	|VARCHAR(50)	|이미지 항목의 고유 식별자 (Primary Key)
@@ -104,6 +107,7 @@
 |ord	|INT	|이미지 순서 (기본값 0)
 
 ### Reply 테이블 (`tbl_reply`)
+
 | 컬럼명 | 데이터 타입 | 설명 |
 | --- | --- | --- |
 | rno | INT | 답글 항목의 고유 식별자 (Primary Key, 자동 증가) |
@@ -116,33 +120,48 @@
 |isDeleted| TINYINT | 댓글.대댓글이 삭제되었는지 확인하고 업데이트|
 
 ### Member 테이블 (`tbl_member`)
+
 | 컬럼명 | 데이터 타입 | 설명 |
 | --- | --- | --- |
 |email|VARCHAR(100)| 회원의 이메일 주소 (Primary Key)|
 |mpw|VARCHAR(100) |회원의 비밀번호|
 |mname|VARCHAR(100) | 회원의 이름|
 
-Member Role 테이블 (tbl_member_role)
-email: 회원의 이메일 주소
-rolename: 회원의 역할 이름
+### Member Role 테이블 (`tbl_member_role`)
 
-Persistent Logins 테이블 (persistent_logins)
-username: 사용자 이름 (Primary Key)
-series: 로그인 시리즈 (Primary Key)
-token: 로그인 토큰
-last_used: 마지막으로 사용된 날짜 및 시간
+| 컬럼명 | 데이터 타입 | 설명 |
+| --- | --- | --- |
+|email| VARCHAR(500) |회원의 이메일 주소 |
+|rolename|VARCHAR(500)| 회원의 역할 이름|
 
+### Persistent Logins 테이블 (`persistent_logins`)
+
+| 컬럼명 | 데이터 타입 | 설명 |
+| --- | --- | --- |
+|username| VARCHAR(64) |사용자 이름 (Primary Key)
+|series| VARCHAR(64)|로그인 시리즈 (Primary Key)
+|token| VARCHAR(64)|로그인 토큰
+|last_used| TIMESTAMP |마지막으로 사용된 날짜 및 시간
+
+### Like 테이블 (`tbl_like`)
+| 컬럼명 | 데이터 타입 | 설명 |
+| --- | --- | --- |
+|tno|	INT|	"좋아요"가 달린 게시글의 고유 식별자 (외래키, tbl_board 참조)|
+|email|	VARCHAR(100)|	"좋아요"를 누른 회원의 이메일 주소 (외래키, tbl_member 참조)|
+|registDate|	TIMESTAMP|	"좋아요"가 등록된 날짜 및 시간 (기본값: 현재 시간)|
 
 SQL 스키마:
 ```sql
 
 CREATE TABLE tbl_board (
-	tno INT AUTO_INCREMENT PRIMARY KEY,
-	title VARCHAR(500) NOT NULL,
-	content VARCHAR(1000) NOT NULL,
-	writer VARCHAR(100) NOT NULL,
+	tno int AUTO_INCREMENT PRIMARY KEY,
+	title varchar(500) NOT NULL,
+	content varchar(700) NOT NULL,
+	writer varchar(100) NOT NULL,
 	registDate TIMESTAMP DEFAULT NOW(),
-	updateDate TIMESTAMP DEFAULT NOW()
+	updateDate TIMESTAMP DEFAULT NOW(),
+	replyCnt INT DEFAULT 0,
+	viewCnt INT DEFAULT 0
 )
 ;
 
