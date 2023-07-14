@@ -53,18 +53,17 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         // DB에 해당 사용자가있으면
         MemberReadDTO memberReadDTO = memberMapper.selectOne(email);
-        if(memberReadDTO != null){
+        if (memberReadDTO != null) {
 
-        return new MemberDTO(email, 
-        memberReadDTO.getMpw(), 
-        memberReadDTO.getMname(),
-        // 권한은 SimpleGranteAuthority객체이므로 나중에 Map을 써서 타입을 바꿔줘야 함 
-        memberReadDTO.getRolenames()
-        );
+            return new MemberDTO(email,
+                    memberReadDTO.getMpw(),
+                    memberReadDTO.getMname(),
+                    // 권한은 SimpleGranteAuthority객체이므로 나중에 Map을 써서 타입을 바꿔줘야 함
+                    memberReadDTO.getRolenames());
 
         }
 
-        // 
+        //
         // PW를 사용하지않는 자원 이미 카카오에서 인증이되었기 때문에 비워둔다.
         MemberDTO memberDTO = new MemberDTO(email, "", "카카오사용자", List.of("USER"));
 
@@ -87,5 +86,4 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         return email;
     }
-
 }

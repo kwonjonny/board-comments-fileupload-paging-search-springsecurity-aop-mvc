@@ -5,116 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Board Create Page</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f8f8f8;
-        margin: 0;
-      }
-  
-      h1 {
-        color: #333;
-        text-align: center;
-      }
-  
-      .container-fluid {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-  
-      .card {
-        border: none;
-        border-radius: 4px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-      }
-  
-      .card-body {
-        padding: 20px;
-      }
-  
-      .form-group {
-        margin-bottom: 20px;
-      }
-  
-      .col-form-label {
-        font-weight: bold;
-      }
-  
-      .form-control {
-        border: 1px solid #ddd;
-        border-radius: 4px;
-      }
-  
-      textarea.form-control {
-        resize: none;
-      }
-  
-      .btn-primary {
-        background-color: #007bff;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-  
-      .btn-primary:hover {
-        background-color: #0069d9;
-      }
-  
-      .border-top {
-        border-top: 1px solid #ddd;
-      }
-  
-      .uploadDiv {
-        margin-top: 20px;
-      }
-  
-      .uploadUL {
-        list-style-type: none;
-        padding: 0;
-      }
-  
-      .uploadUL li {
-        margin-bottom: 10px;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        word-break: break-all;
-      }
-  
-      .uploadHidden {
-        display: none;
-      }
-  
-      .uploadContainer {
-        display: flex;
-        align-items: center;
-      }
-  
-      .uploadBtn {
-        background-color: #28a745;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-left: 10px;
-        text-align: center;
-      }
-  
-      .uploadBtn:hover {
-        background-color: #218838;
-      }
-
-      .saveBtn {
-        display: flex;
-        justify-content: center;
-        margin-top: 10px;
-      }
-
-    </style>
+  <title>Board Create Page</title>
 </head>
 
 <body>
@@ -133,66 +24,47 @@
                   <label for="fname" class="col-sm-3 text-end control-label col-form-label"></label>
                 </div>
                 <!-- title start -->
-                <div class="form-group row">
-                  <label for="title" class="col-sm-3 text-end control-label col-form-label">Title</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="title" name="title" th:required="required" />
-                  </div>
+                <div class="mb-3">
+                  <label for="boardTitle" class="form-label">Title</label>
+                  <input type="text" name="title" class="form-control" id="boardTitle">
                 </div>
                 <!-- writer start -->
-                <div class="form-group row">
-                  <label for="writer" class="col-sm-3 text-end control-label col-form-label">Writer</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="writer" name="writer" th:required="required" />
+                <div class="mb-3">
+                  <label for="boardTitle" class="form-label">Writer</label>
+                  <input type="text" name="Writer" class="form-control" id="boardWriter">
+                </div>
+                <!-- Content Start -->
+                <div class="mb-3">
+                  <label for="boardTitle" class="form-label">Content</label>
+                  <textarea class="form-control" name="content" th:required="required"></textarea>
+                </div>
+                <!-- file upload start -->
+                <div>
+                  <input class="uploadInput" type="file" name="upload" multiple>
+                  <button class="uploadBtn">UPLOAD</button>
+                </div>
+                <!-- Img Start -->
+                <div class="uploadDiv">
+                  <ul class="uploadUL">
+                  </ul>
+                </div>
+                <!-- button start -->
+                <div class="border-top">
+                  <div class="card-body">
+                    <button type="button" class="btn btn-primary saveBtn">게시글 등록</button>
+                    <a href="/board/list" class="btn btn-danger">Cancel</a>
+                  </div>
+                  <div class="uploadHidden">
                   </div>
                 </div>
-                <!-- content start -->
-                <div class="form-group row">
-                  <label for="content" class="col-sm-3 text-end control-label col-form-label">Content</label>
-                  <div class="col-sm-9">
-                    <textarea class="form-control" name="content" th:required="required"></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <!-- file upload start -->
-              <div>
-                <input class="uploadInput" type="file" name="upload" multiple>
-                <button class="uploadBtn">UPLOAD</button>
-              </div>
-              <!-- file uploa end -->
-
-              <!-- Img Start -->
-              <div class="uploadDiv">
-                <ul class="uploadUL">
-
-                </ul>
-              </div>
-              <!-- Img End -->
-
-              <!-- button start -->
-              <div class="border-top">
-                <div class="card-body">
-                  <button type="button" class="btn btn-primary saveBtn">
-                    게시글 등록
-                  </button>
-                </div>
-                <div class="uploadHidden">
-                  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-                </div>
-              </div>
             </form>
-             <!-- 게시판 리스트 버튼 -->
-             <form action="/board/list" method="get">
-              <button type="submit" class="btn btn-primary">Board List Page</button>
-          </form>
           </div>
         </div>
       </div>
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     </div>
-    <!-- modal 창 start -->
   </div>
-  </div>
+</div>
 
   <!-- javaScript start -->
   <script layout:fragment="script" th:inline="javascript">
@@ -252,12 +124,13 @@
         const { fileName, link, uuid } = uploadFile
         str += `
         <li data-uuid='${uuid}' data-fileName='${fileName}'>
-          <div>
-            <a href='http://localhost/${uuid}_${fileName}' target="_blank">
-            <img src='http://localhost/${link}'/>
-            </a>
-            <p>${fileName} <button onclick="javascript:removeFile(event, '${uuid}', '${fileName}')">x</button></p>
-          <div>   
+          <img src='http://localhost/${link}'/>
+            <p>
+              <a href='http://localhost/${uuid}_${fileName}' target="_blank">
+                ${fileName}
+              </a>
+               <button onclick="javascript:removeFile(event, '${uuid}', '${fileName}')">x</button>
+            </p>
         </li>`
       }
       uploadUL.innerHTML += str

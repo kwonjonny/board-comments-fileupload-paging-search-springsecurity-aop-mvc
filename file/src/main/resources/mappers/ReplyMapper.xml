@@ -82,7 +82,7 @@
 <!-- ReplyMappe id = "listReply" -->
 <select id="listReply" parameterType="board.file.dto.reply.ReplyDTO" resultType="board.file.dto.reply.ReplyDTO">
      SELECT IF(rno = gno, 0,1 ) AS STEP,
-     tno, rno, gno, reply, replyer, replyDate, modifyDate
+     tno, rno, gno, reply, replyer, replyDate, modifyDate, isDeleted
      FROM tbl_reply
      WHERE tno = #{tno}
      ORDER BY gno ASC, rno ASC 

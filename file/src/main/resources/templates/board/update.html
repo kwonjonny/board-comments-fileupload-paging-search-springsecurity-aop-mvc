@@ -6,121 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Board Update Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
-            margin: 0;
-        }
-
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-
-        .container-fluid {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .card {
-            border: none;
-            border-radius: 4px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .col-form-label {
-            font-weight: bold;
-        }
-
-        .form-control {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        textarea.form-control {
-            resize: none;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn-primary:hover {
-            background-color: #0069d9;
-        }
-
-        .border-top {
-            border-top: 1px solid #ddd;
-        }
-
-        .card-footer {
-            padding: 20px;
-        }
-
-        .card-footer .btn-primary {
-            margin-right: 10px;
-        }
-
-        .d-flex.align-items-center {
-            display: flex;
-            align-items: center;
-        }
-
-        .my-2 {
-            margin-top: 2px;
-            margin-bottom: 2px;
-        }
-
-        .uploadDiv {
-            margin-top: 20px;
-        }
-
-        .uploadUL {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .uploadUL li {
-            margin-bottom: 10px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            word-break: break-all;
-        }
-
-        .uploadHidden {
-            display: none;
-        }
-
-        .uploadBtn {
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-left: 10px;
-            text-align: center;
-        }
-
-        .uploadBtn:hover {
-            background-color: #218838;
-        }
-    </style>
 </head>
 
 <body>
@@ -132,102 +17,49 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-
                             <!-- Form Start -->
                             <form class="form-horizontal actionForm" method="post" action="/board/update">
-
-                                <!-- Tno Start -->
-                                <div class="form-group row">
-                                    <label for="tno" class="col-sm-3 text-end control-label col-form-label">Tno</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="tno" id="tno"
-                                            th:value="${list.tno}" readonly />
+                                <div class="bg-light rounded h-100 p-4">
+                                    <h2 class="mb-4">Board Modify</h2>
+                                    <div class="mb-3">
+                                        <label for="boardTno" class="form-label">Tno</label>
+                                        <input type="text" name="tno" class="form-control" id="boardTno"
+                                            th:value="${list.tno}">
                                     </div>
-                                </div>
-                                <!-- Tno End -->
-
-                                <!-- Title Start -->
-                                <div class="form-group row">
-                                    <label for="title"
-                                        class="col-sm-3 text-end control-label col-form-label">Title</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="title" id="title"
-                                            th:value="${list.title}" />
+                                    <div class="mb-3">
+                                        <label for="boardTitle" class="form-label">Title</label>
+                                        <input type="text" name="title" class="form-control" id="boardTitle"
+                                            th:value="${list.title}">
                                     </div>
-                                </div>
-                                <!-- Title End -->
-
-                                <!-- Writer Start -->
-                                <div class="form-group row">
-                                    <label for="writer"
-                                        class="col-sm-3 text-end control-label col-form-label">Writer</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="writer" id="writer"
-                                            th:value="${list.writer}" />
+                                    <div class="mb-3">
+                                        <label for="boardWriter" class="form-label">Writer</label>
+                                        <input type="text" name="writer" class="form-control" id="boardWriter"
+                                            th:value="${list.writer}" readonly style="cursor: default;">
                                     </div>
-                                </div>
-                                <!-- Writer End -->
-
-                                <!-- Regist Date Start -->
-                                <div class="form-group row">
-                                    <label for="registDate"
-                                        class="col-sm-3 text-end control-label col-form-label">Regist Date</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="registDate" id="registDate"
-                                            th:value="${list.registDate}" readonly />
+                                    <div class="mb-3">
+                                        <label for="boardContent" class="form-label">Content</label>
+                                        <textarea name="content" class="form-control" id="boardContent"
+                                            style="height:100px;resize:none;">[[${list.content}]]</textarea>
                                     </div>
-                                </div>
-                                <!-- Regist Date End -->
-
-                                <!-- Update Date Start -->
-                                <div class="form-group row">
-                                    <label for="modifyDate"
-                                        class="col-sm-3 text-end control-label col-form-label">Update Date</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="modifyDate" id="modifyDate"
-                                            th:value="${list.updateDate}" readonly />
+                                    <!-- Upload Start -->
+                                    <div>
+                                        <input class="uploadInput" type="file" name="upload" multiple>
+                                        <button class="uploadBtn">UPLOAD</button>
                                     </div>
-                                </div>
-                                <!-- Update Date End -->
-
-                                <!-- Content Start -->
-                                <div class="form-group row">
-                                    <label for="content"
-                                        class="col-sm-3 text-end control-label col-form-label">Content</label>
-                                    <div class="col-sm-9">
-                                        <textarea class="form-control" name="content" id="content"
-                                            th:text="${list.content}"></textarea>
+                                    <!-- 파일 띄워주기 Start -->
+                                    <div class="uploadDiv">
+                                        <ul class="uploadUL">
+                                        </ul>
                                     </div>
-                                </div>
-                                <!-- Content End -->
-
-
-                                <!-- Upload Start -->
-                                <div>
-                                    <input class="uploadInput" type="file" name="upload" multiple>
-                                    <button class="uploadBtn">UPLOAD</button>
-                                </div>
-                                <!-- Upload End -->
-
-                                <!-- 파일 띄워주기 Start -->
-                                <div class="uploadDiv">
-                                    <ul class="uploadUL">
-
-                                    </ul>
-                                </div>
-                                <!-- 파일 띄워주기 End -->
-
-                                <!-- Update Button Start -->
-                                <div class="border-top">
-                                    <div class="card-body">
-                                        <button type="button" class="btn btn-primary saveBtn">게시글 수정 submit</button>
+                                    <!-- Update Button Start -->
+                                    <div class="border-top">
+                                        <div class="card-body">
+                                            <button type="button" class="btn btn-primary saveBtn">게시글 수정 submit</button>
+                                            <a th:href="@{|/board/read/${tno}?${pageRequestDTO.link}|}" class="btn btn-info text-white btnModify">Return Read Page</a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="uploadHidden">
-
-                                </div>
-                                <!-- Update Button End -->
-
+                                    <div class="uploadHidden">
+                                    </div>
                             </form>
                             <!-- Form End -->
                         </div>
@@ -264,11 +96,7 @@
             e.stopPropagation();
             // 사용자가 업데이트 요청시 파일의 값을 Server 로 보내줍니다 
             const liArr = uploadUL.querySelectorAll("li")
-            if (!liArr || liArr.length === 0) {
-                alert("파일이 없어요")
-                return
-            }
-
+           
             let str = ""
             for (let liObj of liArr) {
                 const uuid = liObj.getAttribute("data-uuid")
@@ -307,14 +135,14 @@
 
                 str += `
                 <li data-uuid='${uuid}' data-fileName='${fileName}'>
-                <div>
+                <img src='http://localhost/${link}'/>
+                <p>
                     <a href='http://localhost/${uuid}_${fileName}' target="_blank">
-                    <img src='http://localhost/${link}'/>
+                    ${fileName}
                     </a>
-                    <p>${fileName} <button onclick="javascript:removeFile(event, '${uuid}', '${fileName}')">x</button></p>
-                <div>   
-                </li>
-                `
+                    <button onclick="javascript:removeFile(event, '${uuid}', '${fileName}')">x</button>
+                </p>
+                </li>`
             }
             uploadUL.innerHTML += str
         }
@@ -342,7 +170,6 @@
             // 변환된 배열을 showProducts 함수에 전달
             showProducts(objArr);
         };
-
         loadImages(fileNames)
 
 

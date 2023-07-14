@@ -1,4 +1,4 @@
-package board.file.dto.File;
+package board.file.dto.file;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

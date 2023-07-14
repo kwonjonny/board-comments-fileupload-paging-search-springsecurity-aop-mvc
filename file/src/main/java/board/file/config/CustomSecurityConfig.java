@@ -65,7 +65,6 @@ public class CustomSecurityConfig {
         // form 안에있는 Hidden으로 포함된 csrf input tag를 없애겠다.
         http.csrf(config -> {
             config.disable();
-
         });
 
         // social 로그인 signin페이지에 설정 (카카오)

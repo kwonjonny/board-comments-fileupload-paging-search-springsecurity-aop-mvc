@@ -7,97 +7,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Board Read Page</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f8f8;
-      margin: 0;
+    ul {
+      list-style-type: none;
     }
 
-    h1 {
-      color: #333;
-      text-align: center;
-    }
-
-    .container-fluid {
-      max-width: 1600px;
-      margin: 0 auto;
-    }
-
-    .card {
-      border: none;
-      border-radius: 4px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-    }
-
-    .card-body {
-      padding: 20px;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .col-form-label {
-      font-weight: bold;
-    }
-
-    .form-control {
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-
-    textarea.form-control {
-      resize: none;
-    }
-
-    .btn-primary {
-      background-color: #007bff;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .btn-primary:hover {
-      background-color: #0069d9;
-    }
-
-    .border-top {
-      border-top: 1px solid #ddd;
-    }
-
-    .card-footer {
-      padding: 20px;
-    }
-
-    .card-footer .btn-primary {
-      margin-right: 10px;
-    }
-
-    .d-flex.align-items-center {
-      display: flex;
-      align-items: center;
-    }
-
-    .my-2 {
-      margin-top: 2px;
-      margin-bottom: 2px;
-    }
-
-    #likeCount {
-      display: inline-block;
-      padding: 5px 10px;
-      border-radius: 5px;
-      background-color: #f2f2f2;
-      color: #d65ece;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .like-button-active {
-      color: red;
+    .reply-content {
+      border-left: 2px solid #ddd;
+      /* Add left border */
+      padding-left: 10px;
+      /* Add left padding */
     }
   </style>
 </head>
@@ -105,487 +23,153 @@
 <body>
   <!-- Fragment Content Start -->
   <div layout:fragment="content">
-    <h1>Board Read Page</h1>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-body">
-              <form class="form-horizontal actionForm" method="get" action="/board/read">
-                <!-- tno satrt -->
-                <div class="form-group row">
-                  <label for="tno" class="col-sm-3 text-end control-label col-form-label">Tno</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="tno" id="tno" th:value="${list.tno}" readonly />
-                  </div>
-                </div>
-                <!-- tno end -->
-
-                <!-- Title Start -->
-                <div class="form-group row">
-                  <label for="Title" class="col-sm-3 text-end control-label col-form-label">Title</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="title" id="title" th:value="${list.title}" readonly />
-
-                  </div>
-                </div>
-                <!-- Title End -->
-
-                <!-- Writer Start -->
-                <div class="form-group row">
-                  <label for="writer" class="col-sm-3 text-end control-label col-form-label">Writer</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="writer" id="writer" th:value="${list.writer}"
-                      readonly />
-                  </div>
-                </div>
-                <!-- Writer End -->
-
-                <!-- Regist Date Start -->
-                <div class="form-group row">
-                  <label for="registDate" class="col-sm-3 text-end control-label col-form-label">RegistDate</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="registDate" id="registDate"
-                      th:value="${list.registDate}" readonly />
-                  </div>
-                </div>
-                <!-- Regist Date End -->
-
-                <!-- Update Date Start -->
-                <div class="form-group row">
-                  <label for="modfiyDate" class="col-sm-3 text-end control-label col-form-label">UpdateDate</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="modfiyDate" id="modfyDate"
-                      th:value="${list.updateDate}" readonly />
-                  </div>
-                </div>
-                <!-- Update Date End -->
-
-                <!-- Content Start -->
-                <div class="form-group row">
-                  <label for="content" class="col-sm-3 text-end control-label col-form-label">Content</label>
-                  <div class="col-sm-9">
-                    <textarea class="form-control" name="content" id="content" th:text="${list.content}"
-                      readonly></textarea>
-                  </div>
-                </div>
-                <!-- Content End-->
-
-                <!-- img Start -->
-                <div class="form-group row">
-                  <label for="content" class="col-sm-3 text-end control-label col-form-label">filename</label>
-                  <div class="col-sm-9 d-flex align-items-center">
-                    <div th:each="fileName : ${list.fileName}">
-                      <img th:src="@{|http://localhost/${fileName}|}" class="my-2">
-                    </div>
-                  </div>
-                </div>
-                <!-- img End -->
-
-                <!-- 상세 페이지 이미지 표시 영역 start -->
-                <div id="imageDisplayArea">
-                </div>
-                <!-- 상세 페이지 이미지 표시 영역 end  -->
-
-                <!-- 수정, 삭제, 목록 버튼 start -->
-                <div class="border-top">
-                  <div class="card-body">
-                    <button type="button" class="btn btn-primary updateButton">게시글 수정 page</button>
-                    <button type="button" class="btn btn-primary deleteButton">게시글 삭제 submit</button>
-                    <button type="button" class="btn btn-primary listButton">return list page</button>
-                  </div>
-                </div>
-                <!-- 수정, 삭제, 목록 버튼 end -->
-
-              </form>
+    <!-- [[${pageRequestDTO}]]
+    [[${list}]] -->
+    <!-- Board Read Start -->
+    <div class="col-sm-12 col-xl-12">
+      <div class="bg-light rounded h-100 p-4">
+        <h2 class="mb-4">Board Read Page</h2>
+        <hr>
+        <h4 class="mb-4">Title</h4>
+        <div class="alert alert-light" role="alert">[[${list.title}]]</div>
+        <h4 class="mb-4">Writer</h4>
+        <div class="alert alert-light" role="alert">[[${list.writer}]]</div>
+        <h4 class="mb-4">Create Date</h4>
+        <div class="alert alert-light" role="alert">[[${list.registDate}]]</div>
+        <h4 class="mb-4">Update Date</h4>
+        <div class="alert alert-light" role="alert">[[${list.updateDate}]]</div>
+        <h4 class="mb-4">Content</h4>
+        <div class="alert alert-light" role="alert" style="min-height: 100px;">[[${list.content}]]</div>
+        <h4 class="mb-4">Images</h4>
+        <div class="col-sm-9 d-flex align-items-center">
+          <div th:each="fileName : ${list.fileName}">
+            <img th:src="@{|http://localhost/${fileName}|}" class="my-2">
+          </div>
+        </div>
+        <!-- Button Start -->
+        <div class="button_wrap">
+          <a th:href="@{|/board/list?${pageRequestDTO.link}|}" class="btn btn-primary btnList">List</a>
+          <a th:href="@{|/board/update/${tno}?${pageRequestDTO.link}|}"
+            class="btn btn-info text-white btnModify">Modify</a>
+          <form th:action="@{|/board/delete/${tno}|}" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-danger text-white btnModify">Delete</button>
+          </form>
+          <!-- Reply Start -->
+          <div class="col-sm-12 col-md-12 col-xl-12">
+            <div class="h-100 bg-light rounded p-4">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <h6 class="mb-7">Reply</h6>
+              </div>
+              <div class="replyWrap"></div>
+              <div class="btn-toolbar" role="toolbar" style="justify-content: center;">
+                <!-- Reply Paging -->
+                <ul class="btn-group me-2 paging replyPaging" role="group" aria-label="First group"></ul>
+              </div>
             </div>
-
-
-            <button id="likeButton">Like</button>
-            <div id="likeCount">
-              좋아요
+          </div>
+          <!-- Axios Reply & Axios Install -->
+          <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+          <script src="/js/replyAxios.js"></script>
+          <!-- Reply Form Start -->
+          <div class="reply-form">
+            <h6 class="mb-4">Write a Comment</h6>
+            <form class="ActionCreateReply">
+              <div class="mb-3">
+                <label for="replyer" class="form-label">Name</label>
+                <input type="text" class="form-control actionReplyer" name="replyer" id="replyer"
+                  placeholder="Your Name">
+              </div>
+              <div class="mb-3">
+                <label for="reply" class="form-label">Comment</label>
+                <textarea class="form-control actionReply" id="reply" name="reply" rows="3"
+                  placeholder="Write your comment"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+          <!-- Alert Modal Start -->
+          <div class="modal alertModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-body">[[${message}]]</div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                </div>
+              </div>
             </div>
-
-
-
           </div>
+
         </div>
       </div>
     </div>
-    <!-- Modal Start -->
-    <div class="replyModal modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-
-          <div class="modal-body">
-            <input type="text" name="rno" readonly>
-            <input type="text" name="gno" readonly>
-            <input type="text" name="reply" value="AAA">
-            <input type="text" name="replyer" value="BBB">
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger btnDelete">DELETE</button>
-            <button type="button" class="btn btn-primary btnModify">MODIFY</button>
-            <button type="button" class="btn btn-primary btnReturnReply">답글 달기</button>
-            <button type="button" class="btn btn-secondary modalClose" data-dismiss="modal">ClOSE</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal End -->
-
-    <!-- Reply Add Start -->
-    <div class="card-body">
-      <form class="form-horizontal replyAdd">
-        <div class="row">
-
-          <div class="form-group col-sm-8">
-            <input class="form-control input-sm" name="registReply" id="newReplyText" type="text"
-              placeholder="댓글 입력...">
-          </div>
-
-          <div class="form-group col-sm-2">
-            <input class="form-control input-sm" name="registReplyer" id="newReplyWriter" type="text" placeholder="작성자">
-          </div>
-
-          <div class="form-group col-sm-2" data-tno=${tno}>
-            <button type="button" class="btn btn-primary btn-sm btn-block replyAddBtn">
-              <i class="fa fa-save"></i> 댓글 달기</button>
-          </div>
-
-        </div>
-      </form>
-    </div>
-    <!-- Reply Add End-->
-
-    <!-- Reply List Start -->
-    <div>
-      <ul class="listUl">
-      </ul>
-    </div>
-    <!-- Reply List End -->
-    <!-- Pagination Container Start -->
-    <div class="pagination-container">
-    </div>
-    <!-- Pagination Container End -->
-
-    <!-- Ajax Start -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- Ajax End -->
-
-    <!-- Reply Start -->
-    <script src="/js/reply.js"></script>
-    <!-- Replt End -->
-
-
-
-    <!-- Update Modal Message Start -->
-    <div class="modal alertModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-body">[[${message}]]</div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Update Modal Message End -->
-
   </div>
   <!-- Fragment Content End -->
 
   <!-- JavaScript Start -->
   <script layout:fragment="script" th:inline="javascript">
-    // actonForm 등록 
-    const actionForm = document.querySelector(".actionForm");
-    // tno 의 값을 boardDTO.tno 를 통해 get 
-    const tno = [[${ list.tno }]]
-
-
-    // Update Action Start 
-    const actionUpdate = document.querySelector(".updateButton");
-    actionUpdate.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      window.location.href = `/board/update/${tno}`;
-    }, false);
-
-    // Delete Action Start 
-    const actionDelete = document.querySelector(".deleteButton");
-    actionDelete.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      actionForm.setAttribute("action", `/board/delete/${tno}`);
-      actionForm.setAttribute("method", `post`);
-      actionForm.submit();
-    }, false);
-
-    // List Action Start 
-    const actionList = document.querySelector(".listButton");
-    actionList.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      window.location.href = `/board/list`;
-    }, false);
-
-    //////////////////////////////
-    // Reply & ReplyChild Start // 
-    //////////////////////////////
-
-    // RestController Action Link 
-    const link = `http://localhost:8084/replies/`
-
-
-    // Reply And ReplyChild List 등록 
-    const listUl = document.querySelector(".listUl");
-
-    // modal input name data 등록  
-    const raplyAdd = document.querySelector(".replyAdd")
-    const modalGno = document.querySelector("input[name='gno']")
-    const modalRno = document.querySelector("input[name='rno']")
-    const modalReply = document.querySelector("input[name='reply']")
-    const modalReplyer = document.querySelector("input[name='replyer']")
-
-    // 댓글 창의 input name date 
-    const getReply = document.querySelector("input[name='registReply']")
-    const getReplyer = document.querySelector("input[name='registReplyer']")
-
-    // 댓글 이밴트 (버튼) 
-    listUl.addEventListener("click", (e) => {
-      e.preventDefault();
-      replyModal.show()
-      const target = e.target;
-      const targetName = target.tagName;
-      if (targetName === 'BUTTON') {
-        const liObj = target.closest("li");
-        modalGno.value = liObj.getAttribute("data-gno");
-        modalRno.value = liObj.getAttribute("data-rno");
-        modalReply.value = liObj.getAttribute("data-reply");
-        modalReplyer.value = liObj.getAttribute("data-replyer");
-      }
-    }, false)
-
-    // Reply Create Action Start 
-    raplyAdd.addEventListener(("click"), (e) => {
-      e.preventDefault();
-
-      const target = e.target;
-      const tag = target.tagName;
-
-      if (tag === "BUTTON") {
-        const list = {
-          tno: tno,
-          reply: getReply.value,
-          replyer: getReplyer.value
-        };
-        console.log("list의 데이터 확인:", list);
-
-        registReply(list).then((value) => {
-          getReply.value = "";
-          getReplyer.value = "";
-          loadReply(1, true);
-        });
-
-      }
-    });
-    // Reply Create Action End 
-
-    // Reply List Action Start 
-    const loadReply = async (page, goEnd = false) => {
-
-      const data = await loadList(page)
-
-      const { list, total } = data
-
-      let str = ""
-
-      // For 문을 통한 List Action 
-      for (let i = 0; i < list.length; i++) {
-        const { rno, reply, replyer, replyDate, modifyDate, gno, step } = list[i];
-        console.log(list[i])
-        // Reply Child List 
-        if (step === 1) {
-          str += `<li data-rno=${rno} data-gno=${gno} data-reply=${reply} data-replyer=${replyer} data-tno=${tno} style="margin-left: 200px">
-              작성자 : ${replyer} | ${replyDate} <br> 내용 : ${reply}  
-              <button>답글</button>
-              <button>수정</button>
-              <button>삭제</button>
-              </li>
-              <hr>`;
-        } else {
-          // Reply List 
-          str += `<li data-rno=${rno} data-gno=${gno} data-reply=${reply} data-replyer=${replyer} data-tno=${tno}>
-              작성자 : ${replyer} | ${replyDate} <br> 내용 : ${reply}  
-              <button>답글</button>
-              <button>수정</button>
-              <button>삭제</button>
-              </li>
-              <hr>`;
-        }
-      }
-      listUl.innerHTML = str
-
-      if (total > 0) {
-        const pagination = makePages(page, 10, total);
-        document.querySelector('.pagination-container').innerHTML = pagination;
-      } else {
-        document.querySelector('.pagination-container').innerHTML = '';
-      }
-    }
-    // Reply List Action End
-
-
-    function makePages(currentPage, size, total) {
-      const totalPages = Math.ceil(total / size);
-      const pageGroupSize = 10;
-      const currentGroup = Math.ceil(currentPage / pageGroupSize);
-
-      let paginationHTML = '<ul class="pagination">';
-
-      const startPage = (currentGroup - 1) * pageGroupSize + 1;
-      const endPage = Math.min(currentGroup * pageGroupSize, totalPages);
-
-      // 이전 버튼
-      if (currentGroup > 1) {
-        paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="event.preventDefault(); loadReply(${startPage - 1})">Previous</a></li>`;
-      }
-
-      // 페이지 번호들
-      for (let i = startPage; i <= endPage; i++) {
-        paginationHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="event.preventDefault(); loadReply(${i})">${i}</a></li>`;
-      }
-
-      // 다음 버튼
-      if (currentGroup < Math.ceil(totalPages / pageGroupSize)) {
-        paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="event.preventDefault(); loadReply(${endPage + 1})">Next</a></li>`;
-      }
-
-      paginationHTML += '</ul>';
-      return paginationHTML;
-    }
-
-
-
-
-    // Reply Modal Action Close Start 
-    const replyModal = new bootstrap.Modal(document.querySelector(".replyModal"))
-
-    document.querySelector(".modalClose").addEventListener("click", (e) => {
-      replyModal.hide();
-    })
-    // Reply Modal Action Close End 
-
-
-    // Reply Modal Action Delete Start 
-    document.querySelector(".btnDelete").addEventListener("click", () => {
-
-      deleteReply(modalRno.value).then(result => {
-
-        modalReply.value = '';
-        modalReplyer.value = '';
-
-        replyModal.hide();
-        loadReply(1, true);
-      })
-    })
-    // Reply Modal Action Delete End 
-
-    // Reply Modal Action Update Start 
-    document.querySelector(".btnModify").addEventListener("click", () => {
-      const list =
-      {
-        tno: tno,
-        gno: modalGno.value,
-        reply: modalReply.value,
-        replyer: modalReplyer.value,
-        rno: modalRno.value
-      }
-
-      modifyReply(list).then((value) => {
-
-        replyModal.hide();
-        loadReply(1, true)
-      });
-    })
-    // Reply Modal Action Update End
-
-    // RepltChild Modal Add Action Start 
-    document.querySelector(".btnReturnReply").addEventListener("click", () => {
-      const list = {
-        tno: tno,
-        reply: modalReply.value,
-        replyer: modalReplyer.value,
-        gno: modalGno.value
-      }
-      registReply(list).then((value) => {
-        replyModal.hide();
-
-        loadReply(1, true)
-      });
-    }, false)
-    // ReplyChild Modal Add Action End 
-
-    // Reply & ReplyChild List Start 
-    loadReply(1, true)
-    // Reply & ReplyChild List end 
-
-    // Update Message Modal Start 
+    // Board Update Modal 
     const alertModal = new bootstrap.Modal(document.querySelector(".alertModal"))
+    // If Modal Is Not Null Show
     if ([[${ message }]] != null) {
-      alertModal.show()
+      alertModal.show();
     }
-    // Update Message Modal End
+    setTimeout(function () {
+      alertModal.hide();
+    }, 1500);
+
+    // tno 값 가져오기 
+    const { tno } = [[${ list }]]
+    // Reply Path 
+    const replyLink = "http://localhost:8084/replies"
+    // Reply and pagination containers
+    const replyWrap = document.querySelector(".replyWrap");
+    const replyPaging = document.querySelector(".replyPaging");
+
+    //댓글 페이징 처리
+    replyPaging.addEventListener("click", (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      //target 찾기
+      const target = e.target
+      //paging 번호 찾기 click 시 
+      const pageNum = target.getAttribute("data-page")
+      //페이징 변경해주기
+      replyListAxios(true, pageNum)
+    }, false)
+
+    const replyForm = document.querySelector('.ActionCreateReply');
+    const replyerInput = document.querySelector('.actionReplyer');
+    const replyInput = document.querySelector('.actionReply');
+
+    replyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const replyer = replyerInput.value;
+      const reply = replyInput.value;
+
+      const list = {
+        replyer: replyer,
+        reply: reply,
+        tno: tno, // Assuming tno is accessible in this context
+      };
+
+
+      const response = await registReply(list);
+      console.log(response);
+
+      // Clear the form
+      replyerInput.value = '';
+      replyInput.value = '';
+      // 답글 등록 후 댓글 목록을 다시 로드
+      replyListAxios(false, 1);
+    }, false);
 
 
 
 
-    // Like Start
-    const likeLink = "http://localhost:8084/like/";
-
-    // Count Like
-    const countLike = async (tno) => {
-      const { data } = await axios.get(`${likeLink}${tno}/count`);
-      return data;
-    };
-
-    const likeCountElement = document.getElementById("likeCount");
-
-    const loadLikeCount = async (tno) => {
-      console.log("tno:", tno); // Log the value of tno
-      const { result } = await countLike(tno);
-      const likeCount = result
-      const likeCountHTML = `<div>Likes: ${likeCount}</div>`;
-      likeCountElement.innerHTML = likeCountHTML;
-    };
-
-    loadLikeCount(tno);
-
-    // Toggle Like
-    const likeButton = document.getElementById("likeButton");
-
-    // Toggle Like
-    const toggleLike = async (tno) => {
-      await axios.post(`${likeLink}toggle/${tno}`);
-
-      // After successfully toggling the like, refresh the like count
-      loadLikeCount(tno);
-
-      // Toggle the active class on the like button
-      likeButton.classList.toggle("like-button-active");
-    };
-
-    likeButton.addEventListener("click", () => toggleLike(tno));
-
-
+    // Reply Axios List Show 
+    replyListAxios()
 
 
 

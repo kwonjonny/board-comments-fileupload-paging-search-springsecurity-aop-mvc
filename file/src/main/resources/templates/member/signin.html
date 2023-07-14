@@ -34,44 +34,29 @@
             <a href="/member/join">Join as a new member</a>
         </p>
 
-        <!-- Modal -->
-        <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
-            aria-hidden="true">
+        <!-- Delete & Create Complete Message Start -->
+        <div class="modal alertModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="messageModalLabel">Notification</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="messageModalBody">
-                        <!-- The message will be inserted here by JavaScript -->
-                    </div>
+                    <div class="modal-body">[[${message}]]</div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Modal -->
-
     </div>
 
-    < <script layout:fragment="script" th:inline="javascript">
-        $(document).ready(function () {
-        var message = /*[[${message}]]*/ '';
-        if (message !== '') {
-        $('#messageModalBody').text(message);
-        $('#messageModal').modal('show');
-        setTimeout(function () {
-        $('#messageModal').modal('hide');
-        }, 1000);
+    <script layout:fragment="script" th:inline="javascript">
+        // Update & Delete Message Modal Start
+        const alertModal = new bootstrap.Modal(document.querySelector(".alertModal"))
+        if ([[${ message }]] != null) {
+            alertModal.show();
         }
-        });
-        </script>
-
-
+        setTimeout(function () {
+            alertModal.hide();
+        }, 1500);
+    </script>
 
 </body>
 

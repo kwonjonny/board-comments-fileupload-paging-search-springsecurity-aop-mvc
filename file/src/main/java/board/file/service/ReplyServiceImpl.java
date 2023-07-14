@@ -91,12 +91,24 @@ public class ReplyServiceImpl implements ReplyService {
     @Transactional(readOnly = true)
     public PageResponseDTO<ReplyDTO> listReply(PageRequestDTO pageRequestDTO, Long tno) {
         log.info("List ServiceImpl Is Running");
-        List<ReplyDTO> list = replyMapper.listReply(pageRequestDTO, tno);
+        pageRequestDTO.setSize(10);
         int total = replyMapper.totalReply(tno);
-
+        // page 번호 
+        int pageNum = pageRequestDTO.getPage();
+        // 끝 페이지 계산 
+        if(!pageRequestDTO.isReplyLast()) {
+            // pageNum 에 넣어주기 
+            pageNum = (int) (Math.ceil(total/(double)pageRequestDTO.getSize()));
+            // page 번호가 0 보다 작거나 같으면 1 
+            pageNum = pageNum <=0 ? 1: pageNum;
+        }
+        // 끝페이지 번호로 설정 
+        pageRequestDTO.setPage(pageNum);
+        List<ReplyDTO> list = replyMapper.listReply(pageRequestDTO, tno);
         return PageResponseDTO.<ReplyDTO>withAll()
-                .list(list)
-                .total(total)
-                .build();
+        .list(list)
+        .total(total)
+        .pageRequestDTO(pageRequestDTO)
+        .build();
     }
 }

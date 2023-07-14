@@ -11,10 +11,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import board.file.dto.board.BoardCreateDTO;
@@ -29,7 +27,6 @@ import lombok.extern.log4j.Log4j2;
 // Board Service Test Class 
 @Log4j2
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
 public class BoardServiceTests {
 
     // 의존성 주입

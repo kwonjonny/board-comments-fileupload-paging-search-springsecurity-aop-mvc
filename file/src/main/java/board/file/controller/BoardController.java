@@ -2,6 +2,8 @@ package board.file.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import board.file.dto.board.BoardCreateDTO;
 import board.file.dto.board.BoardDTO;
 import board.file.dto.board.BoardListDTO;
-import board.file.dto.board.BoardNoticeCreateDTO;
-import board.file.dto.board.BoardNoticeUpdateDTO;
 import board.file.dto.board.BoardUpdateDTO;
 import board.file.dto.page.PageRequestDTO;
 import board.file.dto.page.PageResponseDTO;
@@ -50,61 +50,15 @@ public class BoardController {
         return "/board/create";
     }
 
-    // GET : Create Notice 
-    @GetMapping("createnotice")
-    @PreAuthorize("hasAnyRole('USER')")
-    public String getBoardCreateNotice() {
-        log.info("GET | Board Notice Create");
-        return "/board/createnotice";
-    }
-
-    // POST : Create Notice
-    @PostMapping("createntoice")
-    @PreAuthorize("hasAnyRole('USER')")
-    public String postBoardCreateNotice(NoticeCreateDTO boardNoticeCreateDTO) {
-        log.info("POST | Board Notice Create");
-        boardServce.createBoardNotice(boardNoticeCreateDTO);
-        return "redirect:/board/list";
-    }
-
-    // GET : Read Notice 
-    @GetMapping("readnotice/{tno}")
-    @PreAuthorize("hasAnyRole('USER')")
-    public String getBoardReadNotice(@PathVariable("tno") Long tno, Model model, HttpServletRequest request, HttpServletResponse response) {
-        log.info("GET | Board Notice Read");
-        if(managementCookie.createCookie(request, response, tno)) {
-            boardServce.viewCount(tno);
-            log.info("Making Cookie Notice Read");
-        }
-        BoardDTO list = boardServce.readBoardNotice(tno);
-        model.addAttribute("list", list);
-        return "/board/readnotice";
-    }
-
-    // GET : Update Notice 
-    @GetMapping("updatenotice/{tno}")
-    public String getBoardUpdateNotice(@PathVariable("tno") Long tno, Model model) {
-        log.info("GET | Board Notice Update");
-        BoardDTO list = boardServce.readBoardNotice(tno);
-        model.addAttribute("list", list);
-        return "/board/updatenotice";
-    }
-
-    // POST : Update Notice 
-    @PostMapping("updatenotice/{tno}")
-    @PreAuthorize("hasAnyRole('USER')")
-    public String postBoardUpdateNotice(NoticeUpdateDTO boardNoticeUpdateDTO) {
-        log.info("POST | Board Notice Update");
-        boardServce.updateBoardNotice(boardNoticeUpdateDTO);
-        return "redirect:/board/readnotice" + boardNoticeUpdateDTO.getTno();
-    }
- 
     // GET : List
     @GetMapping("list")
     @PreAuthorize("hasAnyRole('USER')")
-    public String getBoardList(PageRequestDTO pageRequestDTO, Model model) {
+    public String getBoardList(PageRequestDTO pageRequestDTO, Authentication authentication, Model model) {
         PageResponseDTO<BoardListDTO> list = boardServce.listboard(pageRequestDTO);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String email = userDetails.getUsername();
         model.addAttribute("list", list);
+        model.addAttribute("email", email);
         log.info("GET | Board List");
         return "/board/list";
     }
@@ -112,9 +66,10 @@ public class BoardController {
     // GET : Read
     @GetMapping("read/{tno}")
     @PreAuthorize("hasAnyRole('USER')")
-    public String getBoardRead(@PathVariable("tno") Long tno, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String getBoardRead(PageRequestDTO pageRequestDTO, @PathVariable("tno") Long tno, Model model,
+            HttpServletRequest request, HttpServletResponse response) {
         log.info("GET | Board Read");
-        if(managementCookie.createCookie(request, response, tno)) {
+        if (managementCookie.createCookie(request, response, tno)) {
             boardServce.viewCount(tno);
             log.info("Making Cookie");
         }

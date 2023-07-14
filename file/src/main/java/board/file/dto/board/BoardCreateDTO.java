@@ -1,5 +1,6 @@
 package board.file.dto.board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +22,8 @@ public class BoardCreateDTO {
     private String title;
     private String writer;
     private String content;
-    private List<String> fileNames;
+    @Builder.Default
+    private List<String> fileNames = new ArrayList<>();
     /*
      * List<String> 의 형태로 BoardMapper id =
      * " int createBoard(BoardCreateDTO boardCreateDTO);"

@@ -18,19 +18,18 @@ public class CustomOAuthSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
 
-                log.info(authentication.getPrincipal());
+        log.info(authentication.getPrincipal());
 
-                MemberDTO dto = (MemberDTO) authentication.getPrincipal();
+        MemberDTO dto = (MemberDTO) authentication.getPrincipal();
 
-                // MemberDTO를 사용 소셜 로그인에 성공했을 시(mpw가 "" 일때) 수정페이지로 가기
-                if(dto.getMpw() == null || dto.getMpw().equals("")){
+        // MemberDTO를 사용 소셜 로그인에 성공했을 시(mpw가 "" 일때) 수정페이지로 가기
+        if (dto.getMpw() == null || dto.getMpw().equals("")) {
 
-                    // DB에 소셜로그인 email이 없을때
-                    response.sendRedirect("/member/update/" + dto.getEmail());
-                    return;
-                }
-                // DB email 컬럼에 소셜로그인 이메일이 존재할 시 myPage 
-                response.sendRedirect("/member/mypage/" + dto.getEmail());
+            // DB에 소셜로그인 email이 없을때
+            response.sendRedirect("/member/update/" + dto.getEmail());
+            return;
+        }
+        // DB email 컬럼에 소셜로그인 이메일이 존재할 시 myPage
+        response.sendRedirect("/member/mypage/" + dto.getEmail());
     }
-
 }

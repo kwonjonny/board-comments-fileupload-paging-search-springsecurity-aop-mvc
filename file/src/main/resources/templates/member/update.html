@@ -18,38 +18,30 @@
                         <div class="card-body">
 
                             <form action="/member/update" method="post">
-                                <div class="form-group row">
-                                    <label for="mname" class="col-sm-3 text-end control-label col-form-label">Member
-                                        Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" id="mname" name="mname" th:value="${member.mname}" required>
-                                    </div>
+                                <div class="mb-3">
+                                    <label for="boardTno" class="form-label">Name</label>
+                                    <input type="text" name="mname" class="form-control" id="memberName"
+                                        th:value="${member.mname}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="boardTno" class="form-label">Email</label>
+                                    <input type="text" name="email" class="form-control" id="MemberEmail"
+                                        th:value="${member.email}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="boardTno" class="form-label">Password(Protected)</label>
+                                    <input type="password" name="mpw" class="form-control" id="MemberPassword"
+                                        th:value="${member.mpw}">
                                 </div>
 
-                                <div class="form-group row">
-                                    <label for="email" class="col-sm-3 text-end control-label col-form-label">Member
-                                        Email</label>
-                                    <div class="col-sm-9">
-                                        <input type="email" id="email" name="email" th:value="${member.email}" readonly>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="password" class="col-sm-3 text-end control-label col-form-label">Member
-                                        Password (Protected)</label>
-                                    <div class="col-sm-9">
-                                        <input type="password" id="mpw" name="mpw" th:value="${member.mpw}"
-                                            required>
-                                    </div>
-                                </div>
-                  
                                 <div class="form-group row">
                                     <div class="col-sm-9 offset-sm-3">
                                         <button type="submit"  class="btn btn-primary">Update</button>
+                                        <a th:href="@{|/member/mypage/${email}|}" class="btn btn-info text-white">Return My
+                                            Page</a>
                                     </div>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>

@@ -5,70 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
-            margin: 0;
-        }
-
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 4px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn-primary:hover {
-            background-color: #0069d9;
-        }
-
-        .row {
-            text-align: center;
-        }
-
-        .updateButton {
-            margin: 0 auto;
-        }
-
-
-    </style>
+    <title>Member My Page</title>
 </head>
 
 <body>
@@ -80,73 +17,38 @@
                     <div class="card">
                         <div class="card-body">
                             <form onsubmit="onSubmitForm(event)" method="get">
-
-                                <div class="form-group row">
-                                    <label for="mname" class="col-sm-3 text-end control-label col-form-label">Member
-                                        Name</label>
-                                    <div class="col-sm-9">
-                                        <span th:text="${member.mname}"></span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="email" class="col-sm-3 text-end control-label col-form-label">Member
-                                        Email</label>
-                                    <div class="col-sm-9">
-                                        <span class="email" th:text="${member.email}"></span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="email" class="col-sm-3 text-end control-label col-form-label">Member
-                                        Password (Protected)</label>
-                                    <div class="col-sm-9">
-                                        <span th:text="${member.mpw}"></span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <button type="submit" class="btn btn-primary updateButton">Go Update Page</button>
+                                <h4 class="mb-4">Name</h4>
+                                <div class="alert alert-light" role="alert">[[${member.mname}]]</div>
+                                <h4 class="mb-4">Email</h4>
+                                <div class="alert alert-light" role="alert">[[${member.email}]]</div>
+                                <h4 class="mb-4">Password(Protected)</h4>
+                                <div class="alert alert-light" role="alert">[[${member.mpw}]]</div>
+                                <h4 class="mb-4">Name</h4>
+                                <div class="alert alert-light" role="alert">[[${member.mname}]]</div>
                                 </div>
                             </form>
-
-                            <!-- 로그아웃 버튼 -->
-                            <form action="/member/logout" method="post">
-                                <button type="submit" class="btn btn-primary">Logout</button>
-                            </form>
-                            <!-- 회원 탈퇴 버튼 -->
+                            <!-- Member Delete & Member Signout & Member Update & Board List Page -->
                             <form onsubmit="return false;" action="/member/delete" method="post">
-                                <button type="submit" class="btn btn-primary" onclick="confirmDelete()">Delete
+                                <button type="submit" class="btn btn-danger" onclick="confirmDelete()">Delete
                                     Account</button>
+                                <a th:href="@{|/board/list|}" class="btn btn-primary text-white">Board List
+                                    Page</a>
+                                <a th:href="@{|/member/logout|}" class="btn btn-primary text-white">Sign Out</a>
+                                <a th:href="@{|/member/update/${email}|}" class="btn btn-info text-white">Member Update
+                                    Page</a>
                             </form>
-                            <!-- 게시판 리스트 버튼 -->
-                            <form action="/board/list" method="get">
-                                <button type="submit" class="btn btn-primary">Board List Page</button>
-                            </form>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog"
-                                aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
+                            <!-- Delete & Create Complete Message Start -->
+                            <div class="modal alertModal" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteConfirmationLabel">Confirm Update</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            회원 정보 업데이트가 완료되었습니다.
-                                        </div>
+                                        <div class="modal-body">[[${message}]]</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Close</button>
+                                                data-dismiss="modal">닫기</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Modal -->
-
                         </div>
                     </div>
                 </div>
@@ -156,13 +58,6 @@
     </div>
 
     <script layout:fragment="script" th:inline="javascript">
-        function onSubmitForm(event) {
-            event.preventDefault();
-            var form = event.target;
-            var email = form.querySelector('span.email').textContent;
-            form.action = '/member/update/' + encodeURIComponent(email);
-            form.submit();
-        }
 
         function confirmDelete() {
             if (confirm("정말로 탈퇴하시겠습니까?")) {
@@ -173,15 +68,14 @@
             }
         }
 
-        $(document).ready(function () {
-            var message = /*[[${message}]]*/ '';
-            if (message === '회원 업데이트 완료') {
-                $('#deleteConfirmationModal').modal('show');
-                setTimeout(function () {
-                    $('#deleteConfirmationModal').modal('hide');
-                }, 1000);
-            }
-        });
+        // Update & Delete Message Modal Start
+        const alertModal = new bootstrap.Modal(document.querySelector(".alertModal"))
+        if ([[${ message }]] != null) {
+            alertModal.show();
+        }
+        setTimeout(function () {
+            alertModal.hide();
+        }, 1500);
     </script>
 
 </body>

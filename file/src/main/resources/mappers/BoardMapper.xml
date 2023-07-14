@@ -13,21 +13,21 @@
    
     LEFT JOIN tbl_board_img tbi ON tb.tno = tbi.tno AND tbi.ord = 0
     WHERE tb.tno > 0
-     <if test="searchType != null and keyword != null">
-        WHERE (
-            <if test="searchType == 'title' or searchType == 'all'">
-                tb.title LIKE CONCAT('%', #{keyword}, '%')
-            </if>
-            <if test="searchType == 'content' or searchType == 'all'">
-                <if test="searchType == 'all'">OR</if>
-                tb.content LIKE CONCAT('%', #{keyword}, '%')
-            </if>
-            <if test="searchType == 'writer' or searchType == 'all'">
-                <if test="searchType == 'all'">OR</if>
-                tb.writer LIKE CONCAT('%', #{keyword}, '%')
-            </if>
-        ) 
-    </if>
+     <if test="keyword != null and types != null">
+    <trim prefix="and (" prefixOverrides="or" suffix=")">
+      <foreach collection="types" item="searchType" separator=" OR ">
+        <if test='searchType == "t"'>
+          title like concat('%', #{keyword}, '%')
+        </if>
+        <if test='searchType == "c"'>
+          content like concat('%', #{keyword}, '%')
+        </if>
+        <if test='searchType == "w"'>
+          writer like concat('%', #{keyword}, '%')
+        </if>
+      </foreach>
+    </trim>
+  </if>
     ORDER BY tb.tno DESC 
     LIMIT #{skip}, #{size}
 </select>
@@ -97,6 +97,21 @@ WHERE b.tno = #{tno};
     SELECT COUNT(*) 
     FROM (SELECT * FROM tbl_board 
     WHERE tno > 0 
+    <if test="keyword != null and types != null">
+    <trim prefix="and (" prefixOverrides="or" suffix=")">
+      <foreach collection="types" item="searchType" separator=" OR ">
+        <if test='searchType == "t"'>
+          title like concat('%', #{keyword}, '%')
+        </if>
+        <if test='searchType == "c"'>
+          content like concat('%', #{keyword}, '%')
+        </if>
+        <if test='searchType == "w"'>
+          writer like concat('%', #{keyword}, '%')
+        </if>
+      </foreach>
+    </trim>
+  </if>
     LIMIT #{countEnd}
     ) tbl_board
 </select>
@@ -109,8 +124,8 @@ WHERE b.tno = #{tno};
     WHERE tno = #{tno}
 </update>
 
+<!-- 
 
-<!-- BoardMapper id = "createBoardNotice" -->
 <insert id="createBoardNotice" parameterType="board.file.dto.board.BoardNoticeCreateDTO">
     INSERT INTO tbl_board
     (title, writer, content, notice) 
@@ -120,11 +135,10 @@ WHERE b.tno = #{tno};
       #{content}, 
       (SELECT IFNULL(MAX(notice), 0) + 1 FROM tbl_board)
     )
-    <!-- 공지사항 순서를 지키기 위해 INFULL MAX notice 컬럼 +1 을 해줍니다 -->
-</insert>
+  
 
 
-<!-- BoardMapper id = "updateBoardNotice" -->
+
 <update id="updateBoardNotice" parameterType="board.file.dto.board.BoardNoticeUpdateDTO">
     UPDATE tbl_board
     SET title = #{title} , writer = #{writer}, content = #{content}, updateDate = now()
@@ -132,14 +146,14 @@ WHERE b.tno = #{tno};
 </update>
 
 
-<!-- BoardMapper id = "readBoardNotice" -->
+
 <select id="readBoardNotice" parameterType="long" resultMap="BoardResultMap">
     SELECT b.tno, b.title, b.content, b.writer, b.registDate, b.updateDate, b.notice 
         CONCAT(i.uuid, '_', filename) AS fileName
     FROM tbl_board b
     LEFT OUTER JOIN tbl_board_img i on b.tno = i.tno
     WHERE t.tno = #{tno}
-</select>
+</select> -->
 
 
 </mapper>
