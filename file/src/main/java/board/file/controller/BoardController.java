@@ -54,6 +54,7 @@ public class BoardController {
     @GetMapping("list")
     @PreAuthorize("hasAnyRole('USER')")
     public String getBoardList(PageRequestDTO pageRequestDTO, Authentication authentication, Model model) {
+        log.info("GET | Board List");
         PageResponseDTO<BoardListDTO> list = boardServce.listboard(pageRequestDTO);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String email = userDetails.getUsername();

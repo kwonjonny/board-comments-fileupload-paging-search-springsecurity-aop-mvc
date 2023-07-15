@@ -1,7 +1,6 @@
 package board.file.dto.notice;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,14 +15,15 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class NoticeDTO {
+public class NoticeListDTO {
     // tbl_notice
     private Long nno;
+    private String title;
     private String content;
     private String writer;
-    private String title;
     private LocalDate registDate;
     private LocalDate updateDate;
-    private List<String> fileName;
-    private Long likeCnt;
+    private int replyCnt;
+    private String fileName;
+    private Long viewCnt;
 }

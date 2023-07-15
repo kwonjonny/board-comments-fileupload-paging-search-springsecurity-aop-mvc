@@ -1,3 +1,8 @@
+
+
+// Reply Path 
+const replyLink = "http://localhost:8084/replies"
+
 // Create Reply
 const registReply = async (list) => {
     console.log("list: ", list)

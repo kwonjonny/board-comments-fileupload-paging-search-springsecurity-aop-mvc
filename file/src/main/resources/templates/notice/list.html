@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Board List Page</title>
+    <title>Notice List Page</title>
     <style>
         .title {
             font-weight: bold;
@@ -30,24 +30,20 @@
         ul {
             list-style-type: none;
         }
-
-        .notice-row {
-            background-color: lightgray;
-        }
     </style>
 </head>
 
 <body>
     <div layout:fragment="content">
-        <h1>Board List Page</h1>
-        <!-- [[${list.list}]]
-        [[${pageRequestDTO}]] -->
+        <h1>Notice List Page</h1>
+        [[${list}]]
+        [[${pageRequestDTO}]]
         <div class="card">
             <div class="card-header"></div>
             <div class="card-body">
                 <!-- Search Form Start -->
                 <div class="container my-4">
-                    <form action="/board/list" method="get" class="actionForm">
+                    <form action="/notice/list" method="get" class="actionForm">
                         <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
                         <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
                         <div class="input-group mb-3">
@@ -57,7 +53,6 @@
                                 <option value="c" th:selected="${pageRequestDTO.searchType == 'c'}">내용</option>
                                 <option value="w" th:selected="${pageRequestDTO.searchType == 'w'}">작성자 </option>
                                 <option value="tc" th:selected="${pageRequestDTO.searchType == 'tc'}">제목+내용</option>
-                                <option value="tw" th:selected="${pageRequestDTO.searchType == 'tw'}">제목+작성자</option>
                                 <option value="tcw" th:selected="${pageRequestDTO.searchType == 'tcw'}">제목+내용+작성자</option>
                             </select>
                             <input type="text" name="keyword" class="form-control search-input"
@@ -70,45 +65,37 @@
                 <table class="table table-bordered boardTable">
                     <thead>
                         <tr>
-                            <th class="text-center">tno & nno</th>
+                            <th class="text-center">nno</th>
                             <th class="text-center">제목:title 댓글:replyCount</th>
                             <th class="text-center">writer</th>
-                            <th class="text-center">createDate</th>
+                            <th class="text-center">craeteDate</th>
                             <th class="text-center">조회수</th>
                             <th class="text-center">IMG</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="board : ${list.list}" th:class="${board.nno != null} ? 'notice-row' : ''">
-                            <td class="text-center">
-                                <a th:if="${board.nno != null}"
-                                    th:href="@{|/notice/read/${board.nno}?${pageRequestDTO.link}|}">
-                                    [[${board.nno}]]
-                                </a>
-                                <a th:if="${board.tno != null}"
-                                    th:href="@{|/board/read/${board.tno}?${pageRequestDTO.link}|}">
-                                    [[${board.tno}]]
-                                </a>
+                        <tr th:each="notice :${list.list}">
+                            <td class="text-center"><a
+                                    th:href="@{|/notice/read/${notice.nno}?${pageRequestDTO.link}|}">[[${notice.nno}]]</a>
                             </td>
                             <td>
-                                <span class="title text-center" th:text="${board.title}"></span>
-                                <span class="reply-count text-center" th:text="'댓글: ' + ${board.replyCnt}"></span>
+                                <span class="title text-center" th:text="${notice.title}"></span>
+                                <span class="reply-count text-center" th:text="'댓글: ' + ${notice.replyCnt}"></span>
                             </td>
-                            <td class="text-center">[[${board.writer}]]</td>
-                            <td class="text-center">[[${board.registDate}]]</td>
-                            <td class="text-center">[[${board.viewCnt}]]</td>
+                            <td class="text-center">[[${notice.writer}]]</td>
+                            <td class="text-center">[[${notice.registDate}]]</td>
+                            <td class="text-center">[[${notice.viewCnt}]]</td>
                             <td class="text-center">
-                                <img th:if="${board.fileName}" th:src="|http://localhost/s_${board.fileName}|" />
-                                <img th:unless="${board.fileName}" th:src="|http://localhost/Default.jpg|" width="100px"
-                                    height="100px" />
+                                <img th:if="${notice.fileName}" th:src="|http://localhost/s_${notice.fileName}|" />
+                                <img th:unless="${notice.fileName}" th:src="|http://localhost/Default.jpg|" width="100px" height="100px" />
                             </td>
+                            
                         </tr>
                     </tbody>
                 </table>
-
-                <!-- Create Board Start -->
+                <!-- Create Notice Start -->
                 <div class="button_wrap">
-                    <a href="/board/create" class="btn btn-primary">게시글 쓰기(Create Board)</a>
+                    <a href="/notice/create" class="btn btn-primary">공지사항 쓰기(Create Notice)</a>
                     <a th:href="@{|/member/mypage/${email}|}" class="btn btn-info text-white">Return My
                         Page</a>
                     <a th:href="@{|/member/logout|}" class="btn btn-info text-white">Sign Out</a>
@@ -171,7 +158,7 @@
             //input에 page변경 넘겨주기
             pageInput.value = pageNum
             //actionForm action 변경
-            actionForm.setAttribute("action", "/board/list")
+            actionForm.setAttribute("action", "/notice/list")
             //submit
             actionForm.submit()
         })

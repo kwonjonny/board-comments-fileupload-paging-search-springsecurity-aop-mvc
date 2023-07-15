@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout.html}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Board Create Page</title>
+</head>
+
+<body>
+  <!-- fragment content start -->
+  <div layout:fragment="content">
+    <h1>Notice Create Page</h1>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <!-- form start -->
+            <form class="form-horizontal actionForm" name="valueCheck" method="post" action="/notice/create">
+              <div class="card-body">
+                <h4 class="card-title">공지사항 등록 페이지</h4>
+                <div class="form-group row">
+                  <label for="fname" class="col-sm-3 text-end control-label col-form-label"></label>
+                </div>
+                <!-- title start -->
+                <div class="mb-3">
+                  <label for="boardTitle" class="form-label">Title</label>
+                  <input type="text" name="title" class="form-control" id="boardTitle">
+                </div>
+                <!-- writer start -->
+                <div class="mb-3">
+                  <label for="boardTitle" class="form-label">Writer</label>
+                  <input type="text" name="Writer" class="form-control" id="boardWriter">
+                </div>
+                <!-- Content Start -->
+                <div class="mb-3">
+                  <label for="boardTitle" class="form-label">Content</label>
+                  <textarea class="form-control" name="content" th:required="required"></textarea>
+                </div>
+                <!-- file upload start -->
+                <div>
+                  <input class="uploadInput" type="file" name="upload" multiple>
+                  <button class="uploadBtn">UPLOAD</button>
+                </div>
+                <!-- Img Start -->
+                <div class="uploadDiv">
+                  <ul class="uploadUL">
+                  </ul>
+                </div>
+                <!-- button start -->
+                <div class="border-top">
+                  <div class="card-body">
+                    <button type="button" class="btn btn-primary saveBtn">공지사항 등록</button>
+                    <a href="/notice/list" class="btn btn-danger">Cancel Return Notice List</a>
+                  </div>
+                  <div class="uploadHidden">
+                  </div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </div>
+  </div>
+</div>
+
+  <!-- javaScript start -->
+  <script layout:fragment="script" th:inline="javascript">
+
+    // querySelector 등록 
+    const actionForm = document.querySelector(".actionForm");
+    const saveBtn = document.querySelector(".saveBtn")
+
+    // fileUpload
+    const uploadBtn = document.querySelector(".uploadBtn")
+    const uploadInput = document.querySelector(".uploadInput")
+    const uploadUL = document.querySelector(".uploadUL")
+    const uploadHidden = document.querySelector(".uploadHidden")
+
+    // actionCreate 버튼 click 시 event 
+    saveBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const liArr = uploadUL.querySelectorAll("li")
+
+      let fileStr = "";
+      for (let liObj of liArr) {
+        const uuid = liObj.getAttribute("data-uuid");
+        const fileName = liObj.getAttribute("data-filename");
+        fileStr += `<input type='text' name='fileNames' value='${uuid}_${fileName}'>`;
+      }
+
+      // 폼에 추가하고 제출
+      uploadHidden.innerHTML += fileStr
+      actionForm.submit();
+    }, false);
+
+    // 사용자가 업로드 버튼을 누를시에 post 요청으로 Enginx에 파일을 먼저 업로드합니다 
+    uploadBtn.addEventListener("click", e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      if (!uploadInput.files || uploadInput.files.length === 0) {
+        return
+      }
+      const formData = new FormData()
+      for (let i = 0; i < uploadInput.files.length; i++) {
+        formData.append("files", uploadInput.files[i])
+      }
+      const header = { headers: { "Content-Type": "multipart/form-data" } }
+      axios.post('http://localhost:8084/upload', formData, header)
+        .then(res => {
+          const result = res.data
+          showProducts(result)
+        })
+    }, false)
+
+    // 사용자가 업로드 버튼을 누를시에 동적으로 File의 이미지를 생성해 띄워줍니다 
+    const showProducts = (arr) => {
+      let str = ""
+      for (const uploadFile of arr) {
+        const { fileName, link, uuid } = uploadFile
+        str += `
+        <li data-uuid='${uuid}' data-fileName='${fileName}'>
+          <img src='http://localhost/${link}'/>
+            <p>
+              <a href='http://localhost/${uuid}_${fileName}' target="_blank">
+                ${fileName}
+              </a>
+               <button onclick="javascript:removeFile(event, '${uuid}', '${fileName}')">x</button>
+            </p>
+        </li>`
+      }
+      uploadUL.innerHTML += str
+    }
+
+    // 사용자가 removeButton 을 클릭시에 post요청을보내고 사진을 삭제합니다 
+    const removeFile = (e, uuid, fileName) => {
+      e.preventDefault()
+      e.stopPropagation()
+      const liObj = e.target.closest("li")
+      axios.delete(`http://localhost:8084/removeFile/${uuid}_${fileName}`)
+      liObj.remove()
+    }
+
+  </script>
+</body>
+
+</html>

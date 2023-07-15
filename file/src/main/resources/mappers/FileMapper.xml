@@ -7,7 +7,7 @@
 <mapper namespace="board.file.mappers.FileMapper">
 
 
-<!-- FileMapper id = "createImage" -->
+<!-- FileMapper id = "createImage Board" -->
 <insert id="createImage" parameterType="java.util.List">
     INSERT INTO tbl_board_img (uuid, fileName, ord, tno)
     VALUES
@@ -17,19 +17,46 @@
 </insert>
 
 
-<!-- FileMapper id = "deleteImage" -->
+<!-- FileMapper id = "deleteImage Board" -->
 <delete id="deleteImage"> 
     DELETE FROM tbl_board_img
     WHERE tno = #{tno}
 </delete>
 
 
-<!-- FileMapper id = "updateImage" -->
+<!-- FileMapper id = "updateImage Board" -->
 <insert id="updateImage" parameterType="java.util.List">
     INSERT INTO tbl_board_img (uuid, filename, ord, tno)
     VALUES
     <foreach collection="list" item="item" separator=",">
         (#{item.uuid}, #{item.fileName}, #{item.ord}, #{item.tno})
+    </foreach>
+</insert>
+
+<!-- FileMapper id = "createImageNotice" -->
+<insert id="createImageNotice" parameterType="java.util.List">
+    INSERT INTO tbl_notice_img 
+    (uuid, fileName, ord, nno)
+    VALUES
+    <foreach collection="list" item="item" separator=",">
+        (#{item.uuid}, #{item.fileName}, #{item.ord}, #{item.nno})
+    </foreach>
+</insert>
+
+
+<!-- FileMapper id = "deleteImageNotice" -->
+<delete id="deleteImageNotice">
+    DELETE FROM tbl_notice_img
+    WHERE nno = #{nno}
+</delete>
+
+
+<!-- FileMapper id = "updateImageNotice" -->
+<insert id="updateImageNotice" parameterType="java.util.List">
+    INSERT INTO tbl_notice_img (uuid, filename, ord, nno)
+    VALUES
+    <foreach collection="list" item="item" separator=",">
+        (#{item.uuid}, #{item.fileName}, #{item.ord}, #{item.nno})
     </foreach>
 </insert>
 

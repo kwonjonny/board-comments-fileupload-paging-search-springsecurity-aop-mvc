@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import board.file.dto.notice.NoticeCreateDTO;
 import board.file.dto.notice.NoticeDTO;
+import board.file.dto.notice.NoticeListDTO;
 import board.file.dto.notice.NoticeUpdateDTO;
 import board.file.dto.page.PageRequestDTO;
 
@@ -26,8 +27,15 @@ public interface NoticeMapper {
     NoticeDTO readNotice(Long nno);
 
     // List Notice 
-    List<NoticeDTO> listNotice(PageRequestDTO pageRequestDTO);
+    List<NoticeListDTO> listNotice(PageRequestDTO pageRequestDTO);
+
+    // total
+    int total(PageRequestDTO pageRequestDTO);
 
     // View Count 
+    int viewCount(Long nno);
+
+    // Like Count 
+    int likeCount(Long nno);
     
 }

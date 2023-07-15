@@ -1,5 +1,6 @@
 package board.file.dto.notice;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -17,10 +18,11 @@ import lombok.ToString;
 @AllArgsConstructor
 public class NoticeCreateDTO {
     // tbl_notice
-    private Long tno;
+    private Long nno;
     private String title;
     private String writer;
     private String content;
-    private List<String> fileNames;
+    @Builder.Default
+    private List<String> fileNames = new ArrayList<>();
     private Long notice;
 }

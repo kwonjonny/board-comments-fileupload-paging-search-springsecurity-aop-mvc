@@ -18,11 +18,10 @@ import lombok.ToString;
 @AllArgsConstructor
 public class NoticeUpdateDTO {
     // tbl_notice
-    private Long tno;
+    private Long nno;
     private String title;
     private String writer;
     private String content;
     private List<String> fileNames;
-    private Long notice;
     private LocalDate updateDate;
 }

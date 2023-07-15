@@ -36,7 +36,6 @@ public class LikeServiceImpl implements LikeService {
     @Transactional
     public int toggleLike(Long tno, String email) {
         log.info("ToggleLike LikeServiceImpl Is Running");
-        log.info(tno + email+ "티엔오 이메일");
         LikeDTO likeDTO = LikeDTO.builder()
                 .email(email)
                 .tno(tno)
@@ -46,6 +45,31 @@ public class LikeServiceImpl implements LikeService {
             return likeMapper.createLike(likeDTO);
         } else {
             return likeMapper.deleteLike(likeDTO);
+        }
+    }
+
+    // Count Like Nno ServiceImpl
+    @Override
+    @Transactional(readOnly = true)
+    public Long countLikeNno(Long nno) {
+        log.info("LikeCount For Nno LikeServiceImpl Is Running");
+        return likeMapper.countLikesNno(nno);
+    }
+
+    // Toggle Like Nno ServiceImpl
+    @Override
+    @Transactional
+    public int toggleLikeNno(Long nno, String email) {
+        log.info("ToggleLike Nno LikeServiceImpl Is Running");
+        LikeDTO likeDTO = LikeDTO.builder()
+                .nno(nno)
+                .email(email)
+                .build();
+        LikeDTO existingLike = likeMapper.checkLikeByMemberAndPostNno(nno, email);
+        if (existingLike == null) {
+            return likeMapper.createLikeNno(likeDTO);
+        } else {
+            return likeMapper.deleteLikeNno(likeDTO);
         }
     }
 }

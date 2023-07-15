@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- BoardMapper Xml -->
+<mapper namespace="board.file.mappers.NoticeMapper">
+
+
+<!-- NoticeMapper id = "createNotice" -->
+<insert id="createNotice" parameterType="board.file.dto.notice.NoticeCreateDTO"
+useGeneratedKeys="true" keyProperty="nno">
+   INSERT INTO tbl_notice
+   (title, content, writer)
+   VALUES(#{title}, #{content}, #{writer})
+</insert>
+
+
+<!-- NoticeMapper id = "listNotice" -->
+<select id="listNotice" parameterType="board.file.dto.notice.NoticeListDTO">
+    SELECT tb.*, CONCAT(tbi.uuid, '_', tbi.filename) AS fileName
+    FROM tbl_notice tb 
+    LEFT OUTER JOIN tbl_notice_img tbi ON tb.nno = tbi.nno AND tbi.ord = 0
+    WHERE tb.nno > 0
+    <if test="keyword != null and types != null">
+      <trim prefix="and (" prefixOverrides="or" suffix=")">
+      <foreach collection="types" item="searchType" separator=" OR ">
+        <if test='searchType == "t"'>
+          title like concat('%', #{keyword}, '%')
+        </if>
+        <if test='searchType == "c"'>
+          content like concat('%', #{keyword}, '%')
+        </if>
+        <if test='searchType == "w"'>
+          writer like concat('%', #{keyword}, '%')
+        </if>
+      </foreach>
+    </trim>
+  </if>
+    ORDER BY tb.nno DESC 
+    LIMIT #{skip}, #{size}
+</select>
+
+
+<!-- NoticeMapper id = "deleteNotice" -->
+<delete id="deleteNotice" parameterType="long">
+    DELETE FROM tbl_notice
+    WHERE nno = #{nno}
+</delete>
+
+
+<!-- fileNames 의 reusltMap -->
+<!-- 파일명 결과 매핑 -->
+<resultMap id="FileNameResultMap" type="java.lang.String">
+  <id property="fileName" column="fileName"/>
+</resultMap>
+
+
+<!-- NoticeMapper id = "readNotice" -->
+<select id="readNotice" parameterType="long" resultMap="NoticeResultMap">
+    SELECT b.nno, b.title, b.content, b.writer, b.registDate, b.updateDate,
+    CONCAT(i.uuid, '_', i.filename) AS fileName
+FROM tbl_notice b
+LEFT OUTER JOIN tbl_notice_img i ON b.nno = i.nno
+WHERE b.nno = #{nno}
+</select> 
+
+
+<!-- 여러개의 사진을 가져오기 위한 resultMap using -->
+<resultMap id="NoticeResultMap" type="board.file.dto.notice.NoticeDTO">
+  <id property="nno" column="nno"/>
+  <result property="title" column="title"/>
+  <result property="content" column="content"/>
+  <result property="writer" column="writer"/>
+  <result property="registDate" column="registDate"/>
+  <result property="updateDate" column="updateDate"/>
+  <result property="viewCnt" column="viewCnt"/>
+  <collection property="fileName" ofType="java.lang.String" resultMap="FileNameResultMap"/>
+</resultMap>
+
+
+<!-- NoticeMapper id = "updateNotice" -->
+<update id="updateNotice" parameterType="board.file.dto.notice.NoticeUpdateDTO">
+    UPDATE tbl_notice
+    SET title = #{title}, writer = #{writer}, content = #{content}
+    WHERE nno = #{nno}
+</update>
+
+
+<!-- NoticeMapper id = "total" -->
+<select id="total" resultType="int">
+    SELECT COUNT(*)
+    FROM (SELECT * FROM tbl_notice
+    WHERE nno > 0
+    <if test="keyword != null and types != null">
+    <trim prefix="and (" prefixOverrides="or" suffix=")">
+      <foreach collection="types" item="searchType" separator=" OR ">
+        <if test='searchType == "t"'>
+          title like concat('%', #{keyword}, '%')
+        </if>
+        <if test='searchType == "c"'>
+          content like concat('%', #{keyword}, '%')
+        </if>
+        <if test='searchType == "w"'>
+          writer like concat('%', #{keyword}, '%')
+        </if>
+      </foreach>
+    </trim>
+  </if>
+    LIMIT #{countEnd}
+    ) tbl_notice
+</select>
+
+
+<!-- NoticeMapper id = "viewCount" -->
+<update id="viewCount" parameterType="long">
+    UPDATE tbl_notice
+    SET viewCnt = viewCnt + 1
+    WHERE nno = #{nno}
+</update>
+
+
+</mapper>

@@ -21,4 +21,15 @@ public interface LikeMapper {
     // Check Like Member    
     LikeDTO checkLikeByMemberAndPost(@Param("tno") Long tno, @Param("email") String email);
 
+    // Count Like For Nno
+    Long countLikesNno(Long nno);
+
+    // Check Like Member Nno
+    LikeDTO checkLikeByMemberAndPostNno(@Param("nno") Long nno, @Param("email") String email);
+
+    // Create Like For Nno
+    int createLikeNno(LikeDTO likeDTO);
+
+    // Delete Like For Nno
+    int deleteLikeNno(LikeDTO likeDTO);
 }

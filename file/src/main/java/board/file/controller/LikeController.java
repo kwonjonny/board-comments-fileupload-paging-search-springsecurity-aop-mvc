@@ -32,22 +32,43 @@ public class LikeController {
         this.likeService = likeService;
     }
 
-    // Toggle Like
-    @PostMapping("toggle/{tno}")
+    // Toggle Like Tno
+    @PostMapping("tno/toggle/{tno}")
     @PreAuthorize("hasAnyRole('USER')")
-    public ResponseEntity<Map<String, Integer>> toggleLike(@PathVariable("tno") Long tno, Authentication authentication) {
+    public ResponseEntity<Map<String, Integer>> toggleLikeTno(@PathVariable("tno") Long tno,
+            Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String email = userDetails.getUsername();
         int result = likeService.toggleLike(tno, email);
         return new ResponseEntity<>(Map.of("result", result), HttpStatus.OK);
     }
 
-    // Count Like
-    @GetMapping("{tno}/count")
+    // Count Like Tno
+    @GetMapping("tno/{tno}/count")
     @PreAuthorize("hasAnyRole('USER')")
-    public ResponseEntity<Map<String, Long>> countLike(@PathVariable("tno") Long tno) {
+    public ResponseEntity<Map<String, Long>> countLikeTno(@PathVariable("tno") Long tno) {
         log.info("RestController | Count Like");
         Long result = likeService.countLike(tno);
+        return new ResponseEntity<>(Map.of("result", result), HttpStatus.OK);
+    }
+
+    // Toggle Like Nno
+    @PostMapping("nno/toggle/{nno}")
+    @PreAuthorize("hasAnyRole('USER')")
+    public ResponseEntity<Map<String, Integer>> toggleLikeNno(@PathVariable("nno") Long nno,
+            Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String email = userDetails.getUsername();
+        int result = likeService.toggleLikeNno(nno, email);
+        return new ResponseEntity<>(Map.of("result", result), HttpStatus.OK);
+    }
+
+    // Count Like Nno
+    @GetMapping("nno/{nno}/count")
+    @PreAuthorize("hasAnyRole('USER')")
+    public ResponseEntity<Map<String, Long>> countLikeNno(@PathVariable("nno") Long nno) {
+        log.info("RestController | Count Like");
+        Long result = likeService.countLikeNno(nno);
         return new ResponseEntity<>(Map.of("result", result), HttpStatus.OK);
     }
 }

@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Board Read Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
     ul {
       list-style-type: none;
@@ -17,14 +18,25 @@
       padding-left: 10px;
       /* Add left padding */
     }
+
+    .actionLike {
+      color: gray;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      font-size: 40px;
+      cursor: pointer;
+    }
+
+    .actionLike.liked {
+      color: red;
+    }
   </style>
 </head>
 
 <body>
   <!-- Fragment Content Start -->
   <div layout:fragment="content">
-    <!-- [[${pageRequestDTO}]]
-    [[${list}]] -->
     <!-- Board Read Start -->
     <div class="col-sm-12 col-xl-12">
       <div class="bg-light rounded h-100 p-4">
@@ -54,6 +66,10 @@
           <form th:action="@{|/board/delete/${tno}|}" method="post" style="display: inline;">
             <button type="submit" class="btn btn-danger text-white btnModify">Delete</button>
           </form>
+          <!-- Like Button Start -->
+          <button class="actionLike"><i class="fas fa-heart"></i></button>
+          <!-- Like Count Start -->
+          <span class="likeCount" style="font-size: larger;"></span>
           <!-- Reply Start -->
           <div class="col-sm-12 col-md-12 col-xl-12">
             <div class="h-100 bg-light rounded p-4">
@@ -70,6 +86,7 @@
           <!-- Axios Reply & Axios Install -->
           <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
           <script src="/js/replyAxios.js"></script>
+          <script src="/js/likeAxios.js"></script>
           <!-- Reply Form Start -->
           <div class="reply-form">
             <h6 class="mb-4">Write a Comment</h6>
@@ -107,6 +124,8 @@
 
   <!-- JavaScript Start -->
   <script layout:fragment="script" th:inline="javascript">
+    // tno 값 가져오기 
+    const { tno } = [[${ list }]]
     // Board Update Modal 
     const alertModal = new bootstrap.Modal(document.querySelector(".alertModal"))
     // If Modal Is Not Null Show
@@ -117,10 +136,6 @@
       alertModal.hide();
     }, 1500);
 
-    // tno 값 가져오기 
-    const { tno } = [[${ list }]]
-    // Reply Path 
-    const replyLink = "http://localhost:8084/replies"
     // Reply and pagination containers
     const replyWrap = document.querySelector(".replyWrap");
     const replyPaging = document.querySelector(".replyPaging");
@@ -144,14 +159,12 @@
     replyForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       e.stopPropagation();
-
       const replyer = replyerInput.value;
       const reply = replyInput.value;
-
       const list = {
         replyer: replyer,
         reply: reply,
-        tno: tno, // Assuming tno is accessible in this context
+        tno: tno,
       };
 
 

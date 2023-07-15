@@ -16,6 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LikeDTO {
+    private Long nno;
     private Long tno;
     private String email;
     private LocalDate registDate;

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notice Read Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        ul {
+            list-style-type: none;
+        }
+
+        .reply-content {
+            border-left: 2px solid #ddd;
+            /* Add left border */
+            padding-left: 10px;
+            /* Add left padding */
+        }
+
+        .actionLike {
+            color: gray;
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        .actionLike.liked {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fragment Content Start -->
+    <div layout:fragment="content">
+        <!-- Notice Read Start -->
+        <!-- [[${list}]]
+        [[${pageRequestDTO}]] -->
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h2 class="mb-4">Notice Read Page</h2>
+                <hr>
+                <h4 class="mb-4">Title</h4>
+                <div class="alert alert-light" role="alert">[[${list.title}]]</div>
+                <h4 class="mb-4">Writer</h4>
+                <div class="alert alert-light" role="alert">[[${list.writer}]]</div>
+                <h4 class="mb-4">Create Date</h4>
+                <div class="alert alert-light" role="alert">[[${list.registDate}]]</div>
+                <h4 class="mb-4">Update Date</h4>
+                <div class="alert alert-light" role="alert">[[${list.updateDate}]]</div>
+                <h4 class="mb-4">Content</h4>
+                <div class="alert alert-light" role="alert" style="min-height: 100px;">[[${list.content}]]</div>
+                <h4 class="mb-4">Images</h4>
+                <div class="col-sm-9 d-flex align-items-center">
+                    <div th:each="fileName : ${list.fileName}">
+                        <img th:src="@{|http://localhost/${fileName}|}" class="my-2">
+                    </div>
+                </div>
+                <!-- Button Start -->
+                <div class="button_wrap">
+                    <a th:href="@{|/notice/list?${pageRequestDTO.link}|}" class="btn btn-primary btnList">List</a>
+                    <a th:href="@{|/notice/update/${nno}?${pageRequestDTO.link}|}"
+                        class="btn btn-info text-white btnModify">Modify</a>
+                    <form th:action="@{|/notice/delete/${nno}|}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger text-white btnModify">Delete</button>
+                    </form>
+                    <!-- Like Button Start -->
+                    <button class="actionLike"><i class="fas fa-heart"></i></button>
+                    <!-- Like Count Start -->
+                    <span class="likeCount" style="font-size: larger;"></span>
+                    <!-- Reply Start -->
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <div class="h-100 bg-light rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <h6 class="mb-7">Reply</h6>
+                            </div>
+                            <div class="replyWrap"></div>
+                            <div class="btn-toolbar" role="toolbar" style="justify-content: center;">
+                                <!-- Reply Paging -->
+                                <ul class="btn-group me-2 paging replyPaging" role="group" aria-label="First group">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Axios Reply & Axios Install -->
+                    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+                    <script src="/js/likeNoticeAxios.js"></script>
+                    <!-- Alert Modal Start -->
+                    <div class="modal alertModal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">[[${message}]]</div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fragment Content End -->
+
+    <!-- JavaScript Start -->
+    <script layout:fragment="script" th:inline="javascript">
+        // nno 값 가져오기 
+        const { nno } = [[${ list }]]
+        // Board Update Modal 
+        const alertModal = new bootstrap.Modal(document.querySelector(".alertModal"))
+        // If Modal Is Not Null Show
+        if ([[${ message }]] != null) {
+            alertModal.show();
+        }
+        setTimeout(function () {
+            alertModal.hide();
+        }, 1500);
+    </script>
+</body>
+
+</html>

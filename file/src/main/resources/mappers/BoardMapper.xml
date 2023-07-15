@@ -6,31 +6,75 @@
 <!-- BoardMapper Xml -->
 <mapper namespace="board.file.mappers.BoardMapper">
 
-<!-- BoardMapper id = "listBoard" -->
-<select id="listBoard" parameterType="board.file.dto.board.BoardListDTO" resultType="board.file.dto.board.BoardListDTO">
-    SELECT tb.*, CONCAT(tbi.uuid, '_', tbi.filename) AS fileName
+<!-- <select id="listBoard" parameterType="board.file.dto.board.BoardListDTO" resultType="board.file.dto.board.BoardListDTO">
+  (
+    SELECT tb.nno AS nno, NULL AS tno, tb.title, tb.content, tb.writer, tb.registDate, tb.updateDate, tb.viewCnt, NULL AS replyCnt, CONCAT(tbi.uuid, '_', tbi.filename) AS fileName, 'notice' AS type
+    FROM tbl_notice tb
+    LEFT OUTER JOIN tbl_notice_img tbi ON tb.nno = tbi.nno AND tbi.ord = 0
+    WHERE tb.nno > 0
+  ) 
+  UNION ALL
+  (
+    SELECT NULL AS nno, tb.tno, tb.title, tb.content, tb.writer, tb.registDate, tb.updateDate, tb.viewCnt, tb.replyCnt, CONCAT(tbi.uuid, '_', tbi.filename) AS fileName, 'board' AS type
     FROM tbl_board tb
-   
-    LEFT JOIN tbl_board_img tbi ON tb.tno = tbi.tno AND tbi.ord = 0
+    LEFT OUTER JOIN tbl_board_img tbi ON tb.tno = tbi.tno AND tbi.ord = 0
     WHERE tb.tno > 0
-     <if test="keyword != null and types != null">
-    <trim prefix="and (" prefixOverrides="or" suffix=")">
-      <foreach collection="types" item="searchType" separator=" OR ">
-        <if test='searchType == "t"'>
-          title like concat('%', #{keyword}, '%')
-        </if>
-        <if test='searchType == "c"'>
-          content like concat('%', #{keyword}, '%')
-        </if>
-        <if test='searchType == "w"'>
-          writer like concat('%', #{keyword}, '%')
-        </if>
-      </foreach>
-    </trim>
-  </if>
-    ORDER BY tb.tno DESC 
+    <if test="keyword != null and types != null">
+      <trim prefix="AND (" prefixOverrides="OR" suffix=")">
+        <foreach collection="types" item="searchType" separator=" OR ">
+          <if test='searchType == "t"'>
+            tb.title LIKE CONCAT('%', #{keyword}, '%')
+          </if>
+          <if test='searchType == "c"'>
+            tb.content LIKE CONCAT('%', #{keyword}, '%')
+          </if>
+          <if test='searchType == "w"'>
+            tb.writer LIKE CONCAT('%', #{keyword}, '%')
+          </if>
+        </foreach>
+      </trim>
+    </if>
+    ORDER BY tb.tno DESC
     LIMIT #{skip}, #{size}
+  )
+</select> -->
+
+<select id="listBoard" parameterType="board.file.dto.board.BoardListDTO" resultType="board.file.dto.board.BoardListDTO">
+  SELECT combinedData.nno, combinedData.tno, combinedData.title, combinedData.content, combinedData.writer, combinedData.registDate, combinedData.updateDate, combinedData.viewCnt, combinedData.replyCnt, combinedData.fileName, combinedData.type
+  FROM (
+    SELECT n.nno, NULL AS tno, n.title, n.content, n.writer, n.registDate, n.updateDate, n.viewCnt, NULL AS replyCnt, CONCAT(tni.uuid, '_', tni.filename) AS fileName, 'notice' AS type
+    FROM tbl_notice n
+    LEFT OUTER JOIN tbl_notice_img tni ON n.nno = tni.nno AND tni.ord = 0
+    WHERE n.nno > 0
+    UNION ALL
+    SELECT NULL AS nno, b.tno, b.title, b.content, b.writer, b.registDate, b.updateDate, b.viewCnt, b.replyCnt, CONCAT(tbi.uuid, '_', tbi.filename) AS fileName, 'board' AS type
+    FROM tbl_board b
+    LEFT OUTER JOIN tbl_board_img tbi ON b.tno = tbi.tno AND tbi.ord = 0
+    WHERE b.tno > 0
+    <if test="keyword != null and types != null">
+      <trim prefix="AND (" prefixOverrides="OR" suffix=")">
+        <foreach collection="types" item="searchType" separator=" OR ">
+          <if test='searchType == "t"'>
+             b.title LIKE CONCAT('%', #{keyword}, '%')
+          </if>
+          <if test='searchType == "c"'>
+             b.content LIKE CONCAT('%', #{keyword}, '%')
+          </if>
+          <if test='searchType == "w"'>
+             b.writer LIKE CONCAT('%', #{keyword}, '%')
+          </if>
+        </foreach>
+      </trim>
+    </if>
+  ) AS combinedData
+  ORDER BY combinedData.nno DESC, combinedData.tno DESC
+  LIMIT #{skip}, #{size}
 </select>
+
+
+
+
+
 
 
 <!-- BoardMapper id = "createBoard" -->
@@ -123,37 +167,6 @@ WHERE b.tno = #{tno};
     SET viewCnt = viewCnt +1
     WHERE tno = #{tno}
 </update>
-
-<!-- 
-
-<insert id="createBoardNotice" parameterType="board.file.dto.board.BoardNoticeCreateDTO">
-    INSERT INTO tbl_board
-    (title, writer, content, notice) 
-    VALUES(
-      #{title}, 
-      #{writer}, 
-      #{content}, 
-      (SELECT IFNULL(MAX(notice), 0) + 1 FROM tbl_board)
-    )
-  
-
-
-
-<update id="updateBoardNotice" parameterType="board.file.dto.board.BoardNoticeUpdateDTO">
-    UPDATE tbl_board
-    SET title = #{title} , writer = #{writer}, content = #{content}, updateDate = now()
-    WHERE tno = #{tno}
-</update>
-
-
-
-<select id="readBoardNotice" parameterType="long" resultMap="BoardResultMap">
-    SELECT b.tno, b.title, b.content, b.writer, b.registDate, b.updateDate, b.notice 
-        CONCAT(i.uuid, '_', filename) AS fileName
-    FROM tbl_board b
-    LEFT OUTER JOIN tbl_board_img i on b.tno = i.tno
-    WHERE t.tno = #{tno}
-</select> -->
 
 
 </mapper>
