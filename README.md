@@ -171,10 +171,6 @@
 ## tbl_board
 `tbl_board` 테이블에 대해 `title`, `content`, `writer` 필드에 인덱스를 추가합니다:
 ```sql
-=======
-
-```sql
->>>>>>> 07e2a1c997d3c967c4edebf8628500594f1ecd44
 ALTER TABLE tbl_board ADD INDEX idx_title (title);
 ALTER TABLE tbl_board ADD INDEX idx_content (content);
 ALTER TABLE tbl_board ADD INDEX idx_writer (writer);
