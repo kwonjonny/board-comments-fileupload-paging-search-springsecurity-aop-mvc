@@ -47,14 +47,26 @@
 - 페이지네이션 지원
 - Board 항목 title, content, writer 검색 지원 
 - Board 항목 필터링 및 정렬 기능
-- Bootstrap을 이용한 반응형 웹 디자인
+- 페이지네이션 지원 
 
 - Reply 항목 생성, 조회, 수정, 삭제
 - 페이지네이션 지원
 
 - File 항목 생성, 조회, 수정, 삭제
 - File 항목 생성 수정 시 Thumnail 생성
-- Eningx 를 통한 Ajax 통신 
+- Eningx 를 통한 Ajax 통신
+
+- 공지사항 항목 생성, 조회, 수정, 삭제
+- 공지사항 Board List 상단 고정 기능
+- 공지사항 항목 title, content, writer 검색 지원
+- 공지사항 항목 필터링 및 정렬 기능
+- 페이지네이션 지원 
+
+- 좋아요 기능 회원을 통한 생성, 삭제, 좋아요 수 Count
+
+- 조회수 기능 Cookie 를 통한 생성 
+
+- Bootstrap을 이용한 반응형 웹 디자인
 
 ## 시작하기
 
@@ -86,7 +98,6 @@
 ## 데이터베이스 테이블 정보
 
 ### Board 테이블 (`tbl_board`)
-
 | 컬럼명   | 데이터 타입     | 설명                                       |
 |----------|----------------|--------------------------------------------|
 | tno      | INT            | Board 항목의 고유 식별자 (Primary Key, 자동 증가) |
@@ -99,7 +110,6 @@
 | viewCnt | INT | Board 의 조회수|
 
 ### Board Image 테이블 (`tbl_board_img`)
-
 | 컬럼명   | 데이터 타입     | 설명                                       |
 |----------|----------------|--------------------------------------------|
 |uuid	|VARCHAR(50)	|이미지 항목의 고유 식별자 (Primary Key)
@@ -108,7 +118,6 @@
 |ord	|INT	|이미지 순서 (기본값 0)
 
 ### Reply 테이블 (`tbl_reply`)
-
 | 컬럼명 | 데이터 타입 | 설명 |
 | --- | --- | --- |
 | rno | INT | 답글 항목의 고유 식별자 (Primary Key, 자동 증가) |
@@ -120,8 +129,33 @@
 | gno | INT | 그룹 번호 (기본값 0) |
 |isDeleted| TINYINT | 댓글.대댓글이 삭제되었는지 확인하고 업데이트|
 
-### Member 테이블 (`tbl_member`)
+### Notice 테이블 (`tbl_notice`)
+| 컬럼명 | 데이터 타입 | 설명 |
+| --- | --- | --- |
+|nno	|INT	|공지사항 항목의 고유 식별자 (Primary Key, 자동 증가)|
+|title	|VARCHAR(500)	|공지사항 항목의 제목 (null이 아님)|
+|content	|VARCHAR(700)	|공지사항 항목의 상세 내용 (null이 아님)|
+|writer	|VARCHAR(100)	|공지사항 항목을 생성한 사용자명 (null이 아님)|
+|registDate	|TIMESTAMP	|공지사항 항목의 생성 날짜|
+|updateDate	|TIMESTAMP	|공지사항 항목의 업데이트 날짜|
+|viewCnt	|INT	|공지사항 항목의 조회수|
 
+### Notice Image 테이블 (`tbl_notice_img`)
+| 컬럼명 | 데이터 타입 | 설명 |
+| --- | --- | --- |
+|uuid	|VARCHAR(50)	|이미지 항목의 고유 식별자 (Primary Key)|
+|filename	|VARCHAR(200)	이미지 파일 이름 (null이 아님)|
+|nno	|INT	|관련 공지사항 항목의 고유 식별자|
+|ord	|INT	|이미지 순서 (기본값 0)|
+
+### Notice Like 테이블 (`tbl_like_notice`)
+| 컬럼명 | 데이터 타입 | 설명 |
+| --- | --- | --- |
+|nno	|INT	|"좋아요"가 달린 공지사항 항목의 고유 식별자 (외래키, tbl_notice 참조)|
+|email	|VARCHAR(100)	|"좋아요"를 누른 회원의 이메일 주소 (외래키, tbl_member 참조)|
+|registDate	|TIMESTAMP	|"좋아요"가 등록된 날짜 및 시간 (기본값: 현재 시간)|
+
+### Member 테이블 (`tbl_member`)
 | 컬럼명 | 데이터 타입 | 설명 |
 | --- | --- | --- |
 |email|VARCHAR(100)| 회원의 이메일 주소 (Primary Key)|
@@ -129,14 +163,12 @@
 |mname|VARCHAR(100) | 회원의 이름|
 
 ### Member Role 테이블 (`tbl_member_role`)
-
 | 컬럼명 | 데이터 타입 | 설명 |
 | --- | --- | --- |
 |email| VARCHAR(500) |회원의 이메일 주소 |
 |rolename|VARCHAR(500)| 회원의 역할 이름|
 
 ### Persistent Logins 테이블 (`persistent_logins`)
-
 | 컬럼명 | 데이터 타입 | 설명 |
 | --- | --- | --- |
 |username| VARCHAR(64) |사용자 이름 (Primary Key)
@@ -166,6 +198,16 @@ CREATE TABLE tbl_board (
 )
 ;
 
+CREATE TABLE tbl_like (
+    tno INT NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    registDate TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (tno, email),
+    FOREIGN KEY (tno) REFERENCES tbl_board(tno) ON DELETE CASCADE,
+    FOREIGN KEY (email) REFERENCES tbl_member(email) ON DELETE CASCADE
+)
+;
+
 CREATE TABLE tbl_board_img (
 	uuid varchar(50) PRIMARY KEY,
 	filename varchar(200) not null,
@@ -188,6 +230,36 @@ CREATE TABLE tbl_reply (
 )
 ;
 
+CREATE TABLE tbl_notice (
+    nno INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(500) NOT NULL,
+    content VARCHAR(700) NOT NULL,
+    writer VARCHAR(100) NOT NULL,
+    registDate TIMESTAMP DEFAULT NOW(),
+    updateDate TIMESTAMP DEFAULT NOW(),
+    viewCnt INT DEFAULT 0
+)
+;
+
+CREATE TABLE tbl_like_notice (
+    nno INT NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    registDate TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (nno, email),
+    FOREIGN KEY (nno) REFERENCES tbl_notice(nno) ON DELETE CASCADE,
+    FOREIGN KEY (email) REFERENCES tbl_member(email) ON DELETE CASCADE
+)
+;
+
+CREATE TABLE tbl_notice_img (
+    uuid VARCHAR(50) NOT NULL PRIMARY KEY,
+    filename VARCHAR(200) NOT NULL,
+    nno INT NOT NULL,
+    ord INT NOT NULL,
+    FOREIGN KEY(nno) REFERENCES tbl_notice(nno) ON DELETE CASCADE
+)
+;
+
 CREATE TABLE tbl_member (
 	email varchar(100) PRIMARY KEY,
 	mpw varchar(100) NOT NULL,
@@ -206,16 +278,6 @@ create table persistent_logins (
        series varchar(64) primary key,
        token varchar(64) not null,
        last_used timestamp not null
-)
-;
-
-CREATE TABLE tbl_like (
-    tno INT NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    registDate TIMESTAMP DEFAULT NOW(),
-    PRIMARY KEY (tno, email),
-    FOREIGN KEY (tno) REFERENCES tbl_board(tno) ON DELETE CASCADE,
-    FOREIGN KEY (email) REFERENCES tbl_member(email) ON DELETE CASCADE
 )
 ;
 
