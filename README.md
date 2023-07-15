@@ -185,10 +185,11 @@
 
 ## tbl_board
 `tbl_board` 테이블에 대해 `title`, `content`, `writer` 필드에 인덱스를 추가합니다:
-```sql
+```sql
 ALTER TABLE tbl_board ADD INDEX idx_title (title);
 ALTER TABLE tbl_board ADD INDEX idx_content (content);
 ALTER TABLE tbl_board ADD INDEX idx_writer (writer);
+```
 
 ## tbl_notice
 `tbl_notice` 테이블에 대해 `title`, `content`, `writer` 필드에 인덱스를 추가합니다:
@@ -196,18 +197,21 @@ ALTER TABLE tbl_board ADD INDEX idx_writer (writer);
 ALTER TABLE tbl_notice ADD INDEX idx_title (title);
 ALTER TABLE tbl_notice ADD INDEX idx_content (content);
 ALTER TABLE tbl_notice ADD INDEX idx_writer (writer);
+```
 
 ## tbl_reply
 `tbl_reply` 테이블에 대해 `tno`, `replyer` 필드에 인덱스를 추가합니다:
 ```sql
 ALTER TABLE tbl_reply ADD INDEX idx_tno (tno);
 ALTER TABLE tbl_reply ADD INDEX idx_replyer (replyer);
+```
 
 ## tbl_member & tbl_member_role
 `tbl_member` 및 `tbl_member_role` 테이블에 대해 email 필드에 인덱스를 추가합니다:
 ```sql
 ALTER TABLE tbl_member ADD INDEX idx_email (email);
 ALTER TABLE tbl_member_role ADD INDEX idx_email (email);
+```
 
 ## tbl_like, tbl_board_img, tbl_like_notice, tbl_notice_img
 `tbl_like`, `tbl_board_img`, `tbl_like_notice`, `tbl_notice_img` 테이블에 대해 외래키 필드에 인덱스를 추가합니다:
@@ -221,7 +225,9 @@ ALTER TABLE tbl_like_notice ADD INDEX idx_nno (nno);
 ALTER TABLE tbl_like_notice ADD INDEX idx_email (email);
 
 ALTER TABLE tbl_notice_img ADD INDEX idx_nno (nno);
+```
 이렇게 README 파일에 작성하면, 각 테이블에 대한 인덱스 추가 방법을 쉽게 파악하고 참조할 수 있습니다. 이 문서를 필요에 따라 수정하거나 확장해서 사용하시면 됩니다.
+
 
 SQL 스키마:
 ```sql
