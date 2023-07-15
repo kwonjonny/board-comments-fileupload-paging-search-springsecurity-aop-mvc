@@ -1,7 +1,7 @@
 
 
 # 개발 상태 : [개발 완료]
-# [게시판 CRUD, 조회수, 댓글대댓글, 파일업로드 개발 완료 , Spring Security 개발 완료, 좋아요 개발 완료, 공지사항 개발 완료]
+# [게시판 CRUD, 조회수, 검색, 댓글대댓글, 파일업로드 개발 완료 , Spring Security(kakao social login) 개발 완료, 좋아요 개발 완료, 공지사항 개발 완료]
 
 # board-comments-fileupload-paging-search-mvc
 - 프로젝트 유형: Board 게시판 토이 프로젝트
