@@ -73,10 +73,7 @@
 
     <!-- JavaScript Start -->
     <script layout:fragment="script" th:inline="javascript">
-
         const fileNames = [[${ list.fileName }]];
-        console.log('fileNames', fileNames)
-
 
         // actionForm 등록 
         const actionForm = document.querySelector(".actionForm");
@@ -156,7 +153,6 @@
             liObj.remove()
         }
 
-
         // 파일 이름 배열을 변환하는 함수
         const loadImages = (fileNames) => {
             // fileNames 배열을 uuid, fileName, link 형태의 객체로 변환
@@ -171,10 +167,6 @@
             showProducts(objArr);
         };
         loadImages(fileNames)
-
-
-
-
         // JavaScript End
     </script>
 </body>

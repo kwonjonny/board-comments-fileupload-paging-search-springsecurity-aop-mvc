@@ -1,11 +1,175 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout.html}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Notice Update Page</title>
 </head>
+
 <body>
-    
+    <!-- Fragment Content Start -->
+    <div layout:fragment="content">
+        <h1>Notice Update Page</h1>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Form Start -->
+                            <form class="form-horizontal actionForm" method="post" action="/notice/update">
+                                <div class="bg-light rounded h-100 p-4">
+                                    <h2 class="mb-4">Notice Modify</h2>
+                                    <div class="mb-3">
+                                        <label for="noticeNno" class="form-label">Nno</label>
+                                        <input type="text" name="nno" class="form-control" id="noticeNno"
+                                            th:value="${list.nno}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="boardTitle" class="form-label">Title</label>
+                                        <input type="text" name="title" class="form-control" id="noticeTitle"
+                                            th:value="${list.title}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="boardWriter" class="form-label">Writer</label>
+                                        <input type="text" name="writer" class="form-control" id="noticeWriter"
+                                            th:value="${list.writer}" readonly style="cursor: default;">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="noticeContent" class="form-label">Content</label>
+                                        <textarea name="content" class="form-control" id="noticeContent"
+                                            style="height:100px;resize:none;">[[${list.content}]]</textarea>
+                                    </div>
+                                    <!-- Upload Start -->
+                                    <div>
+                                        <input class="uploadInput" type="file" name="upload" multiple>
+                                        <button class="uploadBtn">UPLOAD</button>
+                                    </div>
+                                    <!-- 파일 띄워주기 Start -->
+                                    <div class="uploadDiv">
+                                        <ul class="uploadUL">
+                                        </ul>
+                                    </div>
+                                    <!-- Update Button Start -->
+                                    <div class="border-top">
+                                        <div class="card-body">
+                                            <button type="button" class="btn btn-primary saveBtn">게시글 수정 submit</button>
+                                            <a th:href="@{|/notice/read/${nno}?${pageRequestDTO.link}|}"
+                                                class="btn btn-info text-white btnModify">Return Notice Read Page</a>
+                                        </div>
+                                    </div>
+                                    <div class="uploadHidden">
+                                    </div>
+                            </form>
+                            <!-- Form End -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </div>
+    <!-- Fragment Content End -->
+
+    <!-- JavaScript Start -->
+    <script layout:fragment="script" th:inline="javascript">
+        const fileNames = [[${ list.fileName }]];
+
+        // actionForm 등록 
+        const actionForm = document.querySelector(".actionForm");
+        // actionUpdate 등록 
+        const saveBtn = document.querySelector(".saveBtn")
+
+        // fileUpload 등록 
+        const uploadBtn = document.querySelector(".uploadBtn")
+        const uploadInput = document.querySelector(".uploadInput")
+        const uploadUL = document.querySelector(".uploadUL")
+        const uploadHidden = document.querySelector(".uploadHidden")
+        const nno = [[${ list.nno }]]
+
+        // Update Action Method Start 
+        saveBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            // 사용자가 업데이트 요청시 파일의 값을 Server 로 보내줍니다 
+            const liArr = uploadUL.querySelectorAll("li")
+
+            let str = ""
+            for (let liObj of liArr) {
+                const uuid = liObj.getAttribute("data-uuid")
+                const fileName = liObj.getAttribute("data-filename")
+                str += `<input type='text' name='fileNames' value = '${uuid}_${fileName}'>`
+            }
+
+            uploadHidden.innerHTML += str
+            actionForm.submit();
+        }, false)
+
+        // 사용자가 업로드 버튼 클릭시 post 요청 Enginx
+        uploadBtn.addEventListener("click", e => {
+            e.preventDefault()
+            e.stopPropagation()
+            if (!uploadInput.files || uploadInput.files.length === 0) {
+                return
+            }
+            const formData = new FormData()
+            for (let i = 0; i < uploadInput.files.length; i++) {
+                formData.append("files", uploadInput.files[i])
+            }
+            const header = { headers: { "Content-Type": "multipart/form-data" } }
+            axios.post('http://localhost:8084/upload', formData, header)
+                .then(res => {
+                    const result = res.data
+                    showProducts(result)
+                })
+        }, false)
+
+        // 사용자가 upload 버튼을 눌렀을시에 사진을 보여줍니다 
+        const showProducts = (arr) => {
+            let str = ""
+            for (const uploadFile of arr) {
+                const { fileName, link, uuid } = uploadFile
+
+                str += `
+                <li data-uuid='${uuid}' data-fileName='${fileName}'>
+                <img src='http://localhost/${link}'/>
+                <p>
+                    <a href='http://localhost/${uuid}_${fileName}' target="_blank">
+                    ${fileName}
+                    </a>
+                    <button onclick="javascript:removeFile(event, '${uuid}', '${fileName}')">x</button>
+                </p>
+                </li>`
+            }
+            uploadUL.innerHTML += str
+        }
+
+        // 사용자가 removeButton 을 클릭시에 post요청을보내고 사진을 삭제합니다 
+        const removeFile = (e, uuid, fileName) => {
+            e.preventDefault()
+            e.stopPropagation()
+            const liObj = e.target.closest("li")
+            axios.delete(`http://localhost:8084/removeFile/${uuid}_${fileName}`)
+            liObj.remove()
+        }
+
+        // 파일 이름 배열을 변환하는 함수
+        const loadImages = (fileNames) => {
+            // fileNames 배열을 uuid, fileName, link 형태의 객체로 변환
+            const objArr = fileNames.map(str => {
+                const uuid = str.substring(0, 36);
+                const fileName = str.substring(37);
+                const link = 's_' + str;
+                return { uuid, fileName, link };
+            });
+
+            // 변환된 배열을 showProducts 함수에 전달
+            showProducts(objArr);
+        };
+        loadImages(fileNames)
+        // JavaScript End
+    </script>
 </body>
+
 </html>

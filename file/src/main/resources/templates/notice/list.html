@@ -36,8 +36,8 @@
 <body>
     <div layout:fragment="content">
         <h1>Notice List Page</h1>
-        [[${list}]]
-        [[${pageRequestDTO}]]
+        <!-- [[${list}]]
+        [[${pageRequestDTO}]] -->
         <div class="card">
             <div class="card-header"></div>
             <div class="card-body">
@@ -99,6 +99,7 @@
                     <a th:href="@{|/member/mypage/${email}|}" class="btn btn-info text-white">Return My
                         Page</a>
                     <a th:href="@{|/member/logout|}" class="btn btn-info text-white">Sign Out</a>
+                    <a th:href="@{|/board/list|}" class="btn btn-primary text-white">Board List</a>
                 </div>
             </div>
         </div>

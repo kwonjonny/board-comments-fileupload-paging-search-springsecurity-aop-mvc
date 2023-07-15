@@ -14,9 +14,7 @@
 
         .reply-content {
             border-left: 2px solid #ddd;
-            /* Add left border */
             padding-left: 10px;
-            /* Add left padding */
         }
 
         .actionLike {
@@ -62,9 +60,12 @@
                 </div>
                 <!-- Button Start -->
                 <div class="button_wrap">
-                    <a th:href="@{|/notice/list?${pageRequestDTO.link}|}" class="btn btn-primary btnList">List</a>
+                    <a th:href="@{|/notice/list?${pageRequestDTO.link}|}" class="btn btn-primary btnList">Return Notice
+                        List</a>
+                    <a th:href="@{|/board/list?${pageRequestDTO.link}|}" class="btn btn-primary btnList">Return Board
+                        List</a>
                     <a th:href="@{|/notice/update/${nno}?${pageRequestDTO.link}|}"
-                        class="btn btn-info text-white btnModify">Modify</a>
+                        class="btn btn-info text-white btnModify">Notice Update</a>
                     <form th:action="@{|/notice/delete/${nno}|}" method="post" style="display: inline;">
                         <button type="submit" class="btn btn-danger text-white btnModify">Delete</button>
                     </form>
@@ -72,20 +73,6 @@
                     <button class="actionLike"><i class="fas fa-heart"></i></button>
                     <!-- Like Count Start -->
                     <span class="likeCount" style="font-size: larger;"></span>
-                    <!-- Reply Start -->
-                    <div class="col-sm-12 col-md-12 col-xl-12">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                <h6 class="mb-7">Reply</h6>
-                            </div>
-                            <div class="replyWrap"></div>
-                            <div class="btn-toolbar" role="toolbar" style="justify-content: center;">
-                                <!-- Reply Paging -->
-                                <ul class="btn-group me-2 paging replyPaging" role="group" aria-label="First group">
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                     <!-- Axios Reply & Axios Install -->
                     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
                     <script src="/js/likeNoticeAxios.js"></script>
