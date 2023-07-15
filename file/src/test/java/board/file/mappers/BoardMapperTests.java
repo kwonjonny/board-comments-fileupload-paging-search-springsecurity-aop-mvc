@@ -28,7 +28,7 @@ public class BoardMapperTests {
     private static final String TEST_CONTENT = "JunitTestContentMapper";
     private static final Long TEST_TNO = 1L;
 
-    // BoeforeEach 사용을 위한 BoardCreateDTO, BoardUpdateDTO 정의
+    // BeforeEach 사용을 위한 BoardCreateDTO, BoardUpdateDTO 정의
     private BoardCreateDTO boardCreateDTO;
     private BoardUpdateDTO boardUpdateDTO;
 
@@ -50,8 +50,9 @@ public class BoardMapperTests {
                 .build();
     }
 
-    // List Board
+    // List Board Mapper Test 
     @Test
+    @Transactional
     @DisplayName("List Board Test Mapper")
     public void listBoardTest() {
         log.info("===== Start Board List Test Mapper =====");
@@ -62,7 +63,7 @@ public class BoardMapperTests {
         log.info("===== End Board List Test Mapper =====");
     }
 
-    // Create Board
+    // Create Board Mapper Test 
     @Test
     @Transactional
     @DisplayName("Create Board Test Mapper")
@@ -76,7 +77,7 @@ public class BoardMapperTests {
         log.info("===== End Board Create Test Mapper =====");
     }
 
-    // Delete Board
+    // Delete Board Mapper Test 
     @Test
     @Transactional
     @DisplayName("Delete Board Test Mapper")
@@ -92,7 +93,7 @@ public class BoardMapperTests {
         log.info("===== End Board Delete Test Mapper =====");
     }
 
-    // Read Board
+    // Read Board Mapper Test 
     @Test
     @Transactional
     @DisplayName("Read Board Test Mapper")
@@ -107,7 +108,7 @@ public class BoardMapperTests {
         log.info("===== End Board Read Test Mapper =====");
     }
 
-    // Update Board
+    // Update Board Mapper Test 
     @Test
     @Transactional
     @DisplayName("Update Board Test Mapper")

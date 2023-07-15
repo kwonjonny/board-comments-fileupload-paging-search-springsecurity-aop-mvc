@@ -25,5 +25,5 @@ public interface FileMapper {
     int deleteImageNotice(Long nno);
 
     // Update Image Notice
-    int updateImageNOtice(List<Map<String,String>> imageList);
+    int updateImageNotice(List<Map<String,String>> imageList);
 }

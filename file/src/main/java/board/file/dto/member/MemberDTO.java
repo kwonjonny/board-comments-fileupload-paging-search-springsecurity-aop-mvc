@@ -1,16 +1,13 @@
 package board.file.dto.member;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,5 +37,4 @@ public class MemberDTO extends User implements OAuth2User {
   public String getName() {
     return this.email;
   }
-
 }

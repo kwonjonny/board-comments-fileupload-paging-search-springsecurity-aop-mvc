@@ -28,10 +28,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-
-        log.info("--------load User-----------");
-        log.info(userRequest);
-        log.info("============================");
+        log.info("Is Running LoadUser: " + userRequest);
 
         ClientRegistration clientRegistration = userRequest.getClientRegistration();
         String clientName = clientRegistration.getClientName();
@@ -46,10 +43,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 email = getKakaoEmail(paramMap);
                 break;
         }
-
-        log.info("===============================");
-        log.info(email);
-        log.info("===============================");
+        log.info("Email: "+ email);
 
         // DB에 해당 사용자가있으면
         MemberReadDTO memberReadDTO = memberMapper.selectOne(email);
@@ -62,18 +56,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     memberReadDTO.getRolenames());
 
         }
-
-        //
         // PW를 사용하지않는 자원 이미 카카오에서 인증이되었기 때문에 비워둔다.
         MemberDTO memberDTO = new MemberDTO(email, "", "카카오사용자", List.of("USER"));
-
         return memberDTO;
     }
 
     private String getKakaoEmail(Map<String, Object> paramMap) {
-
-        log.info("KAKAO-----------------------------------------");
-
+        log.info("KAKAO Login Is Running");
         Object value = paramMap.get("kakao_account");
 
         log.info(value);
@@ -81,9 +70,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         LinkedHashMap accountMap = (LinkedHashMap) value;
 
         String email = (String) accountMap.get("email");
-
-        log.info("email..." + email);
-
+        log.info("email: " + email);
         return email;
     }
 }

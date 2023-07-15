@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import board.file.service.LikeService;
 import lombok.extern.log4j.Log4j2;
 
+// Like Controller Class
 @Log4j2
 @RestController
 @RequestMapping("/like/")
@@ -30,6 +31,13 @@ public class LikeController {
     public LikeController(LikeService likeService) {
         log.info("Constructor Called, Service Injected.");
         this.likeService = likeService;
+    }
+
+    // Data Not Found Exception
+    public static class DataNotFoundException extends RuntimeException {
+        public DataNotFoundException(String msg) {
+            super(msg);
+        }
     }
 
     // Toggle Like Tno

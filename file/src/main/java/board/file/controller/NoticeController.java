@@ -41,6 +41,13 @@ public class NoticeController {
         this.managementCookie = managementCookie;
     }
 
+    // Data Not Found Exception
+    public static class DataNotFoundException extends RuntimeException {
+        public DataNotFoundException(String msg) {
+            super(msg);
+        }
+    }
+
     // GET : Create Notice
     @GetMapping("create")
     @PreAuthorize("hasAnyRole('USER')")
@@ -65,7 +72,8 @@ public class NoticeController {
     // GET : Read Notice
     @GetMapping("read/{nno}")
     @PreAuthorize("hasAnyRole('USER')")
-    public String getReadNotice(PageRequestDTO pageRequestDTO, @PathVariable("nno") Long nno, Model model, HttpServletRequest request,
+    public String getReadNotice(PageRequestDTO pageRequestDTO, @PathVariable("nno") Long nno, Model model,
+            HttpServletRequest request,
             HttpServletResponse response) {
         log.info("GET | Notice Read");
         if (managementCookie.createCookie(request, response, nno)) {
@@ -77,7 +85,7 @@ public class NoticeController {
         return "/notice/read";
     }
 
-    // GET : Update Notice 
+    // GET : Update Notice
     @GetMapping("update/{nno}")
     @PreAuthorize("hasAnyRole('USER')")
     public String getUpdateNotice(PageRequestDTO pageRequestDTO, @PathVariable("nno") Long nno, Model model) {
@@ -94,10 +102,10 @@ public class NoticeController {
         log.info("POST | Notice Update");
         noitceService.updateNotice(noticeUpdateDTO);
         redirectAttributes.addFlashAttribute("mesaage", "공지사항이 업데이트 되었습니다.");
-        return "redirect:/notice/read/" +noticeUpdateDTO.getNno();
+        return "redirect:/notice/read/" + noticeUpdateDTO.getNno();
     }
-    
-    // POST : Delete Notice 
+
+    // POST : Delete Notice
     @PostMapping("delete/{nno}")
     @PreAuthorize("hasAnyRole('USER')")
     public String postDeleteNotice(@PathVariable("nno") Long nno, RedirectAttributes redirectAttributes) {
@@ -107,13 +115,13 @@ public class NoticeController {
         return "redirect:/notice/list";
     }
 
-    // POST : Create Notice 
+    // POST : Create Notice
     @PostMapping("create")
     @PreAuthorize("hasAnyRole('USER')")
     public String postCreateNotice(NoticeCreateDTO noticeCreateDTO, RedirectAttributes redirectAttributes) {
         log.info("POST | Notice Create");
         Long nno = noitceService.createNotice(noticeCreateDTO);
-        redirectAttributes.addFlashAttribute("message", noticeCreateDTO.getNno()+" 번 게시물로 등록되었습니다.");
+        redirectAttributes.addFlashAttribute("message", noticeCreateDTO.getNno() + " 번 게시물로 등록되었습니다.");
         return "redirect:/notice/list";
     }
 }

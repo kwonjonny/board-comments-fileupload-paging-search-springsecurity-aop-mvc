@@ -1,4 +1,6 @@
 
+// Like Axios For Notice & JavaScript Code 
+
 // querySelector 등록 likeCount actionLike 
 const likeCountElement = document.querySelector(".likeCount");
 const likeButton = document.querySelector(".actionLike");

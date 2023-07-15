@@ -35,6 +35,7 @@ public class LikeMapperTests {
                 .build();
     }
 
+    // Create Like Mapper Test
     @Test
     @Transactional
     @DisplayName("좋아요 생성 테스트")
@@ -49,6 +50,7 @@ public class LikeMapperTests {
         log.info("=== End Create Like Mapper Test ===");
     }
 
+    // Delete Like Mapper Test 
     @Test
     @Transactional
     @DisplayName("좋아요 삭제 테스트")
@@ -59,17 +61,20 @@ public class LikeMapperTests {
         likeMapper.deleteLike(likeDTO);
         // THEN
         Long count = likeMapper.countLikes(TEST_TNO);
-        Assertions.assertNull(count, "TEST_TNO Should Be Null");
+        Assertions.assertEquals(0L, count, "TEST_TNO Should Be Zero");
         log.info("=== End Delete Like Mapper Test ===");
     }
 
+    // Count Like Mapper Test 
     @Test
     @Transactional
     @DisplayName("좋아요 조회 테스트")
     public void countLikeMapperTest() {
         // GIVEN
         log.info("=== Start Count Like Mapper Test ===");
+        // WHEN 
         Long count = likeMapper.countLikes(TEST_TNO);
+        // THEN 
         log.info(count);
         log.info("=== End Count Like Mapper Test ===");
     }

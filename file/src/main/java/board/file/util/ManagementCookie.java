@@ -28,7 +28,6 @@ public class ManagementCookie {
         Cookie cookie = new Cookie(cookieName, "true");
         cookie.setMaxAge(60 * 60 * 24); // 쿠키를 24시간 동안 유지
         response.addCookie(cookie);
-
         // 쿠키가 없으므로 조회수를 증가시키도록 true를 반환합니다
         return true;
     }

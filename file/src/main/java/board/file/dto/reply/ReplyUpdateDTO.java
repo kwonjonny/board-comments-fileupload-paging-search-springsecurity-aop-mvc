@@ -16,6 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReplyUpdateDTO {
+    // tbl_reply
     private Long tno;
     private Long rno;
     private Long gno;

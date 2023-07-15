@@ -14,6 +14,7 @@ import board.file.dto.member.MemberConvertDTO;
 import board.file.service.MemberService;
 import lombok.extern.log4j.Log4j2;
 
+// Member Controller Class
 @Log4j2
 @Controller
 @RequestMapping("/member/")
@@ -29,6 +30,13 @@ public class MemberController {
         this.memberService = memberService;
     }
 
+    // Data Not Found Exception
+    public static class DataNotFoundException extends RuntimeException {
+        public DataNotFoundException(String msg) {
+            super(msg);
+        }
+    }
+
     // GET : Member Signin
     @GetMapping("signin")
     @PreAuthorize("permitAll")
@@ -37,7 +45,7 @@ public class MemberController {
         return "/member/signin";
     }
 
-    // GET : Member Join 
+    // GET : Member Join
     @GetMapping("join")
     @PreAuthorize("permitAll")
     public String getJoin() {
@@ -75,7 +83,7 @@ public class MemberController {
         return "redirect:/member/mypage/" + memberConvertDTO.getEmail();
     }
 
-    // POST : Member Join 
+    // POST : Member Join
     @PostMapping("join")
     @PreAuthorize("permitAll")
     public String postJoinMember(MemberConvertDTO memberConvertDTO, RedirectAttributes redirectAttributes) {

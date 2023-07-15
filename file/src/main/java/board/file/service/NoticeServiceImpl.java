@@ -87,7 +87,7 @@ public class NoticeServiceImpl implements NoitceService {
                 String fileName = str.substring(37);
                 return Map.of("uuid", uuid, "fileName", fileName, "nno", "" + nno, "ord", "" + index.getAndIncrement());
             }).collect(Collectors.toList());
-            fileMapper.updateImageNOtice(list);
+            fileMapper.updateImageNotice(list);
         }
         return noticeUpdateDTO.getNno();
     }

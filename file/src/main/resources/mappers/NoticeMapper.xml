@@ -13,6 +13,10 @@ useGeneratedKeys="true" keyProperty="nno">
    INSERT INTO tbl_notice
    (title, content, writer)
    VALUES(#{title}, #{content}, #{writer})
+    <!-- last insert id 확인 -->
+    <selectKey resultType="long" keyProperty="nno" order="AFTER">
+        SELECT LAST_INSERT_ID()
+    </selectKey>
 </insert>
 
 

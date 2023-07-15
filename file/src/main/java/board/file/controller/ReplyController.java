@@ -22,6 +22,7 @@ import board.file.dto.reply.ReplyUpdateDTO;
 import board.file.service.ReplyService;
 import lombok.extern.log4j.Log4j2;
 
+// Reply Controller Class
 @Log4j2
 @RestController
 @RequestMapping("/replies/")
@@ -36,6 +37,13 @@ public class ReplyController {
     public ReplyController(ReplyService replyService) {
         log.info("Constructor Called, Service Injected.");
         this.replyService = replyService;
+    }
+
+    // Data Not Found Exception
+    public static class DataNotFoundException extends RuntimeException {
+        public DataNotFoundException(String msg) {
+            super(msg);
+        }
     }
 
     // List Reply

@@ -11,5 +11,4 @@ public class FileApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FileApplication.class, args);
 	}
-
 }

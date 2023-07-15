@@ -40,11 +40,6 @@
 </select>
 
 
-
-
-
-
-
 <!-- BoardMapper id = "createBoard" -->
 <insert id="createBoard" parameterType="board.file.dto.board.BoardCreateDTO"
  useGeneratedKeys="true" keyProperty="tno">

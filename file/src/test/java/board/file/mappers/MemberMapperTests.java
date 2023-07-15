@@ -1,6 +1,7 @@
 package board.file.mappers;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import board.file.dto.member.MemberConvertDTO;
-import board.file.dto.member.MemberDTO;
 import lombok.extern.log4j.Log4j2;
 
+// Member Mapper Test Class
 @Log4j2
 @SpringBootTest
 public class MemberMapperTests {
@@ -22,17 +23,30 @@ public class MemberMapperTests {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private static final String TEST_EMAIL = "thisfews2@naver.com";
+    private static final String TEST_PASSWORD = "1weifdlsv";
+    private static final String TEST_MEMBER_NAME = "권성준";
+
+    // BeforeEach 사용을 위한 MemberConvertDTO 정의 
+    private MemberConvertDTO memberConvertDTO;
+
+    // MemberService Create Member Test Set Up
+    @BeforeEach
+    public void setUp() {
+        memberConvertDTO = MemberConvertDTO.builder()
+        .email(TEST_EMAIL)
+        .mpw(passwordEncoder.encode(TEST_PASSWORD))
+        .mname(TEST_MEMBER_NAME)
+        .build();
+    }
+    
+
     // Join Member Mapper Test 
     @Test
-    // @Transactional
+    @Transactional
     @DisplayName("회원 가입 테스트")
     public void joinMemberTest() {
         // GIVEN 
-        MemberConvertDTO memberConvertDTO = MemberConvertDTO.builder()
-        .email("thistrik@naver.com")
-        .mpw(passwordEncoder.encode("1111"))
-        .mname("권성준")
-        .build();
         String roleName = "USER";
         // WHEN 
         memberMapper.joinMember(memberConvertDTO);
@@ -51,10 +65,8 @@ public class MemberMapperTests {
         .mpw(passwordEncoder.encode("1111"))
         .mname("김선제")
         .build();
-        String roleName = "ROLE_USER";
         // WHEN 
         memberMapper.updateMember(memberConvertDTO);
-        memberMapper.createJoinMemberRole(memberConvertDTO.getEmail(), roleName);
         // THEN 
         memberMapper.selectMember("thistrik@naver.com");
         Assertions.assertNotNull("thistrik@naver.com", "Should Be Not Null");

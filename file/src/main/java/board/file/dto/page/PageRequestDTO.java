@@ -58,6 +58,7 @@ public class PageRequestDTO {
   }
 
   // type 배열로 반환 처리
+  // T C W 로 들어오는 검색 조건을 Split 해서 My Batis 검색
   public String[] getTypes() {
     if (this.searchType == null || this.searchType.isEmpty()) {
       return null;

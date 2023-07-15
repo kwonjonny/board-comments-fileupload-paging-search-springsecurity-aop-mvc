@@ -9,6 +9,7 @@ import board.file.dto.member.MemberConvertDTO;
 import board.file.mappers.MemberMapper;
 import lombok.extern.log4j.Log4j2;
 
+// Memeber ServiceImpl Class 
 @Log4j2
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -29,6 +30,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public int joinMember(MemberConvertDTO memberConvertDTO) {
+        log.info("Join Member MeberServiceImpl Is Running");
         String passwordEncode = passwordEncoder.encode(memberConvertDTO.getMpw());
         memberConvertDTO.setMpw(passwordEncode);
         String roleName = "USER";
@@ -40,6 +42,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public int updateMember(MemberConvertDTO memberConvertDTO) {
+        log.info("Update Member MeberServiceImpl Is Running");
         String passwordEncode = passwordEncoder.encode(memberConvertDTO.getMpw());
         memberConvertDTO.setMpw(passwordEncode);
         return memberMapper.updateMember(memberConvertDTO);
@@ -49,6 +52,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public int deleteMember(String email) {
+        log.info("Delete Member MeberServiceImpl Is Running");
         memberMapper.deleteMemberRole(email);
         return memberMapper.deleteMember(email);
     }
@@ -57,6 +61,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional(readOnly = true)
     public MemberConvertDTO readMember(String email) {
+        log.info("Read Member MeberServiceImpl Is Running");
         return memberMapper.selectMember(email);
     }
 }

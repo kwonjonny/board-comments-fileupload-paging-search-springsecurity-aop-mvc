@@ -17,6 +17,7 @@ import board.file.security.handler.CustomOAuthSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
+// Spirng Seucirty Config Class
 @Configuration
 @Log4j2
 // MapperScan 같이 Application.java에 걸어줘도 되지만 Security설정한 곳에 선언
@@ -25,8 +26,7 @@ import lombok.extern.log4j.Log4j2;
 public class CustomSecurityConfig {
 
     private final DataSource dataSource;
-    // private final CustomOAuth2UserService customOAuth2UserService;
-
+    
     // TokenRepository에 토큰 값 저장 함수
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
@@ -40,11 +40,10 @@ public class CustomSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // FilterChain
+    // Spring Security Filter Chain
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        log.info("filter chain----------------------------");
-
+        log.info("Spring Seucirty Filter Chain Is Running");
         // 커스텀 로그인 페이지 경로 지정
         http.formLogin(config -> {
             config.loginPage("/member/signin");
@@ -59,7 +58,7 @@ public class CustomSecurityConfig {
         http.rememberMe(config -> {
             // 발행한 토큰 값 repository에 저장
             config.tokenRepository(persistentTokenRepository());
-            config.tokenValiditySeconds(60 * 60 * 24 * 7);
+            config.tokenValiditySeconds(60 * 60 * 24 * 7);  // 7 Days
         });
 
         // form 안에있는 Hidden으로 포함된 csrf input tag를 없애겠다.

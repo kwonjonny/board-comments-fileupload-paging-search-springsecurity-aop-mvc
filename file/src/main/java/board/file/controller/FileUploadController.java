@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
 
+// File Upload Controlelr Class
 @Log4j2
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +32,14 @@ public class FileUploadController {
     @Value("${org.zerock.upload.path}")
     private String uploadPath;
 
+    // Data Not Found Exception
+    public static class DataNotFoundException extends RuntimeException {
+        public DataNotFoundException(String msg) {
+            super(msg);
+        }
+    }
+
+    // Create File Upload
     @PostMapping("/upload")
     @PreAuthorize("hasAnyRole('USER')")
     public List<UploadResultDTO> postFileUpload(MultipartFile[] files) {

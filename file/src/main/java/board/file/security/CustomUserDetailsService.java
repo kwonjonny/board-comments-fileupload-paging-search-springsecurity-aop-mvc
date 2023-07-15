@@ -20,7 +20,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final MemberMapper memberMapper;
 
-    // 안좋은 방식
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     /* 리턴타입이 UserDetails 이므로 Mapper를 통해 MemberDTO로 반환해야한다. */
@@ -38,8 +37,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                 readDTO.getMname(),
                 // 권한은 SimpleGranteAuthority객체이므로 나중에 Map을 써서 타입을 바꿔줘야 함
                 readDTO.getRolenames());
-
-        log.info("check password.........");
 
         return memberDTO;
     }

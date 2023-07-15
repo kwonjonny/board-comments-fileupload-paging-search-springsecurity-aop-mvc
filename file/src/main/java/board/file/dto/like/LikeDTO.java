@@ -16,6 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LikeDTO {
+    // tbl_like 
     private Long nno;
     private Long tno;
     private String email;

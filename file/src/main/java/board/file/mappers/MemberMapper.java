@@ -11,9 +11,7 @@ import board.file.dto.member.MemberConvertDTO;
 @Mapper
 public interface MemberMapper {
     
-    /*
-     * Security Member Read 
-     */
+    // Security Member Read 
     MemberReadDTO selectOne(String email);
 
     // Create Role 
@@ -34,5 +32,4 @@ public interface MemberMapper {
 
     // Read Member 
     MemberConvertDTO selectMember(String email);
-
 }
