@@ -1,4 +1,4 @@
-package board.file.controller.adviceContorller;
+package board.file.controller.advicecontroller;
 
 import java.util.HashMap;
 import java.util.Map;
