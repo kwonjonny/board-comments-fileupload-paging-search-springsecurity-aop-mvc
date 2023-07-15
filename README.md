@@ -73,6 +73,9 @@
 ## 피드백 기여 및 지원 기타 문의 
 - 프로젝트에 대한 의견과 피드백은 언제나 환영합니다! 만약 프로젝트에 대한 개선 사항이나 버그 제보, 그 외 다른 의견이 있으시면, 언제든지 연락해주시기 바랍니다.
 
+![Database Diagram](./board-comments-fileupload-paging-search-springsecurity-mvc/35D8FAE1-7656-4053-94D3-643DCC541D21.jpeg)
+
+
 ## 데이터베이스 테이블 정보
 
 ### Board 테이블 (`tbl_board`)
