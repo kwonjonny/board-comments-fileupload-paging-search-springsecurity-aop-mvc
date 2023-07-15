@@ -170,7 +170,6 @@
 
 ## tbl_board
 `tbl_board` 테이블에 대해 `title`, `content`, `writer` 필드에 인덱스를 추가합니다:
-<<<<<<< HEAD
 ```sql
 =======
 
