@@ -37,6 +37,7 @@ public class NoticeController {
     // Autowired 명시적 표시
     @Autowired
     public NoticeController(NoitceService noitceService, ManagementCookie managementCookie) {
+        log.info("Constructor Called, Service Injected.");
         this.noitceService = noitceService;
         this.managementCookie = managementCookie;
     }

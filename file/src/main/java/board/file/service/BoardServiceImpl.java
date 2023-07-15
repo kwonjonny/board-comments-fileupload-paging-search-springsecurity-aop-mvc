@@ -118,5 +118,4 @@ public class BoardServiceImpl implements BoardService {
       log.info("ViewCount BoardServiceImpl Is Running");
       boardMapper.viewCount(tno);
    }
-
 }

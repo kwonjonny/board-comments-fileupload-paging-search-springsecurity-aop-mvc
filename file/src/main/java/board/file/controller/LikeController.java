@@ -45,6 +45,7 @@ public class LikeController {
     @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Integer>> toggleLikeTno(@PathVariable("tno") Long tno,
             Authentication authentication) {
+        log.info("RestController | Toggle Like");
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String email = userDetails.getUsername();
         int result = likeService.toggleLike(tno, email);
@@ -65,6 +66,7 @@ public class LikeController {
     @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Integer>> toggleLikeNno(@PathVariable("nno") Long nno,
             Authentication authentication) {
+        log.info("RestController | Toggle Like For Nno");
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String email = userDetails.getUsername();
         int result = likeService.toggleLikeNno(nno, email);
