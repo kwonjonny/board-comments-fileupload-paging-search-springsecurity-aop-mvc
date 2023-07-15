@@ -6,10 +6,7 @@
 # board-comments-fileupload-paging-search-mvc
 - 프로젝트 유형: Board 게시판 토이 프로젝트
 - 목표: JavaScript, Thymeleaf, Spring Boot 를 활용하여 페이지네이션, 검색 기능이 포함된 Board 애플리케이션 개발
-- 목표: 개발의 순서 정립 DataBase 설계 
-- 목표: 개발의 순서 정립 MapperInterface 개발 => Mapper.xml 개발 => MapperTestCode 작성 => ServiceInterface 개발 => ServiceImpl 개발 => ServiceTestCode 작성
-- 목표: 개발의 순서 정립 controller 개발 => html 개발 => 페이징 개발
-- 목표: 개발의 순서 정립 위의 순서대로 Fileupload 기능과 reply 기능도 순차적으로 개발 
+- 목표: 개발의 순서 정립 DataBase , Index 설계 , Query 속도 향상 & Query 문법 정립 
 
 ## Spring Boot 프로젝트 설정
 
@@ -39,7 +36,7 @@
 
 ## board-comments-fileupload-paging-search-mvc: Board 게시판 토이 프로젝트 소개 
 - 데이터 규모 
-- 이 토이 프로젝트에서는 약 3000만건의 데이터를 사용하여 페이지네이션 기능을 테스트하고 최적화하였습니다. 
+- 이 토이 프로젝트에서는 약 300만건의 데이터를 사용하여 페이지네이션 기능을 테스트하고 최적화하였습니다. 
 - 이를 통해 대규모 데이터셋에 대해 어플리케이션의 성능을 측정하고, 사용자에게 빠른 응답 시간을 제공하는 방법을 연구하였습니다.
 
 ### 주요 기능
@@ -121,7 +118,7 @@
 | 컬럼명 | 데이터 타입 | 설명 |
 | --- | --- | --- |
 | rno | INT | 답글 항목의 고유 식별자 (Primary Key, 자동 증가) |
-| tno | VARCHAR(500) | 관련 Board 항목의 고유 식별자 |
+| tno | INT | 관련 Board 항목의 고유 식별자 |
 | reply | VARCHAR(1000) | 답글의 내용 |
 | replyer | VARCHAR(100) | 답글을 작성한 사용자명 |
 | replyDate | TIMESTMAP | 답글이 작성된 날짜와 시간 (기본값은 현재 시간) |
@@ -166,7 +163,7 @@
 | 컬럼명 | 데이터 타입 | 설명 |
 | --- | --- | --- |
 |email|VARCHAR(100)| 회원의 이메일 주소 (Primary Key)|
-|mpw|VARCHAR(100) |회원의 비밀번호|
+|mpw|VARCHAR(100) |회원의 비밀번호(passwordEncode)|
 |mname|VARCHAR(100) | 회원의 이름|
 
 ### Member Role 테이블 (`tbl_member_role`)
@@ -182,6 +179,36 @@
 |series| VARCHAR(64)|로그인 시리즈 (Primary Key)
 |token| VARCHAR(64)|로그인 토큰
 |last_used| TIMESTAMP |마지막으로 사용된 날짜 및 시간
+
+-- tbl_board에 대한 인덱스 추가
+ALTER TABLE tbl_board ADD INDEX idx_title (title);
+ALTER TABLE tbl_board ADD INDEX idx_content (content);
+ALTER TABLE tbl_board ADD INDEX idx_writer (writer);
+
+-- tbl_notice에 대한 인덱스 추가
+ALTER TABLE tbl_notice ADD INDEX idx_title (title);
+ALTER TABLE tbl_notice ADD INDEX idx_content (content);
+ALTER TABLE tbl_notice ADD INDEX idx_writer (writer);
+
+-- tbl_reply에 대한 인덱스 추가
+ALTER TABLE tbl_reply ADD INDEX idx_tno (tno);
+ALTER TABLE tbl_reply ADD INDEX idx_replyer (replyer);
+
+-- tbl_member 및 tbl_member_role에 대한 인덱스 추가
+ALTER TABLE tbl_member ADD INDEX idx_email (email);
+ALTER TABLE tbl_member_role ADD INDEX idx_email (email);
+
+-- tbl_like, tbl_board_img, tbl_like_notice, tbl_notice_img에 대한 외래키 인덱스 추가
+ALTER TABLE tbl_like ADD INDEX idx_tno (tno);
+ALTER TABLE tbl_like ADD INDEX idx_email (email);
+
+ALTER TABLE tbl_board_img ADD INDEX idx_tno (tno);
+
+ALTER TABLE tbl_like_notice ADD INDEX idx_nno (nno);
+ALTER TABLE tbl_like_notice ADD INDEX idx_email (email);
+
+ALTER TABLE tbl_notice_img ADD INDEX idx_nno (nno);
+
 
 SQL 스키마:
 ```sql
