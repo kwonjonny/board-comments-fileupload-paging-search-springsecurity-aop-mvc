@@ -117,7 +117,7 @@
 |tno	|INT	|관련 Board 항목의 고유 식별자
 |ord	|INT	|이미지 순서 (기본값 0)
 
-### Reply 테이블 (`tbl_reply`)
+### Board Reply 테이블 (`tbl_reply`)
 | 컬럼명 | 데이터 타입 | 설명 |
 | --- | --- | --- |
 | rno | INT | 답글 항목의 고유 식별자 (Primary Key, 자동 증가) |
@@ -128,6 +128,13 @@
 | modifyDate | TIMESTMAP | 답글이 수정된 날짜와 시간 (기본값은 현재 시간) |
 | gno | INT | 그룹 번호 (기본값 0) |
 |isDeleted| TINYINT | 댓글.대댓글이 삭제되었는지 확인하고 업데이트|
+
+### Board Like 테이블 (`tbl_like`)
+| 컬럼명 | 데이터 타입 | 설명 |
+| --- | --- | --- |
+|tno|	INT|	"좋아요"가 달린 게시글의 고유 식별자 (외래키, tbl_board 참조)|
+|email|	VARCHAR(100)|	"좋아요"를 누른 회원의 이메일 주소 (외래키, tbl_member 참조)|
+|registDate|	TIMESTAMP|	"좋아요"가 등록된 날짜 및 시간 (기본값: 현재 시간)|
 
 ### Notice 테이블 (`tbl_notice`)
 | 컬럼명 | 데이터 타입 | 설명 |
@@ -175,13 +182,6 @@
 |series| VARCHAR(64)|로그인 시리즈 (Primary Key)
 |token| VARCHAR(64)|로그인 토큰
 |last_used| TIMESTAMP |마지막으로 사용된 날짜 및 시간
-
-### Like 테이블 (`tbl_like`)
-| 컬럼명 | 데이터 타입 | 설명 |
-| --- | --- | --- |
-|tno|	INT|	"좋아요"가 달린 게시글의 고유 식별자 (외래키, tbl_board 참조)|
-|email|	VARCHAR(100)|	"좋아요"를 누른 회원의 이메일 주소 (외래키, tbl_member 참조)|
-|registDate|	TIMESTAMP|	"좋아요"가 등록된 날짜 및 시간 (기본값: 현재 시간)|
 
 SQL 스키마:
 ```sql
