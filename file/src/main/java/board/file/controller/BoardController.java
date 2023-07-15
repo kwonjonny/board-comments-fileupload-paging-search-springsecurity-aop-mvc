@@ -42,8 +42,7 @@ public class BoardController {
         this.managementCookie = managementCookie;
     }
 
-    // Data Not Found Exception
-    public static class DataNotFoundException extends RuntimeException {
+    public class DataNotFoundException extends RuntimeException {
         public DataNotFoundException(String msg) {
             super(msg);
         }

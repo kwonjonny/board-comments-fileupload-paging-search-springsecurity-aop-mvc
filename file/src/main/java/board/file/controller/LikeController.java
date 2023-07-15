@@ -33,8 +33,7 @@ public class LikeController {
         this.likeService = likeService;
     }
 
-    // Data Not Found Exception
-    public static class DataNotFoundException extends RuntimeException {
+    public class DataNotFoundException extends RuntimeException {
         public DataNotFoundException(String msg) {
             super(msg);
         }
