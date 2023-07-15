@@ -16,28 +16,28 @@
 - `io.spring.dependency-management`: Spring의 의존성 관리 기능을 추가합니다. 버전은 1.1.0입니다.
 
 ### 프로젝트 정보
-- `group`: 프로젝트 그룹 ID를 'com.board'로 설정합니다.
+- `group`: 프로젝트 그룹 ID를 'board.file'로 설정합니다.
 - `version`: 프로젝트 버전을 '0.0.1-SNAPSHOT'으로 설정합니다.
 - `sourceCompatibility`: 프로젝트 Java 버전을 17로 설정합니다.
 
-### 태스크 설정
-- `test`: JUnit Platform을 사용하도록 설정합니다.
+## 시작하기(Getting Start)
 
-### 저장소
-- Maven 중앙 저장소에서 의존성을 가져옵니다.
+### 사전 요구 사항
+- Java 17
+- MySQL
+- 웹 브라우저
 
-## 프로젝트 사용 방법
-1. 프로젝트를 빌드합니다.
-2. Run Application을 실행합니다.
-3. 웹 브라우저에서 `/board/list`로 이동합니다.
+### 데이터베이스 설정
+프로젝트를 실행하기 전에 MySQL 데이터베이스를 설정하고 `application.properties` 파일에서 데이터베이스 연결 속성을 구성하세요.
+
+### 빌드 및 실행 방법
+1. 이 저장소를 복제하거나 다운로드합니다: `git clone [repository_url]`
+2. 프로젝트를 빌드합니다: `./gradlew build`
+3. 애플리케이션을 실행합니다: `./gradlew bootRun`
+4. 웹 브라우저에서 애플리케이션에 접속합니다: `http://localhost:8084/board/list`
 
 ## 부트스트랩 사용
-- [AdminLTE](https://adminlte.io/) 템플릿을 사용합니다.
-
-## board-comments-fileupload-paging-search-mvc: Board 게시판 토이 프로젝트 소개 
-- 데이터 규모 
-- 이 토이 프로젝트에서는 약 300만건의 데이터를 사용하여 페이지네이션 기능을 테스트하고 최적화하였습니다. 
-- 이를 통해 대규모 데이터셋에 대해 어플리케이션의 성능을 측정하고, 사용자에게 빠른 응답 시간을 제공하는 방법을 연구하였습니다.
+이 프로젝트는 부트스트랩 템플릿을 사용하여 사용자 인터페이스를 구성합니다. 템플릿에 대한 자세한 정보는 [AdminLTE](https://adminlte.io/)를 참조하세요.
 
 ### 주요 기능
 - Board 항목 생성, 조회, 수정, 삭제
@@ -64,25 +64,6 @@
 - 조회수 기능 Cookie 를 통한 생성 
 
 - Bootstrap을 이용한 반응형 웹 디자인
-
-## 시작하기
-
-### 사전 요구 사항
-- Java 17
-- MySQL
-- 웹 브라우저
-
-### 데이터베이스 설정
-프로젝트를 실행하기 전에 MySQL 데이터베이스를 설정하고 `application.properties` 파일에서 데이터베이스 연결 속성을 구성하세요.
-
-### 빌드 및 실행 방법
-1. 이 저장소를 복제하거나 다운로드합니다: `git clone [repository_url]`
-2. 프로젝트를 빌드합니다: `./gradlew build`
-3. 애플리케이션을 실행합니다: `./gradlew bootRun`
-4. 웹 브라우저에서 애플리케이션에 접속합니다: `http://localhost:8084/board/list`
-
-## 부트스트랩 사용
-이 프로젝트는 부트스트랩 템플릿을 사용하여 사용자 인터페이스를 구성합니다. 템플릿에 대한 자세한 정보는 [AdminLTE](https://adminlte.io/)를 참조하세요.
 
 ## 개발자 정보
 - 이름: [권성준]
