@@ -61,7 +61,7 @@ public class BoardServiceTests {
                 .title(TEST_TITLE)
                 .writer(TEST_WRITER)
                 .content(TEST_CONTENT)
-                .fileNames(Arrays.asList(uuid + "_" + TEST_FilENAMES)) // UUID와 파일 이름 결합하여 저장
+                .fileNames(Arrays.asList(uuid + "_" + TEST_FilE_NAMES)) // UUID와 파일 이름 결합하여 저장
                 .build();
 
         boardUpdateDTO = BoardUpdateDTO.builder()
@@ -69,7 +69,7 @@ public class BoardServiceTests {
                 .title(TEST_TITLE)
                 .writer(TEST_WRITER)
                 .content(TEST_CONTENT)
-                .fileNames(Arrays.asList(uuid + "_" + TEST_FilENAMES)) // UUID와 파일 이름 결합하여 저장
+                .fileNames(Arrays.asList(uuid + "_" + TEST_FilE_NAMES)) // UUID와 파일 이름 결합하여 저장
                 .build();
     }
 
