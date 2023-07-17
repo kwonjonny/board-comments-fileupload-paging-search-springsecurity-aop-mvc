@@ -43,7 +43,7 @@ public class BoardServiceTests {
     private static final String TEST_TITLE = "JunitServiceTest";
     private static final String TEST_WRITER = "JunitServiceTest";
     private static final String TEST_CONTENT = "JunitServiceTest";
-    private static final String TEST_FilENAMES = "Test.jpg";
+    private static final String TEST_FilE_NAMES = "Test.jpg";
     private static final Long TEST_TNO = 2556001L;
 
     // BeforeEach 사용을 위한 BoardCreateDTO , BoardUpdateDTO 정의
