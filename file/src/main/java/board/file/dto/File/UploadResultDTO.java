@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+// Enginx 에 FileUpload 쓰이는 DTO
 @Getter
 @Setter
 @Builder
