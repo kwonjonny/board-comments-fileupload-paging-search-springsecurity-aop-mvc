@@ -38,25 +38,8 @@
 | **조회수 기능**    | 쿠키를 통해 조회수를 생성합니다.                                   |
 | **웹 디자인**     | Bootstrap을 이용한 반응형 웹 디자인을 지원합니다.                      |
 
-## 시작하기(Getting Start)
-
-### 사전 요구 사항
-- Java 17
-- MySQL
-- 웹 브라우저
-
-### 데이터베이스 설정
-프로젝트를 실행하기 전에 MySQL 데이터베이스를 설정하고 `application.properties` 파일에서 데이터베이스 연결 속성을 구성하세요.
-
-### 빌드 및 실행 방법
-1. 이 저장소를 복제하거나 다운로드합니다: `git clone [repository_url]`
-2. 프로젝트를 빌드합니다: `./gradlew build`
-3. 애플리케이션을 실행합니다: `./gradlew bootRun`
-4. 웹 브라우저에서 애플리케이션에 접속합니다: `http://localhost:8084/board/list`
-
 ## 부트스트랩 사용
 이 프로젝트는 부트스트랩 템플릿을 사용하여 사용자 인터페이스를 구성합니다. 템플릿에 대한 자세한 정보는 [AdminLTE](https://adminlte.io/)를 참조하세요.
-
 
 ## Database_Diagram
 ![Database Diagram](./35D8FAE1-7656-4053-94D3-643DCC541D21.jpeg)
