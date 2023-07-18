@@ -46,40 +46,41 @@
 
 # Database Indexing
 다음은 데이터베이스 내 각 테이블에 대한 인덱싱 방법을 안내합니다. 
+<div style="font-size: 0.8em;">
 
-## tbl_board
-`tbl_board` 테이블에 대해 `title`, `content`, `writer` 필드에 인덱스를 추가합니다:
-```sql
+<h2>tbl_board</h2>
+<p><code>tbl_board</code> 테이블에 대해 <code>title</code>, <code>content</code>, <code>writer</code> 필드에 인덱스를 추가합니다:</p>
+<pre><code>
 ALTER TABLE tbl_board ADD INDEX idx_title (title);
 ALTER TABLE tbl_board ADD INDEX idx_content (content);
 ALTER TABLE tbl_board ADD INDEX idx_writer (writer);
-```
+</code></pre>
 
-## tbl_notice
-`tbl_notice` 테이블에 대해 `title`, `content`, `writer` 필드에 인덱스를 추가합니다:
-```sql
+<h2>tbl_notice</h2>
+<p><code>tbl_notice</code> 테이블에 대해 <code>title</code>, <code>content</code>, <code>writer</code> 필드에 인덱스를 추가합니다:</p>
+<pre><code>
 ALTER TABLE tbl_notice ADD INDEX idx_title (title);
 ALTER TABLE tbl_notice ADD INDEX idx_content (content);
 ALTER TABLE tbl_notice ADD INDEX idx_writer (writer);
-```
+</code></pre>
 
-## tbl_reply
-`tbl_reply` 테이블에 대해 `tno`, `replyer` 필드에 인덱스를 추가합니다:
-```sql
+<h2>tbl_reply</h2>
+<p><code>tbl_reply</code> 테이블에 대해 <code>tno</code>, <code>replyer</code> 필드에 인덱스를 추가합니다:</p>
+<pre><code>
 ALTER TABLE tbl_reply ADD INDEX idx_tno (tno);
 ALTER TABLE tbl_reply ADD INDEX idx_replyer (replyer);
-```
+</code></pre>
 
-## tbl_member & tbl_member_role
-`tbl_member` 및 `tbl_member_role` 테이블에 대해 email 필드에 인덱스를 추가합니다:
-```sql
+<h2>tbl_member & tbl_member_role</h2>
+<p><code>tbl_member</code> 및 <code>tbl_member_role</code> 테이블에 대해 email 필드에 인덱스를 추가합니다:</p>
+<pre><code>
 ALTER TABLE tbl_member ADD INDEX idx_email (email);
 ALTER TABLE tbl_member_role ADD INDEX idx_email (email);
-```
+</code></pre>
 
-## tbl_like, tbl_board_img, tbl_like_notice, tbl_notice_img
-`tbl_like`, `tbl_board_img`, `tbl_like_notice`, `tbl_notice_img` 테이블에 대해 외래키 필드에 인덱스를 추가합니다:
-```sql
+<h2>tbl_like, tbl_board_img, tbl_like_notice, tbl_notice_img</h2>
+<p><code>tbl_like</code>, <code>tbl_board_img</code>, <code>tbl_like_notice</code>, <code>tbl_notice_img</code> 테이블에 대해 외래키 필드에 인덱스를 추가합니다:</p>
+<pre><code>
 ALTER TABLE tbl_like ADD INDEX idx_tno (tno);
 ALTER TABLE tbl_like ADD INDEX idx_email (email);
 
@@ -89,4 +90,6 @@ ALTER TABLE tbl_like_notice ADD INDEX idx_nno (nno);
 ALTER TABLE tbl_like_notice ADD INDEX idx_email (email);
 
 ALTER TABLE tbl_notice_img ADD INDEX idx_nno (nno);
-```
+</code></pre>
+
+</div>
