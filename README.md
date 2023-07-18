@@ -2,7 +2,6 @@
 <p align='center'>
   <a href="#demo">
 <body>
-  <h1>Whoever knocks persistently, ends by entering.</h1>
   <h2>기술 스택</h2>
   <p>
     <img src="https://img.shields.io/badge/MyBatis-FAAF15?style=for-the-badge&logo=MyBatis&logoColor=white" alt="MyBatis">
