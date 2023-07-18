@@ -46,7 +46,7 @@
 
 # Database Indexing
 다음은 데이터베이스 내 각 테이블에 대한 인덱싱 방법을 안내합니다. 
-<div style="font-size: 0.8em;">
+<div style="font-size: 0.2em;">
 
 <h2>tbl_board</h2>
 <p><code>tbl_board</code> 테이블에 대해 <code>title</code>, <code>content</code>, <code>writer</code> 필드에 인덱스를 추가합니다:</p>
