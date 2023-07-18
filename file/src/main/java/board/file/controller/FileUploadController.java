@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import board.file.dto.file.UploadResultDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -42,8 +43,8 @@ public class FileUploadController {
     // Create File Upload
     @PostMapping("/upload")
     @PreAuthorize("hasAnyRole('USER')")
-    public List<UploadResultDTO> postFileUpload(MultipartFile[] files) {
-        log.info("Is Running UploadFile RestController");
+    public List<UploadResultDTO> postFileUpload(@Valid MultipartFile[] files) {
+        log.info("RestController | Upload File");
         if (files == null || files.length == 0) {
             return null;
         }
@@ -77,6 +78,7 @@ public class FileUploadController {
     @PreAuthorize("hasAnyRole('USER')")
     @DeleteMapping("removeFile/{fileName}")
     public Map<String, String> deleteFile(@PathVariable("fileName") String fileName) {
+        log.info("RestController | Delete File");
         File originFile = new File(uploadPath, fileName);
 
         // JVM외부랑 연결되는 소스는 exception 처리

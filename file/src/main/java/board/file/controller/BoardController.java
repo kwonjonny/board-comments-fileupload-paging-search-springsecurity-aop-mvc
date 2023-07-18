@@ -22,6 +22,7 @@ import board.file.service.BoardService;
 import board.file.util.ManagementCookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 
 // Board Controller Class 
@@ -108,7 +109,7 @@ public class BoardController {
     // POST : Update
     @PostMapping("update")
     @PreAuthorize("hasAnyRole('USER')")
-    public String postBoardUpdate(BoardUpdateDTO boardUpdateDTO, RedirectAttributes redirectAttributes) {
+    public String postBoardUpdate(@Valid BoardUpdateDTO boardUpdateDTO, RedirectAttributes redirectAttributes) {
         log.info("POST | Board Update");
         boardServce.updateBoard(boardUpdateDTO);
         redirectAttributes.addFlashAttribute("message", "게시물이 업데이트 되었습니다.");
@@ -118,7 +119,7 @@ public class BoardController {
     // POST : Create
     @PostMapping("/create")
     @PreAuthorize("hasAnyRole('USER')")
-    public String postBoardCreate(BoardCreateDTO boardCreateDTO, RedirectAttributes redirectAttributes) {
+    public String postBoardCreate(@Valid BoardCreateDTO boardCreateDTO, RedirectAttributes redirectAttributes) {
         log.info("POST | Board Create");
         Long tno = boardServce.createBoard(boardCreateDTO);
         redirectAttributes.addFlashAttribute("message", boardCreateDTO.getTno() + " 번 게시물로 등록되었습니다.");

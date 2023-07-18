@@ -32,7 +32,7 @@ public class NoticeServiceTests {
 
     // 의존성 주입
     @Autowired
-    private NoitceService noitceService;
+    private NoticeService noticeService;
 
     @Autowired
     private NoticeMapper noticeMapper;
@@ -81,7 +81,7 @@ public class NoticeServiceTests {
         // GIVEN
         log.info("=== Start Notice Service Create Test ===");
         // WHEN
-        Long insertCount = noitceService.createNotice(noticeCreateDTO);
+        Long insertCount = noticeService.createNotice(noticeCreateDTO);
         AtomicInteger index = new AtomicInteger(0);
 
         List<String> fileNames = noticeCreateDTO.getFileNames();
@@ -92,7 +92,7 @@ public class NoticeServiceTests {
             return Map.of("uuid", uuid, "fileName", fileName, "nno", "" + nno, "ord", "" + index.getAndIncrement());
         }).collect(Collectors.toList());
         // THEN
-        NoticeDTO createdNoticeDTO = noitceService.readNotice(TEST_NNO);
+        NoticeDTO createdNoticeDTO = noticeService.readNotice(TEST_NNO);
         Assertions.assertNotNull(createdNoticeDTO, "createdNoticeDTO Should Be Successful And Not Null");
         log.info("=== End Notice Service Create Test ===");
     }
@@ -105,9 +105,9 @@ public class NoticeServiceTests {
         // GIVEN
         log.info("=== Start Notice Service Delete Test ===");
         // WHEN
-        noitceService.deleteNotice(TEST_NNO);
+        noticeService.deleteNotice(TEST_NNO);
         // THEN
-        NoticeDTO deletedNotice = noitceService.readNotice(TEST_NNO);
+        NoticeDTO deletedNotice = noticeService.readNotice(TEST_NNO);
         Assertions.assertNull(deletedNotice, "deletedNotice Should Be Null");
         log.info("=== End Notice Service Delete Test ===");
     }
@@ -120,7 +120,7 @@ public class NoticeServiceTests {
         // GIVEN
         log.info("=== Start Notice Service Update Test ===");
         // WHEN
-        Long result = noitceService.updateNotice(noticeUpdateDTO);
+        Long result = noticeService.updateNotice(noticeUpdateDTO);
         fileMapper.deleteImageNotice(noticeUpdateDTO.getNno());
         AtomicInteger index = new AtomicInteger(0);
 
@@ -133,7 +133,7 @@ public class NoticeServiceTests {
         }).collect(Collectors.toList());
         fileMapper.updateImageNotice(list);
         // THEN
-        NoticeDTO updatedNotice = noitceService.readNotice(TEST_NNO);
+        NoticeDTO updatedNotice = noticeService.readNotice(TEST_NNO);
         Assertions.assertNotNull(updatedNotice, "updatedNotice Should Be Not Null");
         Assertions.assertEquals(TEST_TITLE, updatedNotice.getTitle(), "TITLE Sould Be Updated");
         log.info("=== End Notice Service Update Test ===");
@@ -147,7 +147,7 @@ public class NoticeServiceTests {
         // GIVEN
         log.info("=== Start Notice Service Read Test ===");
         // WHEN
-        NoticeDTO readNotice = noitceService.readNotice(TEST_NNO);
+        NoticeDTO readNotice = noticeService.readNotice(TEST_NNO);
         // THEN
         log.info(readNotice);
         Assertions.assertNotNull(readNotice, "readNotice Should Be Not null");

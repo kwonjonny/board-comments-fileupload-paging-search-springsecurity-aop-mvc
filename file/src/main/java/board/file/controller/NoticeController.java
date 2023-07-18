@@ -18,10 +18,11 @@ import board.file.dto.notice.NoticeListDTO;
 import board.file.dto.notice.NoticeUpdateDTO;
 import board.file.dto.page.PageRequestDTO;
 import board.file.dto.page.PageResponseDTO;
-import board.file.service.NoitceService;
+import board.file.service.NoticeService;
 import board.file.util.ManagementCookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 
 // Notice Controller Class 
@@ -31,14 +32,14 @@ import lombok.extern.log4j.Log4j2;
 public class NoticeController {
 
     // 의존성 주입
-    private final NoitceService noitceService;
+    private final NoticeService noticeService;
     private final ManagementCookie managementCookie;
 
     // Autowired 명시적 표시
     @Autowired
-    public NoticeController(NoitceService noitceService, ManagementCookie managementCookie) {
+    public NoticeController(NoticeService noticeService, ManagementCookie managementCookie) {
         log.info("Constructor Called, Service Injected.");
-        this.noitceService = noitceService;
+        this.noticeService = noticeService;
         this.managementCookie = managementCookie;
     }
 
@@ -62,7 +63,7 @@ public class NoticeController {
     @PreAuthorize("hasAnyRole('USER')")
     public String getListNotice(PageRequestDTO pageRequestDTO, Authentication authentication, Model model) {
         log.info("GET | Notice List");
-        PageResponseDTO<NoticeListDTO> list = noitceService.listNotice(pageRequestDTO);
+        PageResponseDTO<NoticeListDTO> list = noticeService.listNotice(pageRequestDTO);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String email = userDetails.getUsername();
         model.addAttribute("list", list);
@@ -78,10 +79,10 @@ public class NoticeController {
             HttpServletResponse response) {
         log.info("GET | Notice Read");
         if (managementCookie.createCookie(request, response, nno)) {
-            noitceService.viewCount(nno);
+            noticeService.viewCount(nno);
             log.info("Making Cookie");
         }
-        NoticeDTO list = noitceService.readNotice(nno);
+        NoticeDTO list = noticeService.readNotice(nno);
         model.addAttribute("list", list);
         return "/notice/read";
     }
@@ -91,7 +92,7 @@ public class NoticeController {
     @PreAuthorize("hasAnyRole('USER')")
     public String getUpdateNotice(PageRequestDTO pageRequestDTO, @PathVariable("nno") Long nno, Model model) {
         log.info("GET | Notice Update");
-        NoticeDTO list = noitceService.readNotice(nno);
+        NoticeDTO list = noticeService.readNotice(nno);
         model.addAttribute("list", list);
         return "/notice/update";
     }
@@ -99,9 +100,9 @@ public class NoticeController {
     // POST : Update Notice
     @PostMapping("update")
     @PreAuthorize("hasAnyRole('USER')")
-    public String postUpdateNotice(NoticeUpdateDTO noticeUpdateDTO, RedirectAttributes redirectAttributes) {
+    public String postUpdateNotice(@Valid NoticeUpdateDTO noticeUpdateDTO, RedirectAttributes redirectAttributes) {
         log.info("POST | Notice Update");
-        noitceService.updateNotice(noticeUpdateDTO);
+        noticeService.updateNotice(noticeUpdateDTO);
         redirectAttributes.addFlashAttribute("mesaage", "공지사항이 업데이트 되었습니다.");
         return "redirect:/notice/read/" + noticeUpdateDTO.getNno();
     }
@@ -111,7 +112,7 @@ public class NoticeController {
     @PreAuthorize("hasAnyRole('USER')")
     public String postDeleteNotice(@PathVariable("nno") Long nno, RedirectAttributes redirectAttributes) {
         log.info("POST | Notice Delete");
-        noitceService.deleteNotice(nno);
+        noticeService.deleteNotice(nno);
         redirectAttributes.addFlashAttribute("message", "공지사항이 삭제되었습니다.");
         return "redirect:/notice/list";
     }
@@ -119,9 +120,9 @@ public class NoticeController {
     // POST : Create Notice
     @PostMapping("create")
     @PreAuthorize("hasAnyRole('USER')")
-    public String postCreateNotice(NoticeCreateDTO noticeCreateDTO, RedirectAttributes redirectAttributes) {
+    public String postCreateNotice(@Valid NoticeCreateDTO noticeCreateDTO, RedirectAttributes redirectAttributes) {
         log.info("POST | Notice Create");
-        Long nno = noitceService.createNotice(noticeCreateDTO);
+        Long nno = noticeService.createNotice(noticeCreateDTO);
         redirectAttributes.addFlashAttribute("message", noticeCreateDTO.getNno() + " 번 게시물로 등록되었습니다.");
         return "redirect:/notice/list";
     }

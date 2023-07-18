@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import board.file.dto.member.MemberConvertDTO;
 import board.file.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 
 // Member Controller Class
@@ -76,7 +77,7 @@ public class MemberController {
     // POST : Member My Update Page
     @PostMapping("update")
     @PreAuthorize("hasAnyRole('USER')")
-    public String postUpdateMember(MemberConvertDTO memberConvertDTO, RedirectAttributes redirectAttributes) {
+    public String postUpdateMember(@Valid MemberConvertDTO memberConvertDTO, RedirectAttributes redirectAttributes) {
         log.info("POST | Post Member Update");
         memberService.updateMember(memberConvertDTO);
         redirectAttributes.addFlashAttribute("message", "회원 업데이트 완료");
@@ -86,7 +87,7 @@ public class MemberController {
     // POST : Member Join
     @PostMapping("join")
     @PreAuthorize("permitAll")
-    public String postJoinMember(MemberConvertDTO memberConvertDTO, RedirectAttributes redirectAttributes) {
+    public String postJoinMember(@Valid MemberConvertDTO memberConvertDTO, RedirectAttributes redirectAttributes) {
         log.info("POST | Post Member Join");
         memberService.joinMember(memberConvertDTO);
         redirectAttributes.addFlashAttribute("message", "회원 가입 완료");

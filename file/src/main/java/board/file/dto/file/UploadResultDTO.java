@@ -1,5 +1,6 @@
 package board.file.dto.file;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +17,10 @@ import lombok.ToString;
 @AllArgsConstructor
 public class UploadResultDTO {
 
+    @NotNull(message = "UUID Must Not Be Null")
     private String uuid;
+
+    @NotNull(message = "fileName Must Not Be Null")
     private String fileName;
     private boolean img;
 

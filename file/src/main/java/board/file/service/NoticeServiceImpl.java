@@ -22,7 +22,7 @@ import lombok.extern.log4j.Log4j2;
 // Notice ServiceImpl Class
 @Log4j2
 @Service
-public class NoticeServiceImpl implements NoitceService {
+public class NoticeServiceImpl implements NoticeService {
 
     // 의존성 주입
     private final NoticeMapper noticeMapper;

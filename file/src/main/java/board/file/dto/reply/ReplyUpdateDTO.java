@@ -2,6 +2,7 @@ package board.file.dto.reply;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +21,11 @@ public class ReplyUpdateDTO {
     private Long tno;
     private Long rno;
     private Long gno;
+
+    @NotBlank(message = "Reply Is Required")
     private String reply;
+
+    @NotBlank(message = "Replyer Is Required")
     private String replyer;
     private LocalDate modifyDate;
 }

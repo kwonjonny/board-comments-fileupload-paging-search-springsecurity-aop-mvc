@@ -20,6 +20,7 @@ import board.file.dto.reply.ReplyCreateDTO;
 import board.file.dto.reply.ReplyDTO;
 import board.file.dto.reply.ReplyUpdateDTO;
 import board.file.service.ReplyService;
+import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 
 // Reply Controller Class
@@ -60,7 +61,7 @@ public class ReplyController {
     @PostMapping("{tno}/create")
     @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Long>> postCreateReply(@PathVariable("tno") Long tno,
-            @RequestBody ReplyCreateDTO replyCreateDTO) {
+            @RequestBody @Valid ReplyCreateDTO replyCreateDTO) {
         log.info("RestController : Is Running Create Reply");
         Long insertCount = replyService.createReply(replyCreateDTO);
         return new ResponseEntity<>(Map.of("insertCount", insertCount), HttpStatus.CREATED);
@@ -78,7 +79,7 @@ public class ReplyController {
     // Update Reply
     @PutMapping("update")
     @PreAuthorize("hasAnyRole('USER')")
-    public ResponseEntity<Map<String, String>> updateReply(@RequestBody ReplyUpdateDTO replyUpdateDTO) {
+    public ResponseEntity<Map<String, String>> updateReply(@RequestBody @Valid ReplyUpdateDTO replyUpdateDTO) {
         log.info("RestController : Is Running Update Reply");
         replyService.updateReply(replyUpdateDTO);
         return new ResponseEntity<>(Map.of("message", "업데이트가 완료되었습니다."), HttpStatus.OK);

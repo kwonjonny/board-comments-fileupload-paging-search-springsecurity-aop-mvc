@@ -3,6 +3,7 @@ package board.file.dto.board;
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,9 +20,16 @@ import lombok.ToString;
 public class BoardDTO {
     // tbl_board
     private Long tno;
+
+    @NotBlank(message = "Content Is Required")
     private String title;
+
+    @NotBlank(message = "Content Is Required")
     private String content;
+
+    @NotBlank(message = "Content Is Required")
     private String writer;
+    
     private LocalDate registDate;
     private LocalDate updateDate;
     private int replyCnt;

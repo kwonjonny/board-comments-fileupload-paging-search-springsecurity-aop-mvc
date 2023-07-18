@@ -8,7 +8,7 @@ import board.file.dto.page.PageRequestDTO;
 import board.file.dto.page.PageResponseDTO;
 
 // Notice Service Interface 
-public interface NoitceService {
+public interface NoticeService {
     
     // List Notice Service
     PageResponseDTO<NoticeListDTO> listNotice(PageRequestDTO pageRequestDTO);
