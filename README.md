@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Kwon's Study Repo</title>
-</head>
+![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=Kwon's%20Study%20Repo&fontSize=60&animation=fadeIn&fontAlignY=38&desc=Whoever%20knocks%20persistently,%20ends%20by%20entering.&descAlignY=51&descAlign=62)
+<p align='center'>
+  <a href="#demo">
 <body>
   <h1>Whoever knocks persistently, ends by entering.</h1>
   <h2>기술 스택</h2>
