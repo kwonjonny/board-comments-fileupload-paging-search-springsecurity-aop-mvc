@@ -64,8 +64,9 @@ public class BoardServiceImpl implements BoardService {
 
       if (boardCreateDTO.getFileNames() != null && !boardCreateDTO.getFileNames().isEmpty()) {
          List<Map<String, String>> list = fileNames.stream().map(str -> {
-            String uuid = str.substring(0, 36);
-            String fileName = str.substring(37);
+            String[] splitData = str.split("_"); // "_"를 기준으로 문자열을 분리
+            String uuid = splitData[0];
+            String fileName = splitData[1];
             return Map.of("uuid", uuid, "fileName", fileName, "tno", "" + tno, "ord", "" + index.getAndIncrement());
          }).collect(Collectors.toList());
          fileMapper.createImage(list);
@@ -86,8 +87,9 @@ public class BoardServiceImpl implements BoardService {
          List<String> fileNames = boardUpdateDTO.getFileNames();
          Long tno = boardUpdateDTO.getTno();
          List<Map<String, String>> list = fileNames.stream().map(str -> {
-            String uuid = str.substring(0, 36);
-            String fileName = str.substring(37);
+            String[] splitData = str.split("_"); // "_"를 기준으로 문자열을 분리
+            String uuid = splitData[0];
+            String fileName = splitData[1];
             return Map.of("uuid", uuid, "fileName", fileName, "tno", "" + tno, "ord", "" + index.getAndIncrement());
          }).collect(Collectors.toList());
          fileMapper.createImage(list);

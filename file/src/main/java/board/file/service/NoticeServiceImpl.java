@@ -28,7 +28,7 @@ public class NoticeServiceImpl implements NoticeService {
     private final NoticeMapper noticeMapper;
     private final FileMapper fileMapper;
 
-    // Autowired 명시적 표시 
+    // Autowired 명시적 표시
     @Autowired
     public NoticeServiceImpl(NoticeMapper noticeMapper, FileMapper fileMapper) {
         this.noticeMapper = noticeMapper;
@@ -61,8 +61,9 @@ public class NoticeServiceImpl implements NoticeService {
 
         if (noticeCreateDTO.getFileNames() != null && !noticeCreateDTO.getFileNames().isEmpty()) {
             List<Map<String, String>> list = fileNames.stream().map(str -> {
-                String uuid = str.substring(0, 36);
-                String fileName = str.substring(37);
+                String[] splitData = str.split("_"); // "_"를 기준으로 문자열을 분리
+                String uuid = splitData[0];
+                String fileName = splitData[1];
                 return Map.of("uuid", uuid, "fileName", fileName, "nno", "" + nno, "ord", "" + index.getAndIncrement());
             }).collect(Collectors.toList());
             fileMapper.createImageNotice(list);
@@ -81,10 +82,11 @@ public class NoticeServiceImpl implements NoticeService {
         List<String> fileNames = noticeUpdateDTO.getFileNames();
         Long nno = noticeUpdateDTO.getNno();
 
-        if(noticeUpdateDTO.getFileNames() != null && !noticeUpdateDTO.getFileNames().isEmpty()) {
-            List<Map<String,String>> list = fileNames.stream().map(str -> {
-                String uuid = str.substring(0, 36);
-                String fileName = str.substring(37);
+        if (noticeUpdateDTO.getFileNames() != null && !noticeUpdateDTO.getFileNames().isEmpty()) {
+            List<Map<String, String>> list = fileNames.stream().map(str -> {
+                String[] splitData = str.split("_"); // "_"를 기준으로 문자열을 분리
+                String uuid = splitData[0];
+                String fileName = splitData[1];
                 return Map.of("uuid", uuid, "fileName", fileName, "nno", "" + nno, "ord", "" + index.getAndIncrement());
             }).collect(Collectors.toList());
             fileMapper.updateImageNotice(list);
