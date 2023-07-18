@@ -313,13 +313,9 @@ create table persistent_logins (
 ;
 
 ```
-<!DOCTYPE html>
-<html>
-<head>
-  <title>=kwonjonny's Study Repo</title>
-</head>
-<body>
-  <h1>Whoever knocks persistently, ends by entering.</h1>
+
+![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=Sohyeon's%20Study%20Repo&fontSize=60&animation=fadeIn&fontAlignY=38&desc=Whoever%20knocks%20persistently,%20ends%20by%20entering.&descAlignY=51&descAlign=62)
+<p align='center'>
   <h2>기술 스택</h2>
   <p>
     <a href="#demo">
