@@ -313,3 +313,33 @@ create table persistent_logins (
 ;
 
 ```
+<!DOCTYPE html>
+<html>
+<head>
+  <title>=kwonjonny's Study Repo</title>
+</head>
+<body>
+  <h1>Whoever knocks persistently, ends by entering.</h1>
+  <h2>기술 스택</h2>
+  <p>
+    <a href="#demo">
+      <img src="https://img.shields.io/badge/MyBatis-FAAF15?style=for-the-badge&logo=MyBatis&logoColor=white" alt="MyBatis">
+    </a>
+    <a href="#demo">
+      <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white" alt="Spring Boot">
+    </a>
+    <a href="#demo">
+      <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white" alt="Spring">
+    </a>
+    <a href="#demo">
+      <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white" alt="Spring Security">
+    </a>
+    <a href="#demo">
+      <img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white" alt="NGINX">
+    </a>
+    <a href="#demo">
+      <img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=Thymeleaf&logoColor=white" alt="Thymeleaf">
+    </a>
+  </p>
+</body>
+</html>
