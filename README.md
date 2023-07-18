@@ -18,16 +18,10 @@
 </body>
 </html>
 
-
-
-
 # 개발 상태 : [개발 완료]
-# [게시판 CRUD, 조회수, 검색, 댓글대댓글, 파일업로드 개발 완료 , Spring Security(kakao social login) 개발 완료, 좋아요 개발 완료, 공지사항 개발 완료]
 
 # board-comments-fileupload-paging-search-mvc
 - 프로젝트 유형: Board 게시판 토이 프로젝트
-- 목표: JavaScript, Thymeleaf, Spring Boot 를 활용하여 페이지네이션, 검색 기능이 포함된 Board 애플리케이션 개발
-- 목표: 개발의 순서 정립 DataBase , Index 설계 , Query 속도 향상 & Query 문법 정립 
 
 ## 시작하기(Getting Start)
 
