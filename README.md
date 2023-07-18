@@ -1,4 +1,33 @@
 
+![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=Kwon's%20Study%20Repo&fontSize=60&animation=fadeIn&fontAlignY=38&desc=Whoever%20knocks%20persistently,%20ends%20by%20entering.&descAlignY=51&descAlign=62)
+<p align='center'>
+  <h2>기술 스택</h2>
+  <p>
+    <a href="#demo">
+      <img src="https://img.shields.io/badge/MyBatis-FAAF15?style=for-the-badge&logo=MyBatis&logoColor=white" alt="MyBatis">
+    </a>
+    <a href="#demo">
+      <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white" alt="Spring Boot">
+    </a>
+    <a href="#demo">
+      <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white" alt="Spring">
+    </a>
+    <a href="#demo">
+      <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white" alt="Spring Security">
+    </a>
+    <a href="#demo">
+      <img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white" alt="NGINX">
+    </a>
+    <a href="#demo">
+      <img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=Thymeleaf&logoColor=white" alt="Thymeleaf">
+    </a>
+	   <a href="#" onclick="loginWithKakao()">
+      <img src="https://img.shields.io/badge/Kakao-FFCD00?style=for-the-badge&logo=Kakao&logoColor=black" alt="Kakao Social Login">
+    </a>
+  </p>
+</body>
+</html>
+
 
 # 개발 상태 : [개발 완료]
 # [게시판 CRUD, 조회수, 검색, 댓글대댓글, 파일업로드 개발 완료 , Spring Security(kakao social login) 개발 완료, 좋아요 개발 완료, 공지사항 개발 완료]
@@ -224,32 +253,3 @@ create table persistent_logins (
 ;
 
 ```
-
-![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=Kwon's%20Study%20Repo&fontSize=60&animation=fadeIn&fontAlignY=38&desc=Whoever%20knocks%20persistently,%20ends%20by%20entering.&descAlignY=51&descAlign=62)
-<p align='center'>
-  <h2>기술 스택</h2>
-  <p>
-    <a href="#demo">
-      <img src="https://img.shields.io/badge/MyBatis-FAAF15?style=for-the-badge&logo=MyBatis&logoColor=white" alt="MyBatis">
-    </a>
-    <a href="#demo">
-      <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white" alt="Spring Boot">
-    </a>
-    <a href="#demo">
-      <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white" alt="Spring">
-    </a>
-    <a href="#demo">
-      <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white" alt="Spring Security">
-    </a>
-    <a href="#demo">
-      <img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white" alt="NGINX">
-    </a>
-    <a href="#demo">
-      <img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=Thymeleaf&logoColor=white" alt="Thymeleaf">
-    </a>
-	   <a href="#" onclick="loginWithKakao()">
-      <img src="https://img.shields.io/badge/Kakao-FFCD00?style=for-the-badge&logo=Kakao&logoColor=black" alt="Kakao Social Login">
-    </a>
-  </p>
-</body>
-</html>
