@@ -340,6 +340,9 @@ create table persistent_logins (
     <a href="#demo">
       <img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=Thymeleaf&logoColor=white" alt="Thymeleaf">
     </a>
+	   <a href="#" onclick="loginWithKakao()">
+      <img src="https://img.shields.io/badge/Kakao-FFCD00?style=for-the-badge&logo=Kakao&logoColor=black" alt="Kakao Social Login">
+    </a>
   </p>
 </body>
 </html>
