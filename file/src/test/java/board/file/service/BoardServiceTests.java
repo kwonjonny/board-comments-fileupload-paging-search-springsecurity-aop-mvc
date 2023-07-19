@@ -93,7 +93,7 @@ public class BoardServiceTests {
         }).collect(Collectors.toList());
         // THEN
         BoardDTO createdBoardDTO = boardService.readBoard(TEST_TNO);
-        Assertions.assertNotNull(createdBoardDTO, "createdBoardDTO Should Be Successful And Not Null");
+        Assertions.assertNotNull(createdBoardDTO, "createdBoardDTO Should Be Not Null");
         log.info("===== End Board Service Create Test =====");
     }
 
