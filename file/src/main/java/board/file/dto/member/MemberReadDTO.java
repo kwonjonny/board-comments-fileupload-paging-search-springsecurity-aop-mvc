@@ -12,10 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class MemberReadDTO {
-
     private String email;
     private String mpw;
     private String mname;
     private List<String> rolenames;
-    
 }
