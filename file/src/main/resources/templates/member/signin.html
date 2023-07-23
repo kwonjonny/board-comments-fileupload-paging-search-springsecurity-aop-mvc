@@ -56,6 +56,38 @@
         setTimeout(function () {
             alertModal.hide();
         }, 1500);
+
+        window.onload = function () {
+            const form = document.querySelector('form[action="/member/signin"]');
+
+            form.onsubmit = function (e) {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData);
+
+                fetch('/member/signin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(response => {
+                        if (response.jwt) {
+                            localStorage.setItem('jwt', response.jwt);
+                            // 로그인이 성공적으로 완료되었을 때 수행할 로직을 추가합니다.
+                            // 예를 들면, 사용자를 다른 페이지로 리다이렉트 시키는 것 등입니다.
+                        } else {
+                            // 서버로부터 JWT가 반환되지 않은 경우 (로그인 실패 등)에 수행할 로직을 추가합니다.
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        }
     </script>
 
 </body>

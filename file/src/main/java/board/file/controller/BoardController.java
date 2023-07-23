@@ -67,7 +67,6 @@ public class BoardController {
         String email = userDetails.getUsername();
         model.addAttribute("list", list);
         model.addAttribute("email", email);
-        log.info("GET | Board List");
         return "/board/list";
     }
 

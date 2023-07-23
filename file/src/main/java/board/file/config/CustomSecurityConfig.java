@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 import board.file.security.handler.CustomAccessDeniedHandler;
 import board.file.security.handler.CustomOAuthSuccessHandler;
+import board.file.util.JwtiUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -26,6 +27,7 @@ import lombok.extern.log4j.Log4j2;
 public class CustomSecurityConfig {
 
     private final DataSource dataSource;
+    private final JwtiUtil jwtiUtil;
     
     // TokenRepository에 토큰 값 저장 함수
     @Bean
@@ -33,6 +35,11 @@ public class CustomSecurityConfig {
         JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
         repo.setDataSource(dataSource);
         return repo;
+    }
+
+    @Bean
+    public CustomOAuthSuccessHandler customOAuthSuccessHandler() {
+        return new CustomOAuthSuccessHandler(jwtiUtil);
     }
 
     @Bean
@@ -44,10 +51,11 @@ public class CustomSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         log.info("Spring Seucirty Filter Chain Is Running");
+
         // 커스텀 로그인 페이지 경로 지정
         http.formLogin(config -> {
             config.loginPage("/member/signin");
-            config.successHandler(new CustomOAuthSuccessHandler());
+            config.successHandler(customOAuthSuccessHandler());
         });
 
         // 권한이 없는 페이지를 접속했을 시 처리
@@ -69,7 +77,7 @@ public class CustomSecurityConfig {
         // social 로그인 signin페이지에 설정 (카카오)
         http.oauth2Login(config -> {
             config.loginPage("/member/signin");
-            config.successHandler(new CustomOAuthSuccessHandler());
+            config.successHandler(customOAuthSuccessHandler());
 
         });
 
