@@ -29,7 +29,7 @@ public class LikeServiceTests {
 
     // BeforeEach 사용을 위한 LikeDTO 정의
     private LikeDTO likeDTO;
-
+    
     private LikeDTO likeDTOForNotice;
 
     // LikeDTO Create Mapper Set Up

@@ -41,6 +41,7 @@ public class CustomOAuthSuccessHandler implements AuthenticationSuccessHandler {
         // jwtToekn 발행 30분 제한
         String jwtToken = jwtiUtil.generateToken(claimMap, 30);
         response.addHeader("Authorization", "Bearer " + jwtToken);
+        log.info("jwtToken"+jwtToken);
 
         // MemberDTO를 사용 소셜 로그인에 성공했을 시(mpw가 "" 일때) 수정페이지로 가기
         if (dto.getMpw() == null || dto.getMpw().equals("")) {
