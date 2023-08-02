@@ -7,7 +7,7 @@
 <mapper namespace="board.file.mappers.BoardMapper">
 
 
-<select id="listBoard" parameterType="board.file.dto.board.BoardListDTO" resultType="board.file.dto.board.BoardListDTO">
+<!-- <select id="listBoard" parameterType="board.file.dto.board.BoardListDTO" resultType="board.file.dto.board.BoardListDTO">
   SELECT combinedData.nno, combinedData.tno, combinedData.title, combinedData.content, combinedData.writer, combinedData.registDate, combinedData.updateDate, combinedData.viewCnt, combinedData.replyCnt, combinedData.fileName, combinedData.type
   FROM (
     SELECT n.nno, NULL AS tno, n.title, n.content, n.writer, n.registDate, n.updateDate, n.viewCnt, NULL AS replyCnt, CONCAT(tni.uuid, '_', tni.filename) AS fileName, 'notice' AS type
@@ -37,6 +37,63 @@
   ) AS combinedData
   ORDER BY combinedData.nno DESC, combinedData.tno DESC
   LIMIT #{skip}, #{size}
+</select> -->
+
+<select id="listBoard" parameterType="board.file.dto.board.BoardListDTO" resultType="board.file.dto.board.BoardListDTO">
+ (
+  SELECT 
+  n.nno, 
+  NULL AS tno, 
+  n.title, 
+  n.content, 
+  n.writer, 
+  n.registDate, 
+  n.updateDate, 
+  n.viewCnt, 
+  NULL AS replyCnt,
+    CONCAT(tni.uuid, '_', tni.filename) AS fileName, 'notice' AS type
+  FROM tbl_notice n
+  	LEFT OUTER JOIN tbl_notice_img tni ON n.nno = tni.nno AND tni.ord = 0
+  WHERE n.nno > 0
+  ORDER BY n.nno DESC LIMIT #{skip}, #{size} )
+UNION ALL
+( 
+  SELECT NULL AS nno, 
+  b.tno, 
+  b.title, 
+  b.content, 
+  b.writer, 
+  b.registDate, 
+  b.updateDate, 
+  b.viewCnt, 
+  b.replyCnt,
+	CONCAT(tbi.uuid, '_', tbi.filename) AS fileName, 'board' AS type
+  FROM tbl_board b
+    LEFT OUTER JOIN tbl_board_img tbi ON b.tno = tbi.tno AND tbi.ord = 0
+  WHERE b.tno > 0
+  <if test="keyword != null and types != null">
+      <trim prefix="AND (" prefixOverrides="OR" suffix=")">
+        <foreach collection="types" item="searchType" separator=" OR ">
+          <if test='searchType == "t"'>
+             b.title LIKE CONCAT('%', #{keyword}, '%')
+          </if>
+          <if test='searchType == "c"'>
+             b.content LIKE CONCAT('%', #{keyword}, '%')
+          </if>
+          <if test='searchType == "w"'>
+             b.writer LIKE CONCAT('%', #{keyword}, '%')
+          </if>
+        </foreach>
+      </trim>
+    </if>
+      <if test="startDate != null">
+          AND b.registDate >= #{startDate}
+      </if>
+       <if test="endDate != null">
+          AND b.registDate &lt;= #{endDate}
+      </if>
+  ORDER BY b.tno DESC
+  LIMIT #{skip}, #{size} )
 </select>
 
 
@@ -119,6 +176,12 @@ WHERE b.tno = #{tno};
       </foreach>
     </trim>
   </if>
+   <if test="startDate != null">
+          AND registDate >= #{startDate}
+      </if>
+       <if test="endDate != null">
+          OR  registDate &lt;= #{endDate}
+      </if>
     LIMIT #{countEnd}
     ) tbl_board
 </select>

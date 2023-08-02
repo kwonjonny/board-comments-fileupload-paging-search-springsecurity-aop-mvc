@@ -46,7 +46,7 @@
             <div class="card-header"></div>
             <div class="card-body">
                 <!-- Search Form Start -->
-                <div class="container my-4">
+                <div class="container my-4" style="display: contents;">
                     <form action="/board/list" method="get" class="actionForm">
                         <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
                         <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
@@ -58,11 +58,16 @@
                                 <option value="w" th:selected="${pageRequestDTO.searchType == 'w'}">작성자 </option>
                                 <option value="tc" th:selected="${pageRequestDTO.searchType == 'tc'}">제목+내용</option>
                                 <option value="tw" th:selected="${pageRequestDTO.searchType == 'tw'}">제목+작성자</option>
-                                <option value="tcw" th:selected="${pageRequestDTO.searchType == 'tcw'}">제목+내용+작성자</option>
+                                <option value="tcw" th:selected="${pageRequestDTO.searchType == 'tcw'}">제목+내용+작성자 통합검색</option>
                             </select>
                             <input type="text" name="keyword" class="form-control search-input"
                                 placeholder="검색어를 입력 해주세요." th:value="${pageRequestDTO.keyword}">
-                            <button type="submit" class="btn btn-primary btnSearch">검색</button>
+                                <div class="input-group input-date-group">
+                                    <!-- 기간 검색 -->
+                                    <input type="date" name="startDate" class="form-control search-input" value="${pageRequestDTO.startDate}">
+                                    <input type="date" name="endDate" class="form-control search-input" value="${pageRequestDTO.endDate}">
+                                    <button type="submit" class="btn btn-primary btnSearch">검색</button>
+                                </div>
                         </div>
                     </form>
                 </div>

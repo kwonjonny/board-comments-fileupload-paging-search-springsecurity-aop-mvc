@@ -2,6 +2,7 @@ package board.file.dto.page;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.time.LocalDate;
 
 import lombok.*;
 
@@ -24,6 +25,9 @@ public class PageRequestDTO {
   private String keyword; // 검색 키워드
   private String link; // 검색 조건 , 페이지, 사이즈 통합
   private boolean replyLast;
+
+  private LocalDate startDate;
+  private LocalDate endDate;
 
   // if page 요청이 0 보다 작으면 강제 1 page
   public void setPage(int page) {
@@ -89,6 +93,17 @@ public class PageRequestDTO {
           e.printStackTrace();
         }
       }
+
+      // startDate
+      if (startDate != null) {
+        strBuilder.append("&startDate=" + startDate.toString()); // LocalDate의 경우 ISO 8601 날짜 형식으로 변환됩니다.
+      }
+
+      // endDate
+      if (endDate != null) {
+        strBuilder.append("&endDate=" + endDate.toString());
+      }
+      
       // toString으로 String전달
       link = strBuilder.toString();
     }
