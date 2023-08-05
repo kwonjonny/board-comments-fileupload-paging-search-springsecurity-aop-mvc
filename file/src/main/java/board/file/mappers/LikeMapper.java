@@ -32,4 +32,7 @@ public interface LikeMapper {
 
     // Delete Like For Nno
     int deleteLikeNno(LikeDTO likeDTO);
+
+    // Check Member Email
+    int checkMemberEmail(String email); 
 }

@@ -14,6 +14,15 @@ public interface MemberService {
     // Delete Member Service 
     int deleteMember(String email);
 
-    // readMember 
+    // ReadMember 
     MemberConvertDTO readMember(String email);
+
+    // Already User Email Exists
+    void alreadyUserEmailExists(String email);
+
+    // Not Found User 
+    void notFoundUser(String email);
+
+    // Validation User Email 
+    void validationUserEmail(String email);
 }

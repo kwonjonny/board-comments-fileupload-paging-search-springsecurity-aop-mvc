@@ -24,4 +24,9 @@ public interface ReplyService {
     // List Reply Service
     PageResponseDTO<ReplyDTO> listReply(PageRequestDTO pageRequestDTO, Long tno);
 
+    // Not Found Rno
+    void notFoundRno(Long rno);
+
+    // Not Found Tno
+    void notFoundTno(Long tno);
 }

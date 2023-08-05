@@ -43,4 +43,10 @@ public interface ReplyMapper {
 
     // Decrement Reply Count
     int decrementReplyCount(Long tno);
+
+    // Check Rno 
+    int checkRno(Long rno);
+
+    // Check Tno 
+    int checkTno(Long tno);
 }

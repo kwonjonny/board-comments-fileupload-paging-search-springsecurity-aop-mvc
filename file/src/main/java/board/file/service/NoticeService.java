@@ -27,4 +27,7 @@ public interface NoticeService {
 
     // Update Notice Service 
     Long updateNotice(NoticeUpdateDTO noticeUpdateDTO);
+
+    // Not Found Nno 
+    void notFoundNno(Long nno);
 }

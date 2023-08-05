@@ -42,13 +42,7 @@ public class BoardController {
         this.boardServce = boardService;
         this.managementCookie = managementCookie;
     }
-
-    public class DataNotFoundException extends RuntimeException {
-        public DataNotFoundException(String msg) {
-            super(msg);
-        }
-    }
-
+    
     // GET : Create
     @GetMapping("create")
     @PreAuthorize("hasAnyRole('USER')")

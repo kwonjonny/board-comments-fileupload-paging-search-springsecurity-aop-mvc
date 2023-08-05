@@ -31,13 +31,6 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    // Data Not Found Exception
-    public static class DataNotFoundException extends RuntimeException {
-        public DataNotFoundException(String msg) {
-            super(msg);
-        }
-    }
-
     // GET : Member Signin
     @GetMapping("signin")
     @PreAuthorize("permitAll")

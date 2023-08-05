@@ -25,8 +25,8 @@ import board.file.controller.LikeController;
 import board.file.controller.MemberController;
 import board.file.controller.NoticeController;
 import board.file.controller.ReplyController;
-import board.file.controller.ReplyController.DataNotFoundException;
 import board.file.exception.AdviceErrorCode;
+import board.file.exception.DataNotFoundException;
 
 @ControllerAdvice(assignableTypes = { BoardController.class, MemberController.class, NoticeController.class })
 @RestControllerAdvice(assignableTypes = { FileUploadController.class, LikeController.class, ReplyController.class })

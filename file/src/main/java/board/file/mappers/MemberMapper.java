@@ -32,4 +32,7 @@ public interface MemberMapper {
 
     // Read Member 
     MemberConvertDTO selectMember(String email);
+
+    // Check Member Email
+    int checkMemberEmail(String email); 
 }

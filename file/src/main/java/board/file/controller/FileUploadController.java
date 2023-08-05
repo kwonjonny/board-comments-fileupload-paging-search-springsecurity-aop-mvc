@@ -33,13 +33,6 @@ public class FileUploadController {
     @Value("${org.zerock.upload.path}")
     private String uploadPath;
 
-    // Data Not Found Exception
-    public static class DataNotFoundException extends RuntimeException {
-        public DataNotFoundException(String msg) {
-            super(msg);
-        }
-    }
-
     // Create File Upload
     @PostMapping("/upload")
     @PreAuthorize("hasAnyRole('USER')")

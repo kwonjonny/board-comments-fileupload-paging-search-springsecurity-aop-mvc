@@ -15,4 +15,9 @@ public interface LikeService {
     // Count Like Service For Nno
     Long countLikeNno(Long nno);
 
+    // Not Found User
+    void notFoundUser(String email);
+
+    // Validation User Email
+    void validationUserEmail(String email);
 }

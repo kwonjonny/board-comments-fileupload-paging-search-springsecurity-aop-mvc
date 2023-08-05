@@ -37,4 +37,7 @@ public interface NoticeMapper {
 
     // Like Count 
     int likeCount(Long nno);
+
+    // Check Nno 
+    int checkNno(Long nno);
 }

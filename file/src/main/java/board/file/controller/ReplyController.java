@@ -40,13 +40,6 @@ public class ReplyController {
         this.replyService = replyService;
     }
 
-    // Data Not Found Exception
-    public static class DataNotFoundException extends RuntimeException {
-        public DataNotFoundException(String msg) {
-            super(msg);
-        }
-    }
-
     // List Reply
     @GetMapping("{tno}/list")
     @PreAuthorize("hasAnyRole('USER')")

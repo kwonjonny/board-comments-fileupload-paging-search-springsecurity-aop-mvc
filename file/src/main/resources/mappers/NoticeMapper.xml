@@ -41,6 +41,12 @@ useGeneratedKeys="true" keyProperty="nno">
       </foreach>
     </trim>
   </if>
+  <if test="startDate != null">
+        AND registDate >= #{startDate}
+    </if>
+      <if test="endDate != null">
+        AND registDate &lt;= #{endDate}
+    </if>
     ORDER BY tb.nno DESC 
     LIMIT #{skip}, #{size}
 </select>
@@ -111,6 +117,12 @@ WHERE b.nno = #{nno}
       </foreach>
     </trim>
   </if>
+   <if test="startDate != null">
+      AND registDate >= #{startDate}
+  </if>
+    <if test="endDate != null">
+      AND registDate &lt;= #{endDate}
+  </if>
     LIMIT #{countEnd}
     ) tbl_notice
 </select>
@@ -123,5 +135,12 @@ WHERE b.nno = #{nno}
     WHERE nno = #{nno}
 </update>
 
+
+<!-- NoticeMapper id = "checkNno" -->
+<select id="checkNno" parameterType="long" resultType="int">
+    SELECT COUNT(*) 
+    FROM tbl_notice
+    WHERE nno = #{nno}
+</select>
 
 </mapper>

@@ -33,12 +33,6 @@ public class LikeController {
         this.likeService = likeService;
     }
 
-    public class DataNotFoundException extends RuntimeException {
-        public DataNotFoundException(String msg) {
-            super(msg);
-        }
-    }
-
     // Toggle Like Tno
     @PostMapping("tno/toggle/{tno}")
     @PreAuthorize("hasAnyRole('USER')")

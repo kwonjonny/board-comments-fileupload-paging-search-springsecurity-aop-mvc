@@ -15,6 +15,7 @@ import board.file.dto.notice.NoticeListDTO;
 import board.file.dto.notice.NoticeUpdateDTO;
 import board.file.dto.page.PageRequestDTO;
 import board.file.dto.page.PageResponseDTO;
+import board.file.exception.NoticeNumberNotFoundException;
 import board.file.mappers.FileMapper;
 import board.file.mappers.NoticeMapper;
 import lombok.extern.log4j.Log4j2;
@@ -58,6 +59,7 @@ public class NoticeServiceImpl implements NoticeService {
         AtomicInteger index = new AtomicInteger(0);
         List<String> fileNames = noticeCreateDTO.getFileNames();
         Long nno = noticeCreateDTO.getNno();
+        noticeMapper.checkNno(nno); // Check Nno
 
         if (noticeCreateDTO.getFileNames() != null && !noticeCreateDTO.getFileNames().isEmpty()) {
             List<Map<String, String>> list = fileNames.stream().map(str -> {
@@ -76,6 +78,7 @@ public class NoticeServiceImpl implements NoticeService {
     @Transactional
     public Long updateNotice(NoticeUpdateDTO noticeUpdateDTO) {
         log.info("Update NoticeServiceImpl Is Running");
+        notFoundNno(noticeUpdateDTO.getNno()); // Check Nno
         int count = noticeMapper.updateNotice(noticeUpdateDTO);
         fileMapper.deleteImageNotice(noticeUpdateDTO.getNno());
         AtomicInteger index = new AtomicInteger(0);
@@ -99,6 +102,7 @@ public class NoticeServiceImpl implements NoticeService {
     @Transactional
     public void deleteNotice(Long nno) {
         log.info("Delete NoticeServiceImpl Is Running");
+        noticeMapper.checkNno(nno); // Check Nno
         noticeMapper.deleteNotice(nno);
     }
 
@@ -107,6 +111,7 @@ public class NoticeServiceImpl implements NoticeService {
     @Transactional(readOnly = true)
     public NoticeDTO readNotice(Long nno) {
         log.info("Read NoticeServiceImpl Is Running");
+        noticeMapper.checkNno(nno); // Check Nno
         return noticeMapper.readNotice(nno);
     }
 
@@ -115,6 +120,17 @@ public class NoticeServiceImpl implements NoticeService {
     @Transactional
     public void viewCount(Long nno) {
         log.info("ViewCount NoticeServiceImpl Is Running");
+        noticeMapper.checkNno(nno); // Check Nnno
         noticeMapper.viewCount(nno);
+    }
+
+    // Not Found Nno 
+    @Override
+    @Transactional(readOnly = true)
+    public void notFoundNno(Long nno) {
+        log.info("Not Found Nno NoticeServiceImpl Is Running");
+        if (noticeMapper.checkNno(nno) == 0) {
+            throw new NoticeNumberNotFoundException("해당하는 공지사항 번호가 없습니다.");
+        }
     }
 }

@@ -97,4 +97,19 @@
 </select>
 
 
+<!-- ReplyMapper id = "checkRno" -->
+<select id="checkRno" parameterType="long" resultType="int">
+        SELECT COUNT(*) FROM 
+        tbl_reply 
+        WHERE rno = #{rno}
+</select>
+
+
+<!-- ReplyMapper id = "CheckTno" -->
+<select id="checkTno" parameterType="long" resultType="int">
+        SELECT COUNT(*) FROM
+        tbl_board
+        where tno = #{tno}
+</select>
+
 </mapper>

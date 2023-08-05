@@ -43,13 +43,6 @@ public class NoticeController {
         this.managementCookie = managementCookie;
     }
 
-    // Data Not Found Exception
-    public static class DataNotFoundException extends RuntimeException {
-        public DataNotFoundException(String msg) {
-            super(msg);
-        }
-    }
-
     // GET : Create Notice
     @GetMapping("create")
     @PreAuthorize("hasAnyRole('USER')")

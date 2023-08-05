@@ -1,10 +1,15 @@
 package board.file.service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import board.file.dto.like.LikeDTO;
+import board.file.exception.InvalidEmailException;
+import board.file.exception.UserNotFoundException;
 import board.file.mappers.LikeMapper;
 import lombok.extern.log4j.Log4j2;
 
@@ -36,6 +41,8 @@ public class LikeServiceImpl implements LikeService {
     @Transactional
     public int toggleLike(Long tno, String email) {
         log.info("ToggleLike LikeServiceImpl Is Running");
+        validationUserEmail(email); // Validation Email
+        notFoundUser(email); // Check Email
         LikeDTO likeDTO = LikeDTO.builder()
                 .email(email)
                 .tno(tno)
@@ -61,6 +68,8 @@ public class LikeServiceImpl implements LikeService {
     @Transactional
     public int toggleLikeNno(Long nno, String email) {
         log.info("ToggleLike Nno LikeServiceImpl Is Running");
+        validationUserEmail(email); // Validation Email 
+        notFoundUser(email);    // Check Email 
         LikeDTO likeDTO = LikeDTO.builder()
                 .nno(nno)
                 .email(email)
@@ -70,6 +79,26 @@ public class LikeServiceImpl implements LikeService {
             return likeMapper.createLikeNno(likeDTO);
         } else {
             return likeMapper.deleteLikeNno(likeDTO);
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public void notFoundUser(String email) {
+        log.info("Already User Email LikeServiceImpl Is Running");
+        if (likeMapper.checkMemberEmail(email) == 1) {
+            throw new UserNotFoundException("이미 가입된 사용자 입니다.");
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public void validationUserEmail(String email) {
+        log.info("Validation User Email LikeServiceImpl Is Running");
+        Pattern pattern = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
+        Matcher matcher = pattern.matcher(email);
+        if (!matcher.matches()) {
+            throw new InvalidEmailException("이메일 형식이 올바르지 않습니다: " + email);
         }
     }
 }
